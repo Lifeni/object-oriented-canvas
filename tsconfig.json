@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "target": "ESNext",
     "noImplicitAny": true,
     "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*"]
+      "*": [
+        "node_modules/*"
+      ]
     }
   },
   "include": [
