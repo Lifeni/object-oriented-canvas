@@ -10,6 +10,7 @@ export default class CanvasTools extends HTMLElement {
                 <action-button icon="line" tooltip="线"></action-button>
                 <action-button icon="text" tooltip="文本"></action-button>
                 <action-button icon="image" tooltip="图像"></action-button>
+                <action-button icon="clear" tooltip="清空画布"></action-button>
             </section>
             <style>${this.stylesheet}</style>
         `

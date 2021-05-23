@@ -9,6 +9,7 @@ export default class AppMenu extends HTMLElement {
                 <menu-item action="save-file">保存</menu-item>
                 <menu-item action="save-as">另存为</menu-item>
                 <div class="divider"></div>
+                <menu-item action="reload-window">重新加载窗口</menu-item>
                 <menu-item action="toggle-devtools">切换 DevTools</menu-item>
                 <div class="divider"></div>
                 <menu-item action="open-about-dialog">关于</menu-item>

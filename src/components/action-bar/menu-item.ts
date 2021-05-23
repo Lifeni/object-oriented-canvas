@@ -32,6 +32,7 @@ export default class MenuItem extends HTMLElement {
             border: none;
             background: transparent;
             color: #fff;
+            font-family: inherit;
             cursor: pointer;
             white-space: nowrap;
             outline: none;

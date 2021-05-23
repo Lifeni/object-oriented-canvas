@@ -3,10 +3,6 @@ import { app, BrowserWindow, dialog } from "electron"
 
 const startListen = (window: BrowserWindow): void => {
 
-    ipcMain.on("close-window", () => {
-        window.close()
-    })
-
     ipcMain.on("quit-app", () => {
         app.quit()
     })
@@ -21,6 +17,14 @@ const startListen = (window: BrowserWindow): void => {
         } else {
             window.maximize()
         }
+    })
+
+    ipcMain.on("close-window", () => {
+        window.close()
+    })
+
+    ipcMain.on("reload-window", () => {
+        window.reload()
     })
 
     ipcMain.on("toggle-devtools", () => {

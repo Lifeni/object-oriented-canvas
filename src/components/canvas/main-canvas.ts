@@ -28,10 +28,10 @@ export default class MainCanvas extends HTMLElement {
 
     tryDraw(): void {
         this.ctx.font = "48px Inter"
-        this.ctx.fillText("Hello, Electron", 100, 108)
+        this.ctx.fillText("Hello, Electron", 80, 108)
 
         this.ctx.font = "24px Inter"
-        this.ctx.fillText("🎨 Object-oriented Canvas", 100, 160)
+        this.ctx.fillText("🎨 Object-oriented Canvas", 80, 160)
     }
 
     readonly stylesheet = `

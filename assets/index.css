@@ -2,6 +2,11 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: InterApp;
+    src: url("./inter.ttf");
+}
+
 html,
 body {
     margin: 0;
@@ -11,5 +16,6 @@ body {
 body {
     width: 100vw;
     height: 100vh;
+    font-family: InterApp, sans-serif;
     overflow: hidden;
 }
