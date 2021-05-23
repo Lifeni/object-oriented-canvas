@@ -1,4 +1,4 @@
-# Object-Oriented Canvas
+# Object-oriented Canvas
 
 这是一个基于面向对象分析与设计的画布 APP。
 

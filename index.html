@@ -5,10 +5,11 @@
     <title>Canvas</title>
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'"/>
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'"/>
+    <link rel="stylesheet" type="text/css" href="assets/index.css">
 </head>
 <body>
 <!-- You can also require other files to run in this process -->
-<script src="./dist/renderer.js"></script>
+<canvas id="canvas" class="canvas">这是一块画布</canvas>
+<script src="dist/renderer.js"></script>
 </body>
 </html>
