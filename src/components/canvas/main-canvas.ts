@@ -18,6 +18,7 @@ export default class MainCanvas extends HTMLElement {
         this.ctx = this.canvas.getContext("2d")
 
         this.initCanvas()
+        this.tryDraw()
     }
 
     initCanvas(): void {
@@ -25,10 +26,18 @@ export default class MainCanvas extends HTMLElement {
         this.ctx.canvas.height = this.screenHeight
     }
 
+    tryDraw(): void {
+        this.ctx.font = "48px Inter"
+        this.ctx.fillText("Hello, Electron", 100, 108)
+
+        this.ctx.font = "24px Inter"
+        this.ctx.fillText("🎨 Object-oriented Canvas", 100, 160)
+    }
+
     readonly stylesheet = `
         canvas {
-            width: ${this.screenWidth}px;
-            height: calc(${this.screenHeight}px - 48px);
+            width: ${window.screen.width}px;
+            height: ${window.screen.height}px;
         }
     `
 }

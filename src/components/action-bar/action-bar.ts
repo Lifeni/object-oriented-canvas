@@ -3,15 +3,15 @@ export default class ActionBar extends HTMLElement {
         super()
         const shadowRoot = this.attachShadow({ mode: "open" })
         shadowRoot.innerHTML = `
-        <header>
-            <slot></slot>
-            <section>
-                <action-button icon="minimize" action="minimize-window"></action-button>
-                <action-button icon="maximize" action="maximize-window"></action-button>
-                <action-button icon="close" action="close-window"></action-button>
-            </section>
-        </header>
-        <style>${this.stylesheet}</style>
+            <header>
+                <slot></slot>
+                <section>
+                    <action-button icon="minimize" action="minimize-window"></action-button>
+                    <action-button icon="maximize" action="maximize-window"></action-button>
+                    <action-button icon="close" action="close-window"></action-button>
+                </section>
+            </header>
+            <style>${this.stylesheet}</style>
         `
     }
 

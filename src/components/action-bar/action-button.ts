@@ -13,10 +13,10 @@ export default class ActionButton extends HTMLElement {
         super()
         const shadowRoot = this.attachShadow({ mode: "open" })
         shadowRoot.innerHTML = `
-        <button >
-            ${this.iconMap(this.icon)}
-        </button>
-        <style>${this.stylesheet}</style>
+            <button >
+                ${this.iconMap(this.icon)}
+            </button>
+            <style>${this.stylesheet}</style>
         `
 
         this.addEventListener("click", () => {

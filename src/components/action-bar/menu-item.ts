@@ -11,10 +11,10 @@ export default class MenuItem extends HTMLElement {
         super()
         const shadowRoot = this.attachShadow({ mode: "open" })
         shadowRoot.innerHTML = `
-        <button role="menuitem">
-            <slot></slot>
-        </button>   
-        <style>${this.stylesheet}</style>
+            <button role="menuitem">
+                <slot></slot>
+            </button>   
+            <style>${this.stylesheet}</style>
         `
 
         this.addEventListener("click", () => {
