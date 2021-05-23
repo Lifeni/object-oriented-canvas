@@ -3,7 +3,7 @@ export default class AppMenu extends HTMLElement {
         super()
         const shadowRoot = this.attachShadow({ mode: "open" })
         shadowRoot.innerHTML = `
-            <action-button icon="menu" id="menu-button"></action-button>
+            <action-button icon="menu" id="menu-button" class="menu-button"></action-button>
             <div class="menu" role="menu" id="menu">
                 <menu-item action="open-file">打开</menu-item>
                 <menu-item action="save-file">保存</menu-item>
