@@ -21,6 +21,8 @@ yarn global add electronmon concurrently
 yarn dev
 ```
 
+注意：启动开发环境后，应用可能会自动重启一次，这是正常的。
+
 ## 开源协议
 
-MIT
+MIT License
