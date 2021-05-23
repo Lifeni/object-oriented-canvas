@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from "electron"
 import * as path from "path"
-import { ipcMain } from "electron/main"
+import { startListen } from "./utils/ipcMainListener"
+
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
@@ -22,21 +23,7 @@ function createWindow() {
         mainWindow.webContents.openDevTools()
     }
 
-    ipcMain.on("close-window", () => {
-        mainWindow.close()
-    })
-
-    ipcMain.on("minimize-window", () => {
-        mainWindow.minimize()
-    })
-
-    ipcMain.on("maximize-window", () => {
-        if (mainWindow.isMaximized()) {
-            mainWindow.unmaximize()
-        } else {
-            mainWindow.maximize()
-        }
-    })
+    startListen(mainWindow)
 }
 
 app.on("ready", () => {

@@ -14,7 +14,7 @@ export default class ActionButton extends HTMLElement {
         const shadowRoot = this.attachShadow({ mode: "open" })
         shadowRoot.innerHTML = `
         <button >
-            ${ActionButton.iconMap(this.icon)}
+            ${this.iconMap(this.icon)}
         </button>
         <style>${this.stylesheet}</style>
         `
@@ -26,7 +26,7 @@ export default class ActionButton extends HTMLElement {
         })
     }
 
-    static iconMap(name: string): string {
+    iconMap(name: string): string {
         switch (name) {
             case "menu":
                 return `
@@ -130,7 +130,7 @@ export default class ActionButton extends HTMLElement {
                 bottom: -32px;
                 width: auto;
                 padding: 4px 8px;
-                background: #2c2c2cee;
+                background: #222222;
                 border-radius: 4px;
                 white-space: nowrap;
                 transform: translateX(-50%);
