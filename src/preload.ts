@@ -5,7 +5,7 @@ window.addEventListener("DOMContentLoaded", () => {
     import("./components/action-bar/action-button")
     import("./components/action-bar/app-menu")
     import("./components/action-bar/menu-item")
-    import("./components/canvas/canvas-tools")
 
-    // const canvas = document.getElementById("canvas")
+    import("./components/canvas/canvas-tools")
+    import("./components/canvas/main-canvas")
 })
