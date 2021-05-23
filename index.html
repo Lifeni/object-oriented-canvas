@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Canvas</title>
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'"/>
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline';"/>
     <link rel="stylesheet" type="text/css" href="assets/index.css">
 </head>
 <body>
-<!-- You can also require other files to run in this process -->
+<action-bar>
+    <app-menu></app-menu>
+    <canvas-tools></canvas-tools>
+</action-bar>
 <canvas id="canvas" class="canvas">这是一块画布</canvas>
 <script src="dist/renderer.js"></script>
 </body>
