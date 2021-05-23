@@ -35,26 +35,38 @@ export default class AppMenu extends HTMLElement {
         
         .menu {
             position: absolute;
-            left: 0;
-            top: 48px;
+            left: 8px;
+            top: 56px;
             width: fit-content;
             padding: 8px 0;
             display: flex;
             flex-direction: column;
             background: #2c2c2c;
-            border-radius: 0 0 4px 4px;
+            border-radius: 4px;
             visibility: hidden;         
         }
         
         .menu.show {
             visibility: visible;
         }
+        
+        .menu::before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            top: -12px;
+            display: block;
+            width: 0;
+            height: 0;
+            border: solid 6px transparent;
+            border-bottom: solid 6px #2c2c2c;
+        }
              
         .divider {
             width: 100%;
             border-top: solid 1px #424242;
             height: 0;
-            margin: 8px 0;
+            margin: 6px 0;
         }
     `
 }

@@ -27,7 +27,7 @@ export default class MenuItem extends HTMLElement {
     readonly stylesheet = `
         button {
             width: 100%;
-            padding: 8px 16px;
+            padding: 6px 48px 6px 18px;
             text-align: left;
             border: none;
             background: transparent;
