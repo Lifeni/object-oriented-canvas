@@ -22,7 +22,7 @@ export default class ActionBar extends HTMLElement {
             display: flex;
             justify-content: space-between;
             color: #fff;
-            background: #282828;
+            background: #222222;
             -webkit-app-region: drag;
         }
         

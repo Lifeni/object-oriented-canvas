@@ -5,6 +5,7 @@
   "scripts": {
     "build": "tsc",
     "build:win": "tsc && electron-builder --win portable",
+    "build:linux": "tsc && electron-builder --linux",
     "watch": "tsc -w",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
     "start": "npm run build && electron ./dist/main.js",
@@ -39,6 +40,11 @@
     },
     "win": {
       "target": "portable"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ]
     }
   }
 }
