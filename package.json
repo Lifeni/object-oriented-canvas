@@ -1,7 +1,7 @@
 {
   "name": "object-oriented-canvas",
   "version": "0.0.1",
-  "description": "一个基于面向对象分析与设计的画布 APP",
+  "description": "一个基于面向对象分析与设计的画布 App",
   "scripts": {
     "build": "tsc",
     "build:win": "tsc && electron-builder --win portable",

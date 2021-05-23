@@ -2,7 +2,6 @@ import { app, BrowserWindow } from "electron"
 import * as path from "path"
 import { startListen } from "./utils/ipcMainListener"
 
-
 function createWindow() {
     const mainWindow = new BrowserWindow({
         width: 900,

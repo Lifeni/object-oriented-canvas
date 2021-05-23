@@ -9,23 +9,26 @@ export default class AppMenu extends HTMLElement {
                 <menu-item action="save-file">保存</menu-item>
                 <menu-item action="save-as">另存为</menu-item>
                 <div class="divider"></div>
-                <menu-item action="open-devtools">开发者工具</menu-item>
+                <menu-item action="toggle-devtools">切换 DevTools</menu-item>
                 <div class="divider"></div>
-                <menu-item action="open-about">关于</menu-item>
+                <menu-item action="open-about-dialog">关于</menu-item>
                 <menu-item action="quit-app">退出</menu-item>
             </div>
             <style>${this.stylesheet}</style>
         `
 
-        shadowRoot.getElementById("menu-button")
-            .addEventListener("click", () => this.toggleMenu(shadowRoot))
-    }
+        const menu = shadowRoot.getElementById("menu")
+        const button = shadowRoot.getElementById("menu-button")
 
-    toggleMenu(shadow: ShadowRoot): void {
-        const menu = shadow.getElementById("menu")
-        if (menu) {
+        button.addEventListener("click", () => {
             menu.classList.toggle("show")
-        }
+        })
+
+        button.addEventListener("blur", () => {
+            setTimeout(() => {
+                menu.classList.remove("show")
+            }, 200)
+        })
     }
 
     readonly stylesheet = `
