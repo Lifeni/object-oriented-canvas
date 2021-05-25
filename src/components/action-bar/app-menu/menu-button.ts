@@ -8,9 +8,16 @@ export default class MenuButton extends BaseButton {
             <button>
                 ${this.iconMap(this.icon)}
             </button>
-            <style>${this.stylesheet}</style>
+            <style>${this.baseStyle}</style>
+            <style>${this.menuButtonStyle}</style>
         `
     }
+
+    readonly menuButtonStyle = `
+        button:focus {
+            background: #18a0fb;
+        }
+    `
 }
 
 window.customElements.define("menu-button", MenuButton)

@@ -1,8 +1,9 @@
 export default class BaseButton extends HTMLElement {
     static get observedAttributes(): Array<string> {
-        return ["icon", "tooltip"]
+        return ["focusable", "icon", "tooltip",]
     }
 
+    readonly focusable = this.getAttribute("focusable")
     readonly icon = this.getAttribute("icon")
     readonly tooltip = this.getAttribute("tooltip")
 
@@ -96,9 +97,8 @@ export default class BaseButton extends HTMLElement {
         }
     }
 
-    readonly stylesheet = `
-        button,
-        label {
+    readonly baseStyle = `
+        button {
             position: relative;
             width: 48px;
             height: 48px;
@@ -114,14 +114,15 @@ export default class BaseButton extends HTMLElement {
             transition: all 0.2s;
         }
 
-        button:hover,
-        label:hover {
+        button:hover {
             background: rgba(255, 255, 255, 0.1);
         }
          
-        input:checked + label {
-            background: #18a0fb;
-        }
+        ${this.focusable ? `
+            button[data-selected="true"] {
+                background: #18a0fb;
+            }
+        ` : ""}
         
         ${this.tooltip ? `
             button:hover::after,
@@ -143,6 +144,7 @@ export default class BaseButton extends HTMLElement {
             width: 18px;
             height: 18px;
             fill: #fff;
+            pointer-event: none;
         }
         
         svg g,

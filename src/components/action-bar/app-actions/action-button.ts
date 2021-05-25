@@ -15,7 +15,7 @@ export default class ActionButton extends BaseButton {
             <button>
                 ${this.iconMap(this.icon)}
             </button>
-            <style>${this.stylesheet}</style>
+            <style>${this.baseStyle}</style>
         `
 
         this.addEventListener("click", () => {

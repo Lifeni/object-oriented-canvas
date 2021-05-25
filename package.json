@@ -22,7 +22,9 @@
     "eslint": "^7.27.0",
     "typescript": "^4.2.4"
   },
-  "dependencies": {},
+  "dependencies": {
+    "mitt": "^2.1.0"
+  },
   "main": "dist/main.js",
   "build": {
     "appId": "app.lifeni.canvas",
