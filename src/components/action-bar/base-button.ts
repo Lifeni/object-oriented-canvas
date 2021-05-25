@@ -1,29 +1,13 @@
-import { ipcRenderer } from "electron"
-
-export default class ActionButton extends HTMLElement {
+export default class BaseButton extends HTMLElement {
     static get observedAttributes(): Array<string> {
-        return ["icon", "action", "tooltip"]
+        return ["icon", "tooltip"]
     }
 
     readonly icon = this.getAttribute("icon")
-    readonly action = this.getAttribute("action")
     readonly tooltip = this.getAttribute("tooltip")
 
     constructor() {
         super()
-        const shadowRoot = this.attachShadow({ mode: "open" })
-        shadowRoot.innerHTML = `
-            <button >
-                ${this.iconMap(this.icon)}
-            </button>
-            <style>${this.stylesheet}</style>
-        `
-
-        this.addEventListener("click", () => {
-            if (this.action) {
-                ipcRenderer.send(this.action)
-            }
-        })
     }
 
     iconMap(name: string): string {
@@ -113,7 +97,8 @@ export default class ActionButton extends HTMLElement {
     }
 
     readonly stylesheet = `
-        button {
+        button,
+        label {
             position: relative;
             width: 48px;
             height: 48px;
@@ -126,21 +111,28 @@ export default class ActionButton extends HTMLElement {
             -webkit-app-region: none;
             cursor: pointer;
             outline: none;
+            transition: all 0.2s;
         }
-        
-        button:hover {
+
+        button:hover,
+        label:hover {
             background: rgba(255, 255, 255, 0.1);
+        }
+         
+        input:checked + label {
+            background: #18a0fb;
         }
         
         ${this.tooltip ? `
-            button:hover::after {
+            button:hover::after,
+            label:hover::after {
                 content: "${this.tooltip}";
                 position: absolute;
                 left: 50%;
                 bottom: -32px;
                 width: auto;
                 padding: 4px 8px;
-                font-size: 0.875em;
+                font-size: 0.75em;
                 background: #222222;
                 border-radius: 4px;
                 white-space: nowrap;
@@ -160,4 +152,4 @@ export default class ActionButton extends HTMLElement {
     `
 }
 
-window.customElements.define("action-button", ActionButton)
+window.customElements.define("base-button", BaseButton)

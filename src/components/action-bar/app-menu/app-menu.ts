@@ -3,7 +3,7 @@ export default class AppMenu extends HTMLElement {
         super()
         const shadowRoot = this.attachShadow({ mode: "open" })
         shadowRoot.innerHTML = `
-            <action-button icon="menu" id="menu-button" class="menu-button"></action-button>
+            <menu-button icon="menu" id="menu-button" class="menu-button"></menu-button>
             <div class="menu" role="menu" id="menu">
                 <menu-item action="open-file">打开</menu-item>
                 <menu-item action="save-file">保存</menu-item>
@@ -19,16 +19,15 @@ export default class AppMenu extends HTMLElement {
         `
 
         const menu = shadowRoot.getElementById("menu")
-        const button = shadowRoot.getElementById("menu-button")
 
-        button.addEventListener("click", () => {
-            menu.classList.toggle("show")
-        })
-
-        button.addEventListener("blur", () => {
-            setTimeout(() => {
+        window.addEventListener("click", (event) => {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            if (event.target.shadowRoot?.activeElement?.classList.contains("menu-button")) {
+                menu.classList.toggle("show")
+            } else {
                 menu.classList.remove("show")
-            }, 200)
+            }
         })
     }
 
@@ -70,7 +69,7 @@ export default class AppMenu extends HTMLElement {
             width: 100%;
             border-top: solid 1px #424242;
             height: 0;
-            margin: 6px 0;
+            margin: 8px 0;
         }
     `
 }

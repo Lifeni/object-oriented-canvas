@@ -5,11 +5,11 @@ export default class CanvasTools extends HTMLElement {
         shadowRoot.innerHTML = `
             <section>
                 <action-button icon="cursor" tooltip="正常"></action-button>
-                <action-button icon="circle" tooltip="圆形"></action-button>
-                <action-button icon="square" tooltip="矩形"></action-button>
-                <action-button icon="line" tooltip="线"></action-button>
-                <action-button icon="text" tooltip="文本"></action-button>
-                <action-button icon="image" tooltip="图像"></action-button>
+                <tool-button icon="circle" tooltip="圆形"></tool-button>
+                <tool-button icon="square" tooltip="矩形"></tool-button>
+                <tool-button icon="line" tooltip="线"></tool-button>
+                <tool-button icon="text" tooltip="文本"></tool-button>
+                <tool-button icon="image" tooltip="图像"></tool-button>
                 <action-button icon="clear" tooltip="清空画布"></action-button>
             </section>
             <style>${this.stylesheet}</style>
