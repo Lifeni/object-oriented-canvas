@@ -3,7 +3,6 @@ import { canvasToolEmitter } from "../../../emitter"
 
 export default class ToolButton extends BaseButton {
     public button
-    public shadow
 
     static get observedAttributes(): Array<string> {
         return ["type"]
@@ -20,7 +19,6 @@ export default class ToolButton extends BaseButton {
             </button>
             <style>${this.baseStyle}</style>
         `
-        this.shadow = shadowRoot
         this.button = shadowRoot.getElementById("tool-button-shadow")
 
         this.initEmit()

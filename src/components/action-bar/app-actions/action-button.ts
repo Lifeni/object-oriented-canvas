@@ -1,4 +1,5 @@
 import { ipcRenderer } from "electron"
+import { fromEvent } from "rxjs"
 import BaseButton from "../base-button"
 
 export default class ActionButton extends BaseButton {
@@ -18,11 +19,8 @@ export default class ActionButton extends BaseButton {
             <style>${this.baseStyle}</style>
         `
 
-        this.addEventListener("click", () => {
-            if (this.action) {
-                ipcRenderer.send(this.action)
-            }
-        })
+        fromEvent(this, "click")
+            .subscribe(() => ipcRenderer.send(this.action))
     }
 }
 

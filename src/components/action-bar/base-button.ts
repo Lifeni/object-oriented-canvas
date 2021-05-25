@@ -133,7 +133,7 @@ export default class BaseButton extends HTMLElement {
                 bottom: -32px;
                 width: auto;
                 padding: 4px 8px;
-                font-size: 0.75em;
+                font-size: 0.875em;
                 background: #222222;
                 border-radius: 4px;
                 white-space: nowrap;

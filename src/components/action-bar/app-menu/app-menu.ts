@@ -19,6 +19,7 @@ export default class AppMenu extends HTMLElement {
         `
 
         const menu = shadowRoot.getElementById("menu")
+        const menuButton = shadowRoot.getElementById("menu-button")
 
         window.addEventListener("click", (event) => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -27,6 +28,7 @@ export default class AppMenu extends HTMLElement {
                 menu.classList.toggle("show")
             } else {
                 menu.classList.remove("show")
+                menuButton.shadowRoot.querySelector("button").blur()
             }
         })
     }

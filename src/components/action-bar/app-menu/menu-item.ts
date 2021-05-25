@@ -1,4 +1,5 @@
 import { ipcRenderer } from "electron"
+import { fromEvent } from "rxjs"
 
 export default class MenuItem extends HTMLElement {
     static get observedAttributes(): Array<string> {
@@ -17,11 +18,8 @@ export default class MenuItem extends HTMLElement {
             <style>${this.stylesheet}</style>
         `
 
-        this.addEventListener("click", () => {
-            if (this.action) {
-                ipcRenderer.send(this.action)
-            }
-        })
+        fromEvent(this, "click")
+            .subscribe(() => ipcRenderer.send(this.action))
     }
 
     readonly stylesheet = `
