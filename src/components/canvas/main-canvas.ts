@@ -18,6 +18,7 @@ export default class MainCanvas extends HTMLElement {
         super()
         const shadowRoot = this.attachShadow({ mode: "open" })
         shadowRoot.innerHTML = `
+            <property-bar-switcher></property-bar-switcher>
             <canvas id="canvas" class="canvas">这是一块画布</canvas>
             <style>${this.stylesheet}</style>
         `

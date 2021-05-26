@@ -14,4 +14,12 @@ window.addEventListener("DOMContentLoaded", () => {
     import("./components/action-bar/canvas-tools/tool-button")
 
     import("./components/canvas/main-canvas")
+
+    import("./components/property-bar/base-property-bar")
+    import("./components/property-bar/property-bar-switcher")
+
+    import("./components/property-bar/objects/circle")
+    import("./components/property-bar/objects/line")
+    import("./components/property-bar/objects/text")
+    import("./components/property-bar/objects/rectangle")
 })
