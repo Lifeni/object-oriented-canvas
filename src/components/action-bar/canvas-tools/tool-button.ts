@@ -35,7 +35,11 @@ export default class ToolButton extends BaseButton {
 
     listenChecked(): void {
         this.button.addEventListener("click", () => {
-            if (this.button.dataset.selected === "false") {
+            if (!this.focusable) {
+                canvasToolEmitter.emit("canvas-tool", {
+                    current: this.type
+                })
+            } else if (this.button.dataset.selected === "false") {
                 canvasToolEmitter.emit("canvas-tool", {
                     current: this.type
                 })
