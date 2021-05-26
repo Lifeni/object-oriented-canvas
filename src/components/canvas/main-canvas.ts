@@ -49,7 +49,7 @@ export default class MainCanvas extends HTMLElement {
     handleEvent(): void {
         canvasToolEmitter.on("canvas-tool", (event) => {
             if (event.current === "clear") {
-                if (confirm("确定清空画板吗？")) {
+                if (confirm("确定清空画布吗？")) {
                     this.clearCanvas()
                 }
                 canvasTool.setDefault()

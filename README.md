@@ -6,7 +6,11 @@
 
 ## 技术
 
-TypeScript + Electron + Web Components 实现。
+UI 方面，用 TypeScript + Electron + Web Components 实现。
+
+数据方面，用 mitt 实现事件监听，用 RxJS 实现观察者模式。
+
+目前没有用前端的打包工具，仅使用 tsc 处理 TypeScript 文件。
 
 ## 开发
 
