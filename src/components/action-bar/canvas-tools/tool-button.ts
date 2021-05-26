@@ -42,6 +42,9 @@ export default class ToolButton extends BaseButton {
                 this.button.dataset.selected = "true"
             } else {
                 this.button.dataset.selected = "false"
+                canvasToolEmitter.emit("canvas-tool", {
+                    current: "cursor"
+                })
             }
         })
     }

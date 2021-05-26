@@ -11,14 +11,14 @@ class CanvasToolStore {
 }
 
 class CanvasHistoryStore {
-    public history: Array<ImageData> = []
+    public history: ImageData
 
-    push(data: ImageData): void {
-        this.history.push(data)
+    set(data: ImageData): void {
+        this.history = data
     }
 
-    last(): ImageData {
-        return this.history[this.history.length - 1]
+    get(): ImageData {
+        return this.history
     }
 
 }

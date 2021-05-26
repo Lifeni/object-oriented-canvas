@@ -1,7 +1,7 @@
 import { fromEvent } from "rxjs"
 import { canvasToolEmitter } from "../../emitter"
 import { canvasHistory, canvasTool } from "../../store"
-import Rectangle from "../../objects/Rectangle"
+import { canvasObjectMap, CanvasObjects } from "../../utils/canvasObjectMap"
 
 export default class MainCanvas extends HTMLElement {
 
@@ -11,6 +11,8 @@ export default class MainCanvas extends HTMLElement {
     public dpr = devicePixelRatio
     public vw = window.screen.width * this.dpr
     public vh = window.screen.height * this.dpr
+
+    public obj: CanvasObjects
 
     constructor() {
         super()
@@ -31,6 +33,7 @@ export default class MainCanvas extends HTMLElement {
     initCanvas(): void {
         this.ctx.canvas.width = this.vw
         this.ctx.canvas.height = this.vh
+        this.setCanvas()
     }
 
     tryDraw(): void {
@@ -39,6 +42,8 @@ export default class MainCanvas extends HTMLElement {
 
         this.ctx.font = "24px Inter"
         this.ctx.fillText("🎨 Object-oriented Canvas", 80, 160)
+
+        this.setCanvas()
     }
 
     handleEvent(): void {
@@ -50,24 +55,25 @@ export default class MainCanvas extends HTMLElement {
                 canvasTool.setDefault()
             } else {
                 canvasTool.setTool(event.current)
+                this.obj = canvasObjectMap(event.current, this.ctx)
             }
         })
-
-        const rect = new Rectangle(this.ctx)
 
         fromEvent(this.canvas, "mousedown")
             .subscribe((event: MouseEvent) => {
                 event.preventDefault()
-                rect.create(event.offsetX * this.dpr, event.offsetY * this.dpr)
+                if (this.obj) {
+                    this.obj.create(event.offsetX * this.dpr, event.offsetY * this.dpr)
+                }
             })
 
         fromEvent(this.canvas, "mousemove")
             .subscribe((event: MouseEvent) => {
                 event.preventDefault()
                 window.requestAnimationFrame(() => {
-                    if (rect.active && canvasTool.tool === "rectangle") {
-                        this.lastCanvas()
-                        rect.draw(event.offsetX * this.dpr, event.offsetY * this.dpr)
+                    if (this.obj && this.obj.active) {
+                        this.getCanvas()
+                        this.obj.draw(event.offsetX * this.dpr, event.offsetY * this.dpr)
                     }
                 })
 
@@ -76,22 +82,24 @@ export default class MainCanvas extends HTMLElement {
         fromEvent(this.canvas, "mouseup")
             .subscribe((event: MouseEvent) => {
                 event.preventDefault()
-                rect.blur()
-                this.pushCanvas()
+                if (this.obj) {
+                    this.obj.blur()
+                    this.setCanvas()
+                }
             })
     }
 
-    pushCanvas(): void {
-        canvasHistory.push(this.ctx.getImageData(0, 0, this.vw, this.vh))
+    setCanvas(): void {
+        canvasHistory.set(this.ctx.getImageData(0, 0, this.vw, this.vh))
     }
 
-    lastCanvas(): void {
-        this.ctx.putImageData(canvasHistory.last(), 0, 0)
+    getCanvas(): void {
+        this.ctx.putImageData(canvasHistory.get(), 0, 0)
     }
 
     clearCanvas(): void {
         this.ctx.clearRect(0, 0, this.vw, this.vh)
-        this.pushCanvas()
+        this.setCanvas()
     }
 
     readonly stylesheet = `
