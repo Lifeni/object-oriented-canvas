@@ -1,20 +1,34 @@
 import BaseButton from "../base-button"
-import { canvasToolEmitter } from "../../../emitter"
+import { canvasEmitter } from "../../../emitter"
+import { fromEvent } from "rxjs"
+
+type ToolButtonStatus = "none" | "selected" | "show-property-bar"
+type CanvasObjectName = "circle" | "rectangle" | "line" | "image" | "text" | "cursor" | "clear"
+type CanvasObjectPropertyBarName = "circle" | "rectangle" | "line" | "text" | "none"
 
 export default class ToolButton extends BaseButton {
     public button
 
-    static get observedAttributes(): Array<string> {
-        return ["type"]
+    get status(): ToolButtonStatus {
+        return this.button.dataset.status as ToolButtonStatus
     }
 
-    readonly type = this.getAttribute("type")
+    set status(data: ToolButtonStatus) {
+        this.button.dataset.status = data
+    }
+
+    static get observedAttributes(): Array<string> {
+        return ["type", "property"]
+    }
+
+    readonly type = this.getAttribute("type") as CanvasObjectName
+    readonly property = this.getAttribute("property") as CanvasObjectPropertyBarName
 
     constructor() {
         super()
         const shadowRoot = this.attachShadow({ mode: "open" })
         shadowRoot.innerHTML = `
-            <button id="tool-button-shadow" data-selected="false">
+            <button id="tool-button-shadow" data-status="none">
                 ${this.iconMap(this.icon)}
             </button>
             ${this.baseStyle}
@@ -22,33 +36,46 @@ export default class ToolButton extends BaseButton {
         this.button = shadowRoot.getElementById("tool-button-shadow")
 
         this.initEmit()
-        this.listenChecked()
+        this.listenClick()
+    }
+
+    public canvasToolEmitter = (current: CanvasObjectName): void => {
+        canvasEmitter.emit("canvas-tool", {
+            current: current
+        })
+    }
+
+    public propertyBarEmitter = (current: CanvasObjectPropertyBarName): void => {
+        canvasEmitter.emit("property-bar", {
+            current: current
+        })
     }
 
     initEmit(): void {
-        canvasToolEmitter.on("canvas-tool", event => {
+        canvasEmitter.on("canvas-tool", event => {
             if (event.current !== this.type) {
-                this.button.dataset.selected = "false"
+                this.status = "none"
             }
         })
     }
 
-    listenChecked(): void {
-        this.button.addEventListener("click", () => {
-            if (!this.focusable) {
-                canvasToolEmitter.emit("canvas-tool", {
-                    current: this.type
-                })
-            } else if (this.button.dataset.selected === "false") {
-                canvasToolEmitter.emit("canvas-tool", {
-                    current: this.type
-                })
-                this.button.dataset.selected = "true"
+    listenClick(): void {
+        fromEvent(this.button, "click").subscribe(() => {
+            if (!this.focusable || !this.property) {
+                this.canvasToolEmitter(this.type)
+                this.propertyBarEmitter("none")
             } else {
-                this.button.dataset.selected = "false"
-                canvasToolEmitter.emit("canvas-tool", {
-                    current: "cursor"
-                })
+                if (this.status === "none") {
+                    this.canvasToolEmitter(this.type)
+                    this.propertyBarEmitter("none")
+                    this.status = "selected"
+                } else if (this.status === "selected") {
+                    this.propertyBarEmitter(this.type as CanvasObjectPropertyBarName)
+                    this.status = "show-property-bar"
+                } else if (this.status === "show-property-bar") {
+                    this.propertyBarEmitter("none")
+                    this.status = "selected"
+                }
             }
         })
     }

@@ -4,10 +4,10 @@ import { startListen } from "./utils/ipcMainListener"
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
-        width: 900,
+        width: 800,
         height: 600,
-        minWidth: 480,
-        minHeight: 400,
+        minWidth: 800,
+        minHeight: 600,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
             nodeIntegration: true,

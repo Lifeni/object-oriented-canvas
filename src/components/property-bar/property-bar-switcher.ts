@@ -1,4 +1,4 @@
-import { canvasToolEmitter } from "../../emitter"
+import { canvasEmitter } from "../../emitter"
 
 export default class PropertyBarSwitcher extends HTMLElement {
 
@@ -7,7 +7,7 @@ export default class PropertyBarSwitcher extends HTMLElement {
         const shadowRoot = this.attachShadow({ mode: "open" })
         this.switchBar("cursor", shadowRoot)
 
-        canvasToolEmitter.on("canvas-tool", (event) => {
+        canvasEmitter.on("property-bar", (event) => {
             this.switchBar(event.current, shadowRoot)
         })
     }

@@ -18,7 +18,7 @@ export default class BasePropertyBar extends HTMLElement {
                 top: 48px;
                 width: 100%;
                 height: 48px;
-                padding: 12px 24px;
+                padding: 12px 16px;
                 display: flex;
                 align-items: center;
                 color: #fff;

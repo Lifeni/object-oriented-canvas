@@ -1,5 +1,5 @@
 import { fromEvent } from "rxjs"
-import { canvasToolEmitter } from "../../emitter"
+import { canvasEmitter } from "../../emitter"
 import { canvasHistory, canvasTool } from "../../store"
 import { canvasObjectMap, CanvasObjects } from "../../utils/canvasObjectMap"
 
@@ -48,7 +48,7 @@ export default class MainCanvas extends HTMLElement {
     }
 
     handleEvent(): void {
-        canvasToolEmitter.on("canvas-tool", (event) => {
+        canvasEmitter.on("canvas-tool", (event) => {
             if (event.current === "clear") {
                 if (confirm("确定清空画布吗？")) {
                     this.clearCanvas()

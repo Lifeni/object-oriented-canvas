@@ -13,9 +13,20 @@ export default class LinePropertyBar extends HTMLElement {
 
     readonly stylesheet = `
         <style>
+            label {
+                margin: 0 16px 0 0;
+                font-size: 0.875rem;
+            }
+            
             input {
                 width: 48px;
                 height: 24px;
+                padding: 0 8px;
+                border: none;
+                border-radius: 4px;
+                color: #fff;
+                background: rgba(255, 255, 255, 0.1);
+                outline: none;
             }
         </style>
     `

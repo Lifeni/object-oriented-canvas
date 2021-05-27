@@ -119,11 +119,19 @@ export default class BaseButton extends HTMLElement {
                 background: rgba(255, 255, 255, 0.1);
             }
              
-            ${this.focusable ? `
-                button[data-selected="true"] {
-                    background: #18a0fb;
-                }
-            ` : ``}
+            button[data-status="selected"] {
+                background: #18a0fb;
+                padding-top: 4px;
+                border-bottom: solid 4px #017dd0;
+                transition: all 0.2s;
+            }
+            
+            button[data-status="show-property-bar"] {
+                background: #017dd0;
+                padding-top: 4px;
+                border-bottom: solid 4px #18a0fb;
+                transition: all 0.2s;
+            }
             
             ${this.tooltip ? `
                 button:hover::after,
@@ -132,6 +140,7 @@ export default class BaseButton extends HTMLElement {
                     position: absolute;
                     left: 50%;
                     bottom: -32px;
+                    z-index: 200;
                     width: auto;
                     padding: 4px 8px;
                     font-size: 0.875em;

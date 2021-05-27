@@ -5,10 +5,10 @@ export default class CanvasTools extends HTMLElement {
         shadowRoot.innerHTML = `
             <section>
                 <tool-button icon="cursor" tooltip="正常" type="cursor"></tool-button>
-                <tool-button icon="circle" tooltip="圆形" type="circle" focusable="true"></tool-button>
-                <tool-button icon="square" tooltip="矩形" type="rectangle" focusable="true"></tool-button>
-                <tool-button icon="line" tooltip="线" type="line" focusable="true"></tool-button>
-                <tool-button icon="text" tooltip="文本" type="text" focusable="true"></tool-button>
+                <tool-button icon="circle" tooltip="圆形" type="circle" focusable="true" property="true"></tool-button>
+                <tool-button icon="square" tooltip="矩形" type="rectangle" focusable="true" property="true"></tool-button>
+                <tool-button icon="line" tooltip="线" type="line" focusable="true" property="true"></tool-button>
+                <tool-button icon="text" tooltip="文本" type="text" focusable="true" property="true"></tool-button>
                 <tool-button icon="image" tooltip="图像" type="image"></tool-button>
                 <tool-button icon="clear" tooltip="清空画布" type="clear"></tool-button>
             </section>
