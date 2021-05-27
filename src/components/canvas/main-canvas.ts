@@ -20,7 +20,7 @@ export default class MainCanvas extends HTMLElement {
         shadowRoot.innerHTML = `
             <property-bar-switcher></property-bar-switcher>
             <canvas id="canvas" class="canvas">这是一块画布</canvas>
-            <style>${this.stylesheet}</style>
+            ${this.stylesheet}
         `
 
         this.canvas = <HTMLCanvasElement>shadowRoot.getElementById("canvas")
@@ -104,10 +104,12 @@ export default class MainCanvas extends HTMLElement {
     }
 
     readonly stylesheet = `
-        canvas {
-            width: ${window.screen.width}px;
-            height: ${window.screen.height}px;
-        }
+        <style>
+            canvas {
+                width: ${window.screen.width}px;
+                height: ${window.screen.height}px;
+            }
+        </style>
     `
 }
 

@@ -8,15 +8,17 @@ export default class MenuButton extends BaseButton {
             <button>
                 ${this.iconMap(this.icon)}
             </button>
-            <style>${this.baseStyle}</style>
-            <style>${this.menuButtonStyle}</style>
+            ${this.baseStyle}
+            ${this.menuButtonStyle}
         `
     }
 
     readonly menuButtonStyle = `
-        button:focus {
-            background: #18a0fb;
-        }
+        <style>
+            button:focus {
+                background: #18a0fb;
+            }
+        </style>
     `
 }
 

@@ -17,7 +17,7 @@ export default class ToolButton extends BaseButton {
             <button id="tool-button-shadow" data-selected="false">
                 ${this.iconMap(this.icon)}
             </button>
-            <style>${this.baseStyle}</style>
+            ${this.baseStyle}
         `
         this.button = shadowRoot.getElementById("tool-button-shadow")
 

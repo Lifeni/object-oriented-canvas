@@ -15,7 +15,7 @@ export default class AppMenu extends HTMLElement {
                 <menu-item action="open-about-dialog">关于</menu-item>
                 <menu-item action="quit-app">退出</menu-item>
             </div>
-            <style>${this.stylesheet}</style>
+            ${this.stylesheet}
         `
 
         const menu = shadowRoot.getElementById("menu")
@@ -34,45 +34,47 @@ export default class AppMenu extends HTMLElement {
     }
 
     readonly stylesheet = `
-        :host {
-            position: relative;
-        }
-        
-        .menu {
-            position: absolute;
-            left: 8px;
-            top: 56px;
-            width: fit-content;
-            padding: 8px 0;
-            display: flex;
-            flex-direction: column;
-            background: #2c2c2c;
-            border-radius: 4px;
-            visibility: hidden;         
-        }
-        
-        .menu.show {
-            visibility: visible;
-        }
-        
-        .menu::before {
-            content: "";
-            position: absolute;
-            left: 10px;
-            top: -12px;
-            display: block;
-            width: 0;
-            height: 0;
-            border: solid 6px transparent;
-            border-bottom: solid 6px #2c2c2c;
-        }
-             
-        .divider {
-            width: 100%;
-            border-top: solid 1px #424242;
-            height: 0;
-            margin: 8px 0;
-        }
+        <style>
+            :host {
+                position: relative;
+            }
+            
+            .menu {
+                position: absolute;
+                left: 8px;
+                top: 56px;
+                width: fit-content;
+                padding: 8px 0;
+                display: flex;
+                flex-direction: column;
+                background: #2c2c2c;
+                border-radius: 4px;
+                visibility: hidden;         
+            }
+            
+            .menu.show {
+                visibility: visible;
+            }
+            
+            .menu::before {
+                content: "";
+                position: absolute;
+                left: 10px;
+                top: -12px;
+                display: block;
+                width: 0;
+                height: 0;
+                border: solid 6px transparent;
+                border-bottom: solid 6px #2c2c2c;
+            }
+                 
+            .divider {
+                width: 100%;
+                border-top: solid 1px #424242;
+                height: 0;
+                margin: 8px 0;
+            }
+        </style>
     `
 }
 

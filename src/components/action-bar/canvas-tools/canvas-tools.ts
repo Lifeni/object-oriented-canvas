@@ -12,19 +12,21 @@ export default class CanvasTools extends HTMLElement {
                 <tool-button icon="image" tooltip="图像" type="image"></tool-button>
                 <tool-button icon="clear" tooltip="清空画布" type="clear"></tool-button>
             </section>
-            <style>${this.stylesheet}</style>
+            ${this.stylesheet}
         `
     }
 
     readonly stylesheet = `
-        :host {
-            margin: 0 auto 0 0;
-        }
-    
-        section {
-            display: flex;
-            -webkit-app-region: none;
-        }
+        <style>
+            :host {
+                margin: 0 auto 0 0;
+            }
+        
+            section {
+                display: flex;
+                -webkit-app-region: none;
+            }
+        </style>
     `
 }
 

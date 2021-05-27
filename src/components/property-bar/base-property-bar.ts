@@ -6,22 +6,26 @@ export default class BasePropertyBar extends HTMLElement {
             <section>
                 <slot></slot>
             </section>
-            <style>${this.stylesheet}</style>
+            ${this.stylesheet}
         `
     }
 
     readonly stylesheet = `
-        section {
-            position: absolute;
-            left: 0;
-            top: 48px;
-            width: 100%;
-            height: 48px;
-            display: flex;
-            justify-content: space-between;
-            color: #fff;
-            background: #2c2c2c;
-        }
+        <style>
+            section {
+                position: absolute;
+                left: 0;
+                top: 48px;
+                width: 100%;
+                height: 48px;
+                padding: 12px 24px;
+                display: flex;
+                align-items: center;
+                color: #fff;
+                background: #2c2c2c;
+                box-sizing: border-box;
+            }
+        </style>
     `
 }
 

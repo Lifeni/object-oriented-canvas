@@ -11,25 +11,27 @@ export default class ActionBar extends HTMLElement {
                     <action-button icon="close" action="close-window"></action-button>
                 </section>
             </header>
-            <style>${this.stylesheet}</style>
+            ${this.stylesheet}
         `
     }
 
     readonly stylesheet = `
-        header {
-            width: 100%;
-            height: 48px;
-            display: flex;
-            justify-content: space-between;
-            color: #fff;
-            background: #222222;
-            -webkit-app-region: drag;
-        }
-        
-        section {
-            display: flex;
-            -webkit-app-region: none;
-        }
+        <style>
+            header {
+                width: 100%;
+                height: 48px;
+                display: flex;
+                justify-content: space-between;
+                color: #fff;
+                background: #222222;
+                -webkit-app-region: drag;
+            }
+            
+            section {
+                display: flex;
+                -webkit-app-region: none;
+            }
+        </style>
     `
 }
 

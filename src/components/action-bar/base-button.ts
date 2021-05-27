@@ -98,59 +98,61 @@ export default class BaseButton extends HTMLElement {
     }
 
     readonly baseStyle = `
-        button {
-            position: relative;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            border: none;
-            background: transparent;
-            -webkit-app-region: none;
-            cursor: pointer;
-            outline: none;
-            transition: all 0.2s;
-        }
-
-        button:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-         
-        ${this.focusable ? `
-            button[data-selected="true"] {
-                background: #18a0fb;
+        <style>
+            button {
+                position: relative;
+                width: 48px;
+                height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                border: none;
+                background: transparent;
+                -webkit-app-region: none;
+                cursor: pointer;
+                outline: none;
+                transition: all 0.2s;
             }
-        ` : ""}
-        
-        ${this.tooltip ? `
-            button:hover::after,
-            label:hover::after {
-                content: "${this.tooltip}";
-                position: absolute;
-                left: 50%;
-                bottom: -32px;
-                width: auto;
-                padding: 4px 8px;
-                font-size: 0.875em;
-                background: #222222;
-                border-radius: 4px;
-                white-space: nowrap;
-                transform: translateX(-50%);
-        }` : ""}
-        
-        svg {
-            width: 18px;
-            height: 18px;
-            fill: #fff;
-            pointer-event: none;
-        }
-        
-        svg g,
-        svg path {
-            fill: #fff;
-        }
+    
+            button:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+             
+            ${this.focusable ? `
+                button[data-selected="true"] {
+                    background: #18a0fb;
+                }
+            ` : ``}
+            
+            ${this.tooltip ? `
+                button:hover::after,
+                label:hover::after {
+                    content: "${this.tooltip}";
+                    position: absolute;
+                    left: 50%;
+                    bottom: -32px;
+                    width: auto;
+                    padding: 4px 8px;
+                    font-size: 0.875em;
+                    background: #222222;
+                    border-radius: 4px;
+                    white-space: nowrap;
+                    transform: translateX(-50%);
+            }` : ``}
+            
+            svg {
+                width: 18px;
+                height: 18px;
+                fill: #fff;
+                pointer-events: none;
+            }
+            
+            svg g,
+            svg path {
+                fill: #fff;
+            }
+        </style>
     `
 }
 

@@ -15,7 +15,7 @@ export default class MenuItem extends HTMLElement {
             <button role="menuitem">
                 <slot></slot>
             </button>   
-            <style>${this.stylesheet}</style>
+            ${this.stylesheet}
         `
 
         fromEvent(this, "click")
@@ -23,22 +23,24 @@ export default class MenuItem extends HTMLElement {
     }
 
     readonly stylesheet = `
-        button {
-            width: 100%;
-            padding: 6px 48px 6px 18px;
-            text-align: left;
-            border: none;
-            background: transparent;
-            color: #fff;
-            font-family: inherit;
-            cursor: pointer;
-            white-space: nowrap;
-            outline: none;
-        }
-        
-        button:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
+        <style>
+            button {
+                width: 100%;
+                padding: 6px 48px 6px 18px;
+                text-align: left;
+                border: none;
+                background: transparent;
+                color: #fff;
+                font-family: inherit;
+                cursor: pointer;
+                white-space: nowrap;
+                outline: none;
+            }
+            
+            button:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+        </style>
     `
 }
 

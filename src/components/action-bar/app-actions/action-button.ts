@@ -16,7 +16,7 @@ export default class ActionButton extends BaseButton {
             <button>
                 ${this.iconMap(this.icon)}
             </button>
-            <style>${this.baseStyle}</style>
+            ${this.baseStyle}
         `
 
         fromEvent(this, "click")
