@@ -1,12 +1,19 @@
-export default class TextPropertyBar extends HTMLElement {
+import BasePropertyBar from "../base-property-bar"
+
+export default class TextPropertyBar extends BasePropertyBar {
     constructor() {
         super()
         const shadowRoot = this.attachShadow({ mode: "open" })
         shadowRoot.innerHTML = `
-            <property-bar>
-                <label for="font-size">字体大小</label>
-                <input type="number" placeholder="24" id="font-size" />
-            </property-bar>
+            <section>
+                <h1>文本</h1>
+                <label>字体大小<input type="number" placeholder="24" value="24" /></label>
+                <label>字体<input type="text" placeholder="Inter" value="Inter" /></label>
+                <label>字体颜色<input type="color" value="#000000" /></label>
+                <label><input type="checkbox" />粗体</label>
+                <label><input type="checkbox" />斜体</label>
+            </section>
+            ${this.stylesheet}
         `
     }
 }

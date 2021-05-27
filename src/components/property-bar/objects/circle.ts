@@ -1,12 +1,19 @@
-export default class CirclePropertyBar extends HTMLElement {
+import BasePropertyBar from "../base-property-bar"
+
+export default class CirclePropertyBar extends BasePropertyBar {
     constructor() {
         super()
         const shadowRoot = this.attachShadow({ mode: "open" })
         shadowRoot.innerHTML = `
-            <property-bar>
-                <label for="stroke-width">线宽度</label>
-                <input type="number" placeholder="1" id="stroke-width" />
-            </property-bar>
+            <section>
+                <h1>圆形</h1>
+                <label>边框宽度<input type="number" placeholder="1" /></label>
+                <label>边框颜色<input type="color" value="#000000" /></label>
+                <label>填充颜色<input type="color" disabled value="#ffffff" /></label>
+                <label><input type="checkbox" checked />无填充</label>
+                <label><input type="checkbox" />正圆</label>
+            </section>
+            ${this.stylesheet}
         `
     }
 }
