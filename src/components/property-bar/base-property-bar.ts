@@ -28,6 +28,7 @@ export default class BasePropertyBar extends HTMLElement {
                 gap: 12px;
                 font-size: 0.75rem;
                 white-space: nowrap;
+                user-select: none;
             }
             
             input {

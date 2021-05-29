@@ -148,7 +148,21 @@ export default class BaseButton extends HTMLElement {
                     border-radius: 4px;
                     white-space: nowrap;
                     transform: translateX(-50%);
-            }` : ``}
+                    animation: show-tooltip 0.2s;
+                }
+                
+                button[data-status="selected"]:hover::after {
+                    content: "点击展开";
+                    bottom: -36px;
+                    animation: show-tooltip-again 0.2s;
+                }
+                
+                button[data-status="show-property-bar"]:hover::after {
+                    content: "点击折叠";
+                    bottom: -36px;
+                    animation: show-tooltip-again 0.2s;
+                }
+            ` : ``}
             
             svg {
                 width: 18px;
@@ -160,6 +174,30 @@ export default class BaseButton extends HTMLElement {
             svg g,
             svg path {
                 fill: #fff;
+            }
+            
+            @keyframes show-tooltip {
+                from {
+                    opacity: 0;
+                    bottom: -28px;
+                }
+            
+                to {
+                    opacity: 1;
+                    bottom: -32px;
+                }
+            }
+            
+            @keyframes show-tooltip-again {
+                from {
+                    opacity: 0;
+                    bottom: -28px;
+                }
+            
+                to {
+                    opacity: 1;
+                    bottom: -36px;
+                }
             }
         </style>
     `
