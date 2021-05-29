@@ -1,12 +1,14 @@
 import { ipcRenderer } from "electron"
 import { fromEvent } from "rxjs"
+import { canvasElement } from "../../../store"
 
 export default class MenuItem extends HTMLElement {
     static get observedAttributes(): Array<string> {
-        return ["action"]
+        return ["action", "type"]
     }
 
     readonly action = this.getAttribute("action")
+    readonly type = this.getAttribute("type")
 
     constructor() {
         super()
@@ -19,7 +21,20 @@ export default class MenuItem extends HTMLElement {
         `
 
         fromEvent(this, "click")
-            .subscribe(() => ipcRenderer.send(this.action))
+            .subscribe(() => {
+                switch (this.action) {
+                    case "export-image": {
+                        console.log(`image/${this.type}`)
+                        ipcRenderer.send(this.action, canvasElement.exportFile(`image/${this.type}`), this.type)
+                        break
+                    }
+                    default: {
+                        ipcRenderer.send(this.action)
+                        break
+                    }
+                }
+
+            })
     }
 
     readonly stylesheet = `

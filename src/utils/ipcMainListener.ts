@@ -1,5 +1,6 @@
 import { ipcMain } from "electron/main"
 import { app, BrowserWindow, dialog } from "electron"
+import fs from "fs"
 
 const startListen = (window: BrowserWindow): void => {
 
@@ -43,7 +44,7 @@ const startListen = (window: BrowserWindow): void => {
             platform: process.platform
         }
 
-        dialog.showMessageBox({
+        dialog.showMessageBoxSync({
             message: "Object-oriented Canvas\n",
             type: "info",
             title: "关于",
@@ -57,6 +58,27 @@ const startListen = (window: BrowserWindow): void => {
         })
     })
 
+    ipcMain.on("export-image", (event, data: string, type: string) => {
+        const file = dialog.showSaveDialogSync(
+            {
+                filters: [
+                    { name: type.toUpperCase(), extensions: [type] },
+                    { name: "All Files", extensions: ["*"] }
+                ],
+                properties: ["createDirectory"]
+            }
+        )
+
+        if (file) {
+            try {
+                const base64 = data.replace(`data:image/${type};base64,`, "")
+                fs.writeFileSync(file, base64, "base64")
+            } catch
+                (error) {
+                console.error(error)
+            }
+        }
+    })
 }
 
 export { startListen }

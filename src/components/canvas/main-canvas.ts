@@ -1,6 +1,6 @@
 import { fromEvent } from "rxjs"
 import { canvasEmitter } from "../../emitter"
-import { canvasHistory, canvasTool } from "../../store"
+import { canvasElement, canvasHistory, canvasTool } from "../../store"
 import { canvasObjectMap, CanvasObjects } from "../../utils/canvasObjectMap"
 
 export default class MainCanvas extends HTMLElement {
@@ -34,7 +34,14 @@ export default class MainCanvas extends HTMLElement {
     initCanvas(): void {
         this.ctx.canvas.width = this.vw
         this.ctx.canvas.height = this.vh
+
+        this.ctx.save()
+        this.ctx.fillStyle = "#fff"
+        this.ctx.fillRect(0, 0, this.vw, this.vh)
+        this.ctx.restore()
+
         this.setCanvas()
+        canvasElement.set(this.canvas)
     }
 
     tryDraw(): void {

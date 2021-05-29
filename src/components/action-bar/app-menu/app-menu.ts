@@ -9,6 +9,10 @@ export default class AppMenu extends HTMLElement {
                 <menu-item action="save-file">保存</menu-item>
                 <menu-item action="save-as">另存为</menu-item>
                 <div class="divider"></div>
+                <menu-item action="export-image" type="png">导出为 PNG</menu-item>
+                <menu-item action="export-image" type="jpeg">导出为 JPG</menu-item>
+                <menu-item action="export-image" type="webp">导出为 WebP</menu-item>
+                <div class="divider"></div>
                 <menu-item action="reload-window">重新加载窗口</menu-item>
                 <menu-item action="toggle-devtools">切换 DevTools</menu-item>
                 <div class="divider"></div>
