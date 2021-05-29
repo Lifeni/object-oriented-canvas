@@ -107,6 +107,10 @@ export default class MainCanvas extends HTMLElement {
 
     clearCanvas(): void {
         this.ctx.clearRect(0, 0, this.vw, this.vh)
+        this.ctx.save()
+        this.ctx.fillStyle = "#fff"
+        this.ctx.fillRect(0, 0, this.vw, this.vh)
+        this.ctx.restore()
         this.setCanvas()
     }
 

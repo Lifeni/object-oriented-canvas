@@ -46,17 +46,21 @@ export default class AppMenu extends HTMLElement {
             .menu {
                 position: absolute;
                 left: 8px;
-                top: 56px;
+                top: 52px;
                 width: fit-content;
                 padding: 8px 0;
                 display: flex;
                 flex-direction: column;
                 background: #2c2c2c;
                 border-radius: 4px;
-                visibility: hidden;         
+                opacity: 0;
+                visibility: hidden;    
+                transition: all 0.2s;     
             }
             
             .menu.show {
+                top: 56px;
+                opacity: 1;
                 visibility: visible;
             }
             
