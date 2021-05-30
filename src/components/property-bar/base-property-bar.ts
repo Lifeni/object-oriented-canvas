@@ -1,4 +1,20 @@
+import { objectOptionEmitter } from "../../emitter"
+
 export default class BasePropertyBar extends HTMLElement {
+    constructor() {
+        super()
+
+    }
+
+    handleBlur(shadow: ShadowRoot): void {
+        objectOptionEmitter.on("blur", () => {
+            const inputs = shadow.querySelectorAll("input")
+            inputs.forEach((input) => {
+                input.blur()
+            })
+        })
+    }
+
     readonly stylesheet = `
         <style>
             section {
@@ -44,8 +60,9 @@ export default class BasePropertyBar extends HTMLElement {
                 outline: none;
             }
             
-            input:disabled {
+            input.hide {
                 display: none;
+                visibility: hidden;
                 cursor: not-allowed;
             }
             
@@ -57,6 +74,7 @@ export default class BasePropertyBar extends HTMLElement {
             input[type="color"] {
                 width: 28px;
                 height: 24px;
+                padding: 0 3px;
             }
             
             input[type="checkbox"] {

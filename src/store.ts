@@ -1,3 +1,5 @@
+import { objectOptionEmitter } from "./emitter"
+
 class CanvasToolStore {
     public tool = "cursor"
 
@@ -48,3 +50,20 @@ class CanvasElement {
 export const canvasTool = new CanvasToolStore()
 export const canvasHistory = new CanvasHistoryStore()
 export const canvasElement = new CanvasElement()
+
+class CircleOption {
+    public option: ICircleOption = {
+        borderWidth: 2,
+        borderColor: "#000000",
+        fillColor: "#ffffff",
+        noFillColor: true,
+        isPerfectCircle: false,
+    }
+
+    setOption(modifiedOption: ICircleOption) {
+        this.option = modifiedOption
+        objectOptionEmitter.emit("circle", modifiedOption)
+    }
+}
+
+export const circleOption = new CircleOption()

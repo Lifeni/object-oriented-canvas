@@ -1,5 +1,5 @@
 import { fromEvent } from "rxjs"
-import { canvasEmitter } from "../../emitter"
+import { canvasEmitter, objectOptionEmitter } from "../../emitter"
 import { canvasElement, canvasHistory, canvasTool } from "../../store"
 import { canvasObjectMap, CanvasObjects } from "../../utils/canvasObjectMap"
 
@@ -18,7 +18,6 @@ export default class MainCanvas extends HTMLElement {
         super()
         const shadowRoot = this.attachShadow({ mode: "open" })
         shadowRoot.innerHTML = `
-            <property-bar-switcher></property-bar-switcher>
             <canvas id="canvas" class="canvas">这是一块画布</canvas>
             ${this.stylesheet}
         `
@@ -72,6 +71,7 @@ export default class MainCanvas extends HTMLElement {
                 event.preventDefault()
                 if (this.obj) {
                     this.obj.create(event.offsetX * this.dpr, event.offsetY * this.dpr)
+                    objectOptionEmitter.emit("blur")
                 }
             })
 
