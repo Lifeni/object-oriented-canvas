@@ -12,12 +12,13 @@ class TextInput {
         this.element.style.height = `${h / window.devicePixelRatio}px`
 
         this.element.dataset.id = id
-
-        this.element.focus()
     }
 
     mount(): void {
         document.documentElement.append(this.element)
+        setTimeout(() => {
+            this.element.shadowRoot.getElementById("text-input").focus()
+        }, 200)
     }
 
     unmount(): void {

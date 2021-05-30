@@ -1,15 +1,12 @@
-class Base {
-    public ctx: CanvasRenderingContext2D
+import Base from "./Base"
+
+class Vector extends Base {
     public active = false
     public x: number
     public y: number
 
-    public dpr = devicePixelRatio
-    public vw = window.screen.width * this.dpr
-    public vh = window.screen.height * this.dpr
-
     constructor(ctx: CanvasRenderingContext2D) {
-        this.ctx = ctx
+        super(ctx)
     }
 
     create(x: number, y: number): void {
@@ -24,4 +21,4 @@ class Base {
     }
 }
 
-export default Base
+export default Vector

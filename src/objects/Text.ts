@@ -1,9 +1,9 @@
-import Base from "./bases/Base"
+import Vector from "./bases/Vector"
 import { canvasTextHistory, textOption, TextOption } from "../store"
 import TextInput from "./widgets/TextInput"
 import { textInputEmitter } from "../emitter"
 
-class Text extends Base {
+class Text extends Vector {
     public textOption: TextOption = textOption
     private readonly id: string
 
@@ -41,14 +41,14 @@ class Text extends Base {
 
         this.active = false
 
+        this.getCanvas()
+
         const minX = Math.min(this.x, x)
         const minY = Math.min(this.y, y)
         const dx = Math.abs(this.x - x)
         const dy = Math.abs(this.y - y)
 
         if (dx < 120 || dy < 40) return
-
-        this.getCanvas()
 
         const textInput = new TextInput(minX, minY, dx, dy, this.id)
         textInput.mount()
@@ -58,7 +58,10 @@ class Text extends Base {
                 this.ctx.font =
                     `${this.textOption.option.isBold ? `bold` : ``} ${this.textOption.option.isItalic ? `italic` : ``} ${this.textOption.option.fontSize * window.devicePixelRatio}px ${this.textOption.option.fontFamily}`
                 this.ctx.fillStyle = this.textOption.option.fontColor
-                this.ctx.fillText(value, this.x + 18, this.y + this.textOption.option.fontSize * window.devicePixelRatio + 14)
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                this.ctx.wrapText(value, this.x + 18, this.y + this.textOption.option.fontSize * window.devicePixelRatio + 14,
+                    dx, this.textOption.option.fontSize * window.devicePixelRatio * 1.5)
 
                 textInput.unmount()
             }

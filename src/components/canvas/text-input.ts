@@ -30,16 +30,25 @@ export default class TextInput extends HTMLElement {
         const ok = shadow.getElementById("ok")
         const cancel = shadow.getElementById("cancel")
 
-        fromEvent(ok, "click").subscribe(() => {
-            textInputEmitter.emit("ok", {
-                value: this.textarea.value,
-                id: this.dataset.id
+        fromEvent(ok, "click")
+            .subscribe(() => {
+                textInputEmitter.emit("ok", {
+                    value: this.textarea.value,
+                    id: this.dataset.id
+                })
             })
-        })
 
-        fromEvent(cancel, "click").subscribe(() => textInputEmitter.emit("cancel", {
-            id: this.dataset.id
-        }))
+        fromEvent(cancel, "click")
+            .subscribe(() => textInputEmitter.emit("cancel", {
+                id: this.dataset.id
+            }))
+
+        fromEvent(this.textarea, "keydown")
+            .subscribe((event: KeyboardEvent) => {
+                if (event.key === "Enter") {
+                    ok.click()
+                }
+            })
     }
 
     readonly stylesheet = `
@@ -68,7 +77,6 @@ export default class TextInput extends HTMLElement {
             }
             
             textarea:focus {
-                border-width: 0
                 border-color: transparent;
                 outline: solid 4px #18a0fb;
             }

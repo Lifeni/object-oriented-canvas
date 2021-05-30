@@ -16,13 +16,13 @@ function createWindow() {
         frame: false
     })
 
-    mainWindow.loadFile(path.join(__dirname, "../index.html"))
+    mainWindow.loadFile(path.join(__dirname, "../index.html")).then(() => {
+        startListen(mainWindow)
+    })
 
     if (!app.isPackaged) {
         mainWindow.webContents.openDevTools()
     }
-
-    startListen(mainWindow)
 }
 
 app.on("ready", () => {
