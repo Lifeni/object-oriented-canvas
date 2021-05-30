@@ -40,12 +40,12 @@ class Polygon extends Base {
     }
 
     checkOption(): void {
-        if (this.polygonOption.option.borderWidth !== 0) {
-            this.ctx.stroke()
-        }
-
         if (!this.polygonOption.option.noFillColor) {
             this.ctx.fill()
+        }
+
+        if (this.polygonOption.option.borderWidth !== 0) {
+            this.ctx.stroke()
         }
     }
 }
