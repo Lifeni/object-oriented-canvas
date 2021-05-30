@@ -4,16 +4,17 @@ import BaseButton from "../base-button"
 
 export default class ActionButton extends BaseButton {
     static get observedAttributes(): Array<string> {
-        return ["action"]
+        return ["action", "class"]
     }
 
     readonly action = this.getAttribute("action")
+    readonly className = this.getAttribute("class")
 
     constructor() {
         super()
         const shadowRoot = this.attachShadow({ mode: "open" })
         shadowRoot.innerHTML = `
-            <button>
+            <button class=${this.className || ""}>
                 ${this.iconMap(this.icon)}
             </button>
             ${this.baseStyle}

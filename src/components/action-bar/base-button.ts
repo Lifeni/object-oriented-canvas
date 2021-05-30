@@ -118,6 +118,10 @@ export default class BaseButton extends HTMLElement {
             button:hover {
                 background: rgba(255, 255, 255, 0.1);
             }
+            
+            button.close:hover {
+                background: #e81123;
+            }
              
             button[data-status="selected"] {
                 background: #18a0fb;

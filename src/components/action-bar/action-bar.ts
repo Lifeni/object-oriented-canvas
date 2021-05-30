@@ -8,7 +8,7 @@ export default class ActionBar extends HTMLElement {
                 <section>
                     <action-button icon="minimize" action="minimize-window"></action-button>
                     <action-button icon="maximize" action="maximize-window"></action-button>
-                    <action-button icon="close" action="close-window"></action-button>
+                    <action-button icon="close" action="close-window" class="close"></action-button>
                 </section>
             </header>
             ${this.stylesheet}
