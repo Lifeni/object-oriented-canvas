@@ -1,24 +1,15 @@
-import Base from "./Base"
+import Polygon from "./bases/Polygon"
 import { circleOption } from "../store"
-import { objectOptionEmitter } from "../emitter"
-import { fromEvent } from "rxjs"
-import { pluck } from "rxjs/operators"
 
-class Circle extends Base {
-    public option = circleOption
-    public pressShift = false
-
+class Circle extends Polygon {
     constructor(ctx: CanvasRenderingContext2D) {
-        super(ctx)
-        this.applyOption()
-        this.bindKey()
+        super(ctx, circleOption)
     }
 
     draw(x: number, y: number): void {
-        this.ctx.save()
         this.ctx.beginPath()
 
-        if (this.option.option.isPerfectCircle || this.pressShift) {
+        if (this.polygonOption.option.isPerfectPolygon || this.pressShift) {
             this.ctx.arc(this.x - (this.x - x) / 2, this.y - (this.y - y) / 2,
                 this.calc(this.x - x, this.y - y), 0, 2 * Math.PI)
         } else {
@@ -28,15 +19,7 @@ class Circle extends Base {
                 Math.PI * (Math.atan((this.y - y) / (this.x - x))) / 180, 0, 2 * Math.PI)
         }
 
-        if (this.option.option.borderWidth !== 0) {
-            this.ctx.stroke()
-        }
-
-        if (!this.option.option.noFillColor) {
-            this.ctx.fill()
-        }
-
-        this.ctx.restore()
+        this.checkOption()
     }
 
     calc(dx: number, dy: number): number {
@@ -53,29 +36,6 @@ class Circle extends Base {
         return this.calc(dx, dy) / this.calc(x, y)
     }
 
-    applyOption(): void {
-        const apply = (who: ICircleOption): void => {
-            this.ctx.lineWidth = who.borderWidth
-            this.ctx.strokeStyle = who.borderColor
-            this.ctx.fillStyle = who.fillColor || "#ffffff"
-        }
-
-        apply(this.option.option)
-        objectOptionEmitter.on("circle", (event: ICircleOption) => {
-            apply(event)
-        })
-    }
-
-    bindKey(): void {
-        fromEvent(window, "keydown")
-            .pipe(
-                pluck("shiftKey"),
-            )
-            .subscribe(() => this.pressShift = true)
-
-        fromEvent(window, "keyup")
-            .subscribe(() => this.pressShift = false)
-    }
 }
 
 export default Circle

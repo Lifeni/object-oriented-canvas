@@ -1,9 +1,8 @@
 import { objectOptionEmitter } from "../../../emitter"
 
-export default class BasePropertyBar extends HTMLElement {
+export default class Base extends HTMLElement {
     constructor() {
         super()
-
     }
 
     handleBlur(shadow: ShadowRoot): void {
@@ -20,13 +19,13 @@ export default class BasePropertyBar extends HTMLElement {
             section {
                 width: 100%;
                 height: 40px;
-                padding: 8px 20px;
+                padding: 8px 18px;
                 display: flex;
                 align-items: center;
                 color: #fff;
                 background: #2c2c2c;
                 box-sizing: border-box;
-                gap: 20px;
+                gap: 18px;
                 animation: show-bar 0.2s;
                 overflow-y: hidden;
             }
@@ -84,17 +83,15 @@ export default class BasePropertyBar extends HTMLElement {
             
             @keyframes show-bar {
                 from {
-                    padding: 0 20px;
+                    padding: 0 18px;
                     height: 0;
                 }
                 
                 to {
-                    padding: 8px 20px;
+                    padding: 8px 18px;
                     height: 40px;
                 }
             }
         </style>
     `
 }
-
-window.customElements.define("base-property-bar", BasePropertyBar)

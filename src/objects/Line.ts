@@ -1,4 +1,4 @@
-import Base from "./Base"
+import Base from "./bases/Base"
 
 class Line extends Base {
 

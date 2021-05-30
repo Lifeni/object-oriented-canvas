@@ -1,6 +1,6 @@
-import BasePropertyBar from "../bases/base-property-bar"
+import Base from "../bases/base"
 
-export default class LinePropertyBar extends BasePropertyBar {
+export default class LinePropertyBar extends Base {
     constructor() {
         super()
         const shadowRoot = this.attachShadow({ mode: "open" })

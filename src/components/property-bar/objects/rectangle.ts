@@ -1,20 +1,9 @@
-import BasePropertyBar from "../bases/base-property-bar"
+import PolygonPropertyBar from "../bases/polygon"
+import { rectangleOption } from "../../../store"
 
-export default class RectanglePropertyBar extends BasePropertyBar {
+export default class RectanglePropertyBar extends PolygonPropertyBar {
     constructor() {
-        super()
-        const shadowRoot = this.attachShadow({ mode: "open" })
-        shadowRoot.innerHTML = `
-            <section>
-                <h1>矩形</h1>
-                <label>边框宽度<input type="number" placeholder="2" value="2" min="0" /></label>
-                <label>边框颜色<input type="color" value="#000000" /></label>
-                <label>填充颜色<input type="color" disabled value="#ffffff" /></label>
-                <label><input type="checkbox" checked />无填充</label>
-                <label><input type="checkbox" />正方形</label>
-            </section>
-            ${this.stylesheet}
-        `
+        super("方", rectangleOption)
     }
 }
 

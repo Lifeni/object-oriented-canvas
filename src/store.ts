@@ -51,19 +51,20 @@ export const canvasTool = new CanvasToolStore()
 export const canvasHistory = new CanvasHistoryStore()
 export const canvasElement = new CanvasElement()
 
-class CircleOption {
-    public option: ICircleOption = {
+export class PolygonOption {
+    public option: IPolygonOption = {
         borderWidth: 2,
         borderColor: "#000000",
         fillColor: "#ffffff",
         noFillColor: true,
-        isPerfectCircle: false,
+        isPerfectPolygon: false,
     }
 
-    setOption(modifiedOption: ICircleOption) {
+    setOption(modifiedOption: IPolygonOption): void {
         this.option = modifiedOption
-        objectOptionEmitter.emit("circle", modifiedOption)
+        objectOptionEmitter.emit("polygon", modifiedOption)
     }
 }
 
-export const circleOption = new CircleOption()
+export const circleOption = new PolygonOption()
+export const rectangleOption = new PolygonOption()
