@@ -18,7 +18,7 @@ class ImageObject extends Base {
     }
 
     follow(x: number, y: number): void {
-        this.imagePreview.move(x + 12, y - 12)
+        this.imagePreview.move(x + 24, y - 24)
     }
 
     draw(x: number, y: number): void {
@@ -28,8 +28,8 @@ class ImageObject extends Base {
             image.onload = () => {
                 const ratio = image.width / image.height
                 this.ctx.drawImage(image, x, y,
-                    Math.min(image.width, window.innerHeight * 0.8 * ratio),
-                    Math.min(image.height, window.innerHeight * 0.8))
+                    Math.min(image.width, (window.innerWidth * this.dpr - x - 24)),
+                    Math.min(image.height, (window.innerWidth * this.dpr - x - 24) / ratio))
             }
 
             this.imagePreview.unmount()

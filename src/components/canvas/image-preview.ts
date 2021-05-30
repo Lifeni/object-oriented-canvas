@@ -13,16 +13,18 @@ export default class ImagePreview extends HTMLElement {
         <style>
             :host {
                 position: absolute;
+                width: 120px;
+                display: flex;
+                flex-direction: column;
+                border: solid 6px #ffffff;
+                border-radius: 4px;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+                background: #ffffff;
                 pointer-events: none;
             }
         
             img {
-                width: 100px;
-                height: 100px;
-                border: solid 6px #ffffff;
-                border-radius: 4px;
-                opacity: 0.95;
-                box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
+                width: 100%;
                 object-fit: cover;
             }
            
