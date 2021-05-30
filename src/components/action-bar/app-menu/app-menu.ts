@@ -28,6 +28,7 @@ export default class AppMenu extends HTMLElement {
         window.addEventListener("click", (event) => {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
+
             if (event.target.shadowRoot?.activeElement?.classList.contains("menu-button")) {
                 menu.classList.toggle("show")
             } else {
@@ -41,6 +42,7 @@ export default class AppMenu extends HTMLElement {
         <style>
             :host {
                 position: relative;
+                z-index: 1000;
             }
             
             .menu {

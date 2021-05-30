@@ -11,7 +11,7 @@ export default class LinePropertyBar extends Base {
         shadowRoot.innerHTML = `
             <section>
                 <h1>线</h1>
-                
+
                 <label>
                     线宽度
                     <input 
@@ -25,7 +25,7 @@ export default class LinePropertyBar extends Base {
                 </label>
                 
                 <label>
-                    边框颜色
+                    线颜色
                     <input 
                         type="color" 
                         value=${this.lineOption.option.lineColor} 
@@ -45,17 +45,7 @@ export default class LinePropertyBar extends Base {
         const lineWidth = shadow.getElementById("line-width")
         const lineColor = shadow.getElementById("line-color")
 
-        const observer = (event: Event) => {
-            const target = event.target as HTMLInputElement
-            if (target.type === "number") {
-                this.lineOption.setOption({
-                    ...this.lineOption.option,
-                    [target.dataset.option]: Number(target.value)
-                })
-            } else {
-                this.lineOption.setOption({ ...this.lineOption.option, [target.dataset.option]: target.value })
-            }
-        }
+        const observer = this.createObserver<LineOption>(this.lineOption)
 
         lineWidth && fromEvent(lineWidth, "change").subscribe(observer)
         lineColor && fromEvent(lineColor, "change").subscribe(observer)

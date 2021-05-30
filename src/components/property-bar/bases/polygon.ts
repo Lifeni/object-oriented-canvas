@@ -82,19 +82,7 @@ export default class PolygonPropertyBar extends Base {
         const noFillColor = shadow.getElementById("no-fill-color")
         const isPerfectPolygon = shadow.getElementById("is-perfect-polygon")
 
-        const observer = (event: Event) => {
-            const target = event.target as HTMLInputElement
-            if (target.type === "checkbox") {
-                this.polygonOption.setOption({ ...this.polygonOption.option, [target.dataset.option]: target.checked })
-            } else if (target.type === "number") {
-                this.polygonOption.setOption({
-                    ...this.polygonOption.option,
-                    [target.dataset.option]: Number(target.value)
-                })
-            } else {
-                this.polygonOption.setOption({ ...this.polygonOption.option, [target.dataset.option]: target.value })
-            }
-        }
+        const observer = this.createObserver<PolygonOption>(this.polygonOption)
 
         borderWidth && fromEvent(borderWidth, "change").subscribe(observer)
         borderColor && fromEvent(borderColor, "change").subscribe(observer)

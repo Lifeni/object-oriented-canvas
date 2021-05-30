@@ -14,6 +14,7 @@ window.addEventListener("DOMContentLoaded", () => {
     import("./components/action-bar/canvas-tools/tool-button")
 
     import("./components/canvas/main-canvas")
+    import("./components/canvas/text-input")
 
     import("./components/property-bar/bases/base")
     import("./components/property-bar/property-bar")

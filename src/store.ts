@@ -37,7 +37,7 @@ class CanvasElement {
 
     exportFile(type: string): string {
         const w = window.innerWidth * window.devicePixelRatio
-        const h = (window.innerHeight - 48) * window.devicePixelRatio
+        const h = (window.innerHeight - canvasElement.get().getBoundingClientRect().y) * window.devicePixelRatio
         const canvas = document.createElement("canvas")
         canvas.width = w
         canvas.height = h
@@ -49,6 +49,7 @@ class CanvasElement {
 
 export const canvasTool = new CanvasToolStore()
 export const canvasHistory = new CanvasHistoryStore()
+export const canvasTextHistory = new CanvasHistoryStore()
 export const canvasElement = new CanvasElement()
 
 export class PolygonOption {
@@ -82,3 +83,20 @@ export class LineOption {
 }
 
 export const lineOption = new LineOption()
+
+export class TextOption {
+    public option: ITextOption = {
+        fontSize: 18,
+        fontFamily: "Inter",
+        fontColor: "#000000",
+        isBold: false,
+        isItalic: false
+    }
+
+    setOption(modifiedOption: ITextOption): void {
+        this.option = modifiedOption
+        objectOptionEmitter.emit("text", modifiedOption)
+    }
+}
+
+export const textOption = new TextOption()

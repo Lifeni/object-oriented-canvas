@@ -14,9 +14,28 @@ export default class Base extends HTMLElement {
         })
     }
 
+    createObserver = <T extends IOptionClass>(whichOption: T): IObserverFunction => {
+        return (event: Event) => {
+            const target = event.target as HTMLInputElement
+            if (target.type === "checkbox") {
+                whichOption.setOption({ ...whichOption.option, [target.dataset.option]: target.checked })
+            } else if (target.type === "number") {
+                whichOption.setOption({
+                    ...whichOption.option,
+                    [target.dataset.option]: Number(target.value)
+                })
+            } else {
+                whichOption.setOption({ ...whichOption.option, [target.dataset.option]: target.value })
+            }
+        }
+    }
+
     readonly stylesheet = `
         <style>
             section {
+                position: absolute;
+                left: 0;
+                top: 48px;
                 width: 100%;
                 height: 40px;
                 padding: 8px 18px;

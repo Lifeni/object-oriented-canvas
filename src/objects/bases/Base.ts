@@ -4,6 +4,10 @@ class Base {
     public x: number
     public y: number
 
+    public dpr = devicePixelRatio
+    public vw = window.screen.width * this.dpr
+    public vh = window.screen.height * this.dpr
+
     constructor(ctx: CanvasRenderingContext2D) {
         this.ctx = ctx
     }
@@ -14,7 +18,8 @@ class Base {
         this.y = y
     }
 
-    blur(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    blur(x: number, y: number): void {
         this.active = false
     }
 }

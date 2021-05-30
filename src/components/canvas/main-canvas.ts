@@ -2,6 +2,7 @@ import { fromEvent } from "rxjs"
 import { canvasEmitter, objectOptionEmitter } from "../../emitter"
 import { canvasElement, canvasHistory, canvasTool } from "../../store"
 import { canvasObjectMap, CanvasObjects } from "../../utils/canvasObjectMap"
+import Text from "../../objects/Text"
 
 export default class MainCanvas extends HTMLElement {
 
@@ -69,9 +70,11 @@ export default class MainCanvas extends HTMLElement {
         fromEvent(this.canvas, "mousedown")
             .subscribe((event: MouseEvent) => {
                 event.preventDefault()
-                if (this.obj) {
+                const target = event.target as HTMLElement
+                if (this.obj && (target.localName === "main-canvas" || target.localName === "canvas")) {
                     this.obj.create(event.offsetX * this.dpr, event.offsetY * this.dpr)
                     objectOptionEmitter.emit("blur")
+                    this.setCanvas()
                 }
             })
 
@@ -79,7 +82,8 @@ export default class MainCanvas extends HTMLElement {
             .subscribe((event: MouseEvent) => {
                 event.preventDefault()
                 window.requestAnimationFrame(() => {
-                    if (this.obj && this.obj.active) {
+                    const target = event.target as HTMLElement
+                    if (this.obj && this.obj.active && (target.localName === "main-canvas" || target.localName === "canvas")) {
                         this.getCanvas()
                         this.obj.draw(event.offsetX * this.dpr, event.offsetY * this.dpr)
                     }
@@ -90,9 +94,14 @@ export default class MainCanvas extends HTMLElement {
         fromEvent(this.canvas, "mouseup")
             .subscribe((event: MouseEvent) => {
                 event.preventDefault()
-                if (this.obj) {
-                    this.obj.blur()
+                const target = event.target as HTMLElement
+                if (this.obj && (target.localName === "main-canvas" || target.localName === "canvas")) {
+                    this.obj.blur(event.offsetX * this.dpr, event.offsetY * this.dpr)
                     this.setCanvas()
+
+                    if (this.obj instanceof Text) {
+                        this.obj = canvasObjectMap("text", this.ctx)
+                    }
                 }
             })
     }
