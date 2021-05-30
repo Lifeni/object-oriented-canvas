@@ -79,6 +79,31 @@ const startListen = (window: BrowserWindow): void => {
             }
         }
     })
+
+    ipcMain.on("import-image", (event) => {
+        const file = dialog.showOpenDialogSync(
+            {
+                filters: [
+                    { name: "图片", extensions: ["webp", "png", "jpg", "jpeg", "gif"] },
+                ],
+                properties: ["openFile"]
+            }
+        )
+
+        if (file) {
+            try {
+                console.log(file[0])
+                const data = fs.readFileSync(file[0])
+                event.sender.send("import-image-data", {
+                    data: data.toString("base64"),
+                    name: file[0]
+                })
+            } catch
+                (error) {
+                console.error(error)
+            }
+        }
+    })
 }
 
 export { startListen }

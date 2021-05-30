@@ -31,3 +31,8 @@ interface IOptionClass {
 interface IObserverFunction {
     (event: Event): void
 }
+
+interface IImportImageData {
+    name: string
+    data: string
+}

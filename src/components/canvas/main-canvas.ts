@@ -1,8 +1,9 @@
 import { fromEvent } from "rxjs"
 import { canvasEmitter, objectOptionEmitter } from "../../emitter"
 import { canvasElement, canvasHistory, canvasTool } from "../../store"
-import { canvasObjectMap, CanvasObjects } from "../../utils/canvasObjectMap"
+import { CanvasBinaryObjects, canvasObjectMap, CanvasObjects, CanvasVectorObjects } from "../../utils/canvasObjectMap"
 import Text from "../../objects/Text"
+import { ipcRenderer } from "electron"
 
 export default class MainCanvas extends HTMLElement {
 
@@ -14,6 +15,16 @@ export default class MainCanvas extends HTMLElement {
     public vh = window.screen.height * this.dpr
 
     public obj: CanvasObjects
+    public type: "vector" | "binary" = "vector"
+
+    readonly stylesheet = `
+        <style>
+            canvas {
+                width: ${window.screen.width}px;
+                height: ${window.screen.height}px;
+            }
+        </style>
+    `
 
     constructor() {
         super()
@@ -60,10 +71,19 @@ export default class MainCanvas extends HTMLElement {
                 if (confirm("确定清空画布吗？")) {
                     this.clearCanvas()
                 }
+                this.type = "vector"
+                canvasTool.setDefault()
+            } else if (event.current === "image") {
+                ipcRenderer.send("import-image")
+                ipcRenderer.once("import-image-data", (_, data: IImportImageData) => {
+                    this.obj = canvasObjectMap(event.current, this.ctx, data)
+                    this.type = "binary"
+                })
                 canvasTool.setDefault()
             } else {
                 canvasTool.setTool(event.current)
                 this.obj = canvasObjectMap(event.current, this.ctx)
+                this.type = "vector"
             }
         })
 
@@ -71,8 +91,9 @@ export default class MainCanvas extends HTMLElement {
             .subscribe((event: MouseEvent) => {
                 event.preventDefault()
                 const target = event.target as HTMLElement
-                if (this.obj && (target.localName === "main-canvas" || target.localName === "canvas")) {
-                    this.obj.create(event.offsetX * this.dpr, event.offsetY * this.dpr)
+                if (this.obj && this.type === "vector"
+                    && (target.localName === "main-canvas" || target.localName === "canvas")) {
+                    (this.obj as CanvasVectorObjects).create(event.offsetX * this.dpr, event.offsetY * this.dpr)
                     objectOptionEmitter.emit("blur")
                     this.setCanvas()
                 }
@@ -83,9 +104,12 @@ export default class MainCanvas extends HTMLElement {
                 event.preventDefault()
                 window.requestAnimationFrame(() => {
                     const target = event.target as HTMLElement
-                    if (this.obj && this.obj.active && (target.localName === "main-canvas" || target.localName === "canvas")) {
-                        this.getCanvas()
-                        this.obj.draw(event.offsetX * this.dpr, event.offsetY * this.dpr)
+                    if (this.obj && (this.obj as CanvasVectorObjects).active && this.type === "vector"
+                        && (target.localName === "main-canvas" || target.localName === "canvas")) {
+                        this.getCanvas();
+                        (this.obj as CanvasVectorObjects).draw(event.offsetX * this.dpr, event.offsetY * this.dpr)
+                    } else if (this.obj && this.type === "binary") {
+                        (this.obj as CanvasBinaryObjects).follow(event.offsetX * this.dpr, event.offsetY * this.dpr)
                     }
                 })
 
@@ -95,13 +119,24 @@ export default class MainCanvas extends HTMLElement {
             .subscribe((event: MouseEvent) => {
                 event.preventDefault()
                 const target = event.target as HTMLElement
-                if (this.obj && (target.localName === "main-canvas" || target.localName === "canvas")) {
-                    this.obj.blur(event.offsetX * this.dpr, event.offsetY * this.dpr)
+                if (this.obj && this.type === "vector"
+                    && (target.localName === "main-canvas" || target.localName === "canvas")) {
+                    (this.obj as CanvasVectorObjects).blur(event.offsetX * this.dpr, event.offsetY * this.dpr)
                     this.setCanvas()
 
                     if (this.obj instanceof Text) {
                         this.obj = canvasObjectMap("text", this.ctx)
                     }
+                }
+            })
+
+        fromEvent(this.canvas, "click")
+            .subscribe((event: MouseEvent) => {
+                event.preventDefault()
+                const target = event.target as HTMLElement
+                if (this.obj && this.type === "binary"
+                    && (target.localName === "main-canvas" || target.localName === "canvas")) {
+                    (this.obj as CanvasBinaryObjects).draw(event.offsetX * this.dpr, event.offsetY * this.dpr)
                 }
             })
     }
@@ -122,15 +157,6 @@ export default class MainCanvas extends HTMLElement {
         this.ctx.restore()
         this.setCanvas()
     }
-
-    readonly stylesheet = `
-        <style>
-            canvas {
-                width: ${window.screen.width}px;
-                height: ${window.screen.height}px;
-            }
-        </style>
-    `
 }
 
 window.customElements.define("main-canvas", MainCanvas)

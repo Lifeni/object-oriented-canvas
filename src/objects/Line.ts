@@ -1,8 +1,8 @@
-import Base from "./bases/Base"
+import Vector from "./bases/Vector"
 import { objectOptionEmitter } from "../emitter"
 import { lineOption, LineOption } from "../store"
 
-class Line extends Base {
+class Line extends Vector {
     public lineOption: LineOption = lineOption
 
     constructor(ctx: CanvasRenderingContext2D) {

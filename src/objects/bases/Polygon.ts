@@ -1,10 +1,10 @@
-import Base from "./Base"
+import Vector from "./Vector"
 import { objectOptionEmitter } from "../../emitter"
 import { fromEvent } from "rxjs"
 import { pluck } from "rxjs/operators"
 import { PolygonOption } from "../../store"
 
-class Polygon extends Base {
+class Polygon extends Vector {
     public pressShift = false
     public polygonOption: PolygonOption
 
