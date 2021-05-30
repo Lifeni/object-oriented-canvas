@@ -68,3 +68,17 @@ export class PolygonOption {
 
 export const circleOption = new PolygonOption()
 export const rectangleOption = new PolygonOption()
+
+export class LineOption {
+    public option: ILineOption = {
+        lineWidth: 2,
+        lineColor: "#000000",
+    }
+
+    setOption(modifiedOption: ILineOption): void {
+        this.option = modifiedOption
+        objectOptionEmitter.emit("line", modifiedOption)
+    }
+}
+
+export const lineOption = new LineOption()

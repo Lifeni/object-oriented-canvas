@@ -1,3 +1,8 @@
+interface ILineOption {
+    lineWidth: number,
+    lineColor: string,
+}
+
 interface IPolygonOption {
     borderWidth: number,
     borderColor: string,

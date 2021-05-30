@@ -72,7 +72,6 @@ export default class PolygonPropertyBar extends Base {
 
         this.handleEvent(shadowRoot)
         this.handleElementVisibility(shadowRoot)
-
         this.handleBlur(shadowRoot)
     }
 
