@@ -1,4 +1,4 @@
-import BasePropertyBar from "../base-property-bar"
+import BasePropertyBar from "../bases/base-property-bar"
 
 export default class RectanglePropertyBar extends BasePropertyBar {
     constructor() {

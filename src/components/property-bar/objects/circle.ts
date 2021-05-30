@@ -1,4 +1,4 @@
-import BasePropertyBar from "../base-property-bar"
+import BasePropertyBar from "../bases/base-property-bar"
 import { fromEvent } from "rxjs"
 import { circleOption } from "../../../store"
 

@@ -1,20 +1,24 @@
 import Base from "./Base"
 import { circleOption } from "../store"
 import { objectOptionEmitter } from "../emitter"
+import { fromEvent } from "rxjs"
+import { pluck } from "rxjs/operators"
 
 class Circle extends Base {
     public option = circleOption
+    public pressShift = false
 
     constructor(ctx: CanvasRenderingContext2D) {
         super(ctx)
         this.applyOption()
+        this.bindKey()
     }
 
     draw(x: number, y: number): void {
         this.ctx.save()
         this.ctx.beginPath()
 
-        if (this.option.option.isPerfectCircle) {
+        if (this.option.option.isPerfectCircle || this.pressShift) {
             this.ctx.arc(this.x - (this.x - x) / 2, this.y - (this.y - y) / 2,
                 this.calc(this.x - x, this.y - y), 0, 2 * Math.PI)
         } else {
@@ -25,7 +29,6 @@ class Circle extends Base {
         }
 
         if (this.option.option.borderWidth !== 0) {
-            console.log(this.option.option.borderWidth, typeof this.option.option.borderWidth)
             this.ctx.stroke()
         }
 
@@ -61,6 +64,17 @@ class Circle extends Base {
         objectOptionEmitter.on("circle", (event: ICircleOption) => {
             apply(event)
         })
+    }
+
+    bindKey(): void {
+        fromEvent(window, "keydown")
+            .pipe(
+                pluck("shiftKey"),
+            )
+            .subscribe(() => this.pressShift = true)
+
+        fromEvent(window, "keyup")
+            .subscribe(() => this.pressShift = false)
     }
 }
 

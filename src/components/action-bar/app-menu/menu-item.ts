@@ -24,7 +24,6 @@ export default class MenuItem extends HTMLElement {
             .subscribe(() => {
                 switch (this.action) {
                     case "export-image": {
-                        console.log(`image/${this.type}`)
                         ipcRenderer.send(this.action, canvasElement.exportFile(`image/${this.type}`), this.type)
                         break
                     }

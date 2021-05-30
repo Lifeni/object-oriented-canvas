@@ -1,6 +1,6 @@
 import { canvasEmitter } from "../../emitter"
 
-export default class PropertyBarSwitcher extends HTMLElement {
+export default class PropertyBar extends HTMLElement {
 
     constructor() {
         super()
@@ -38,4 +38,4 @@ export default class PropertyBarSwitcher extends HTMLElement {
     }
 }
 
-window.customElements.define("property-bar-switcher", PropertyBarSwitcher)
+window.customElements.define("property-bar", PropertyBar)

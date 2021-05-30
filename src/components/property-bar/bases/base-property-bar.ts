@@ -1,4 +1,4 @@
-import { objectOptionEmitter } from "../../emitter"
+import { objectOptionEmitter } from "../../../emitter"
 
 export default class BasePropertyBar extends HTMLElement {
     constructor() {
@@ -97,4 +97,4 @@ export default class BasePropertyBar extends HTMLElement {
     `
 }
 
-window.customElements.define("property-bar", BasePropertyBar)
+window.customElements.define("base-property-bar", BasePropertyBar)

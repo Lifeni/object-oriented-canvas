@@ -15,8 +15,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
     import("./components/canvas/main-canvas")
 
-    import("./components/property-bar/base-property-bar")
-    import("./components/property-bar/property-bar-switcher")
+    import("./components/property-bar/bases/base-property-bar")
+    import("./components/property-bar/property-bar")
 
     import("./components/property-bar/objects/circle")
     import("./components/property-bar/objects/line")
