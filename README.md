@@ -16,13 +16,15 @@ UI 方面，用 TypeScript + Electron + Web Components 实现。
 
 - [ ] 所有对象可移动和改变大小
 
+- [ ] 全面使用 RxJS
+
 - [ ] 将每次绘制流程储存成 JSON 格式
 
 - [ ] 添加保存和读取绘制流程的功能
 
-- [ ] 添加多人本地共享画布的功能
+- [ ] 用 GitHub Actions 构建 Windows、Linux 和 macOS 平台的可执行文件
 
-- [ ] 全面使用 RxJS
+- [ ] 添加多人本地共享画布的功能
 
 - [ ] 规范项目文件命名
 
