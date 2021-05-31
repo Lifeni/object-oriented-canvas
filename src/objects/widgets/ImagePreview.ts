@@ -23,6 +23,14 @@ class ImagePreview {
         })
     }
 
+    hide(): void {
+        this.element.classList.add("hide")
+    }
+
+    show(): void {
+        this.element.classList.remove("hide")
+    }
+
     unmount(): void {
         this.element.remove()
     }

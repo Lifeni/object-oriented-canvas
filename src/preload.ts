@@ -25,5 +25,5 @@ window.addEventListener("DOMContentLoaded", () => {
     import("./components/property-bar/objects/text")
     import("./components/property-bar/objects/rectangle")
 
-    import("./libs/index")
+    import("./libs/canvas/wrapText")
 })

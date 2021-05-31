@@ -1,7 +1,7 @@
-import Polygon from "./bases/Polygon"
+import Shape from "./bases/Shape"
 import { circleOption } from "../store"
 
-class Circle extends Polygon {
+class Circle extends Shape {
     constructor(ctx: CanvasRenderingContext2D) {
         super(ctx, circleOption)
     }
@@ -9,7 +9,7 @@ class Circle extends Polygon {
     draw(x: number, y: number): void {
         this.ctx.beginPath()
 
-        if (this.polygonOption.option.isPerfectPolygon || this.pressShift) {
+        if (this.polygonOption.option.isPerfectShape || this.pressShift) {
             this.ctx.arc(this.x - (this.x - x) / 2, this.y - (this.y - y) / 2,
                 this.calc(this.x - x, this.y - y), 0, 2 * Math.PI)
         } else {

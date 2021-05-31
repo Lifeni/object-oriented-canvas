@@ -20,14 +20,22 @@ export default class ImagePreview extends HTMLElement {
                 border-radius: 4px;
                 box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
                 background: #ffffff;
+                opacity: 1;
+                visibility: visible;
+                transition: opacity 0.2s;
                 pointer-events: none;
             }
-        
+            
             img {
                 width: 100%;
                 object-fit: cover;
+
             }
-           
+            
+            :host(.hide) {
+                opacity: 0;
+                visibility: hidden;
+            }         
         </style>
     `
 }

@@ -12,7 +12,7 @@ class CanvasToolStore {
     }
 }
 
-class CanvasHistoryStore {
+class CanvasSnapshotStore {
     public history: ImageData
 
     set(data: ImageData): void {
@@ -48,17 +48,16 @@ class CanvasElement {
 }
 
 export const canvasTool = new CanvasToolStore()
-export const canvasHistory = new CanvasHistoryStore()
-export const canvasTextHistory = new CanvasHistoryStore()
+export const canvasSnapshot = new CanvasSnapshotStore()
 export const canvasElement = new CanvasElement()
 
-export class PolygonOption {
+export class ShapeOption {
     public option: IPolygonOption = {
         borderWidth: 2,
         borderColor: "#000000",
         fillColor: "#ffffff",
         noFillColor: true,
-        isPerfectPolygon: false,
+        isPerfectShape: false,
     }
 
     setOption(modifiedOption: IPolygonOption): void {
@@ -67,8 +66,8 @@ export class PolygonOption {
     }
 }
 
-export const circleOption = new PolygonOption()
-export const rectangleOption = new PolygonOption()
+export const circleOption = new ShapeOption()
+export const rectangleOption = new ShapeOption()
 
 export class LineOption {
     public option: ILineOption = {

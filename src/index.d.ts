@@ -3,7 +3,7 @@ interface IPolygonOption {
     borderColor: string,
     fillColor: string | null,
     noFillColor: boolean,
-    isPerfectPolygon: boolean,
+    isPerfectShape: boolean,
 }
 
 interface ILineOption {

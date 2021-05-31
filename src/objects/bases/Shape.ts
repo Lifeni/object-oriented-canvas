@@ -1,14 +1,14 @@
-import Vector from "./Vector"
+import Base from "./Base"
 import { objectOptionEmitter } from "../../emitter"
 import { fromEvent } from "rxjs"
 import { pluck } from "rxjs/operators"
-import { PolygonOption } from "../../store"
+import { ShapeOption } from "../../store"
 
-class Polygon extends Vector {
+class Shape extends Base {
     public pressShift = false
-    public polygonOption: PolygonOption
+    public polygonOption: ShapeOption
 
-    constructor(ctx: CanvasRenderingContext2D, store: PolygonOption) {
+    constructor(ctx: CanvasRenderingContext2D, store: ShapeOption) {
         super(ctx)
         this.polygonOption = store
         this.applyOption()
@@ -50,4 +50,4 @@ class Polygon extends Vector {
     }
 }
 
-export default Polygon
+export default Shape

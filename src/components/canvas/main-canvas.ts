@@ -1,9 +1,10 @@
 import { fromEvent } from "rxjs"
 import { canvasEmitter, objectOptionEmitter } from "../../emitter"
-import { canvasElement, canvasHistory, canvasTool } from "../../store"
-import { CanvasBinaryObjects, canvasObjectMap, CanvasObjects, CanvasVectorObjects } from "../../utils/canvasObjectMap"
+import { canvasElement, canvasSnapshot, canvasTool } from "../../store"
+import { canvasObjectMap, CanvasObjects } from "../../utils/canvasObjectMap"
 import Text from "../../objects/Text"
 import { ipcRenderer } from "electron"
+import ImageObject from "../../objects/Image"
 
 export default class MainCanvas extends HTMLElement {
 
@@ -91,9 +92,9 @@ export default class MainCanvas extends HTMLElement {
             .subscribe((event: MouseEvent) => {
                 event.preventDefault()
                 const target = event.target as HTMLElement
-                if (this.obj && this.type === "vector"
+                if (this.obj
                     && (target.localName === "main-canvas" || target.localName === "canvas")) {
-                    (this.obj as CanvasVectorObjects).create(event.offsetX * this.dpr, event.offsetY * this.dpr)
+                    this.obj.create(event.offsetX * this.dpr, event.offsetY * this.dpr)
                     objectOptionEmitter.emit("blur")
                     this.setCanvas()
                 }
@@ -104,12 +105,14 @@ export default class MainCanvas extends HTMLElement {
                 event.preventDefault()
                 window.requestAnimationFrame(() => {
                     const target = event.target as HTMLElement
-                    if (this.obj && (this.obj as CanvasVectorObjects).active && this.type === "vector"
+                    if (this.obj && this.obj.active
                         && (target.localName === "main-canvas" || target.localName === "canvas")) {
-                        this.getCanvas();
-                        (this.obj as CanvasVectorObjects).draw(event.offsetX * this.dpr, event.offsetY * this.dpr)
-                    } else if (this.obj && this.type === "binary") {
-                        (this.obj as CanvasBinaryObjects).follow(event.offsetX * this.dpr, event.offsetY * this.dpr)
+                        this.getCanvas()
+                        this.obj.draw(event.offsetX * this.dpr, event.offsetY * this.dpr)
+                    }
+
+                    if (this.obj && this.obj instanceof ImageObject) {
+                        this.obj.follow(event.offsetX * this.dpr, event.offsetY * this.dpr)
                     }
                 })
 
@@ -117,36 +120,27 @@ export default class MainCanvas extends HTMLElement {
 
         fromEvent(this.canvas, "mouseup")
             .subscribe((event: MouseEvent) => {
-                event.preventDefault()
                 const target = event.target as HTMLElement
-                if (this.obj && this.type === "vector"
+                if (this.obj
                     && (target.localName === "main-canvas" || target.localName === "canvas")) {
-                    (this.obj as CanvasVectorObjects).blur(event.offsetX * this.dpr, event.offsetY * this.dpr)
+                    this.obj.blur(event.offsetX * this.dpr, event.offsetY * this.dpr)
                     this.setCanvas()
 
                     if (this.obj instanceof Text) {
                         this.obj = canvasObjectMap("text", this.ctx)
+                    } else if (this.obj instanceof ImageObject) {
+                        this.obj = null
                     }
-                }
-            })
-
-        fromEvent(this.canvas, "click")
-            .subscribe((event: MouseEvent) => {
-                event.preventDefault()
-                const target = event.target as HTMLElement
-                if (this.obj && this.type === "binary"
-                    && (target.localName === "main-canvas" || target.localName === "canvas")) {
-                    (this.obj as CanvasBinaryObjects).draw(event.offsetX * this.dpr, event.offsetY * this.dpr)
                 }
             })
     }
 
     setCanvas(): void {
-        canvasHistory.set(this.ctx.getImageData(0, 0, this.vw, this.vh))
+        canvasSnapshot.set(this.ctx.getImageData(0, 0, this.vw, this.vh))
     }
 
     getCanvas(): void {
-        this.ctx.putImageData(canvasHistory.get(), 0, 0)
+        this.ctx.putImageData(canvasSnapshot.get(), 0, 0)
     }
 
     clearCanvas(): void {

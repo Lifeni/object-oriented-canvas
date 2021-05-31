@@ -1,7 +1,7 @@
-import PolygonPropertyBar from "../bases/polygon"
+import ShapePropertyBar from "../bases/shape"
 import { circleOption } from "../../../store"
 
-export default class CirclePropertyBar extends PolygonPropertyBar {
+export default class CirclePropertyBar extends ShapePropertyBar {
     constructor() {
         super("圆", circleOption)
     }

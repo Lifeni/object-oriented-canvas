@@ -1,13 +1,13 @@
 import Base from "../bases/base"
 import { fromEvent } from "rxjs"
-import { PolygonOption } from "../../../store"
+import { ShapeOption } from "../../../store"
 
-export default class PolygonPropertyBar extends Base {
-    public polygonOption: PolygonOption
+export default class ShapePropertyBar extends Base {
+    public shapeOption: ShapeOption
 
-    constructor(name: string, store: PolygonOption) {
+    constructor(name: string, store: ShapeOption) {
         super()
-        this.polygonOption = store
+        this.shapeOption = store
 
         const shadowRoot = this.attachShadow({ mode: "open" })
         shadowRoot.innerHTML = `
@@ -19,7 +19,7 @@ export default class PolygonPropertyBar extends Base {
                     <input 
                         type="number" 
                         placeholder="2" 
-                        value=${this.polygonOption.option.borderWidth} 
+                        value=${this.shapeOption.option.borderWidth} 
                         min="0" 
                         id="border-width" 
                         data-option="borderWidth" 
@@ -30,7 +30,7 @@ export default class PolygonPropertyBar extends Base {
                     边框颜色
                     <input 
                         type="color" 
-                        value=${this.polygonOption.option.borderColor} 
+                        value=${this.shapeOption.option.borderColor} 
                         id="border-color" 
                         data-option="borderColor" 
                     />
@@ -40,7 +40,7 @@ export default class PolygonPropertyBar extends Base {
                     填充颜色
                     <input 
                         type="color" 
-                        value=${this.polygonOption.option.fillColor} 
+                        value=${this.shapeOption.option.fillColor} 
                         id="fill-color" 
                         data-option="fillColor" 
                         class="hide"
@@ -50,7 +50,7 @@ export default class PolygonPropertyBar extends Base {
                 <label>
                     <input 
                         type="checkbox" 
-                        ${this.polygonOption.option.noFillColor && `checked`} 
+                        ${this.shapeOption.option.noFillColor && `checked`} 
                         id="no-fill-color" 
                         data-option="noFillColor" 
                     />
@@ -60,9 +60,9 @@ export default class PolygonPropertyBar extends Base {
                 <label>
                     <input 
                         type="checkbox" 
-                        ${this.polygonOption.option.isPerfectPolygon && `checked`} 
-                        id="is-perfect-polygon" 
-                        data-option="isPerfectPolygon" 
+                        ${this.shapeOption.option.isPerfectShape && `checked`} 
+                        id="is-perfect-shape" 
+                        data-option="isPerfectShape" 
                     />
                     正${name}
                 </label>
@@ -80,15 +80,15 @@ export default class PolygonPropertyBar extends Base {
         const borderColor = shadow.getElementById("border-color")
         const fillColor = shadow.getElementById("fill-color")
         const noFillColor = shadow.getElementById("no-fill-color")
-        const isPerfectPolygon = shadow.getElementById("is-perfect-polygon")
+        const isPerfectShape = shadow.getElementById("is-perfect-shape")
 
-        const observer = this.createObserver<PolygonOption>(this.polygonOption)
+        const observer = this.createObserver<ShapeOption>(this.shapeOption)
 
         borderWidth && fromEvent(borderWidth, "change").subscribe(observer)
         borderColor && fromEvent(borderColor, "change").subscribe(observer)
         fillColor && fromEvent(fillColor, "change").subscribe(observer)
         noFillColor && fromEvent(noFillColor, "change").subscribe(observer)
-        isPerfectPolygon && fromEvent(isPerfectPolygon, "change").subscribe(observer)
+        isPerfectShape && fromEvent(isPerfectShape, "change").subscribe(observer)
     }
 
     handleElementVisibility(shadow: ShadowRoot): void {

@@ -1,7 +1,7 @@
-import Polygon from "./bases/Polygon"
+import Shape from "./bases/Shape"
 import { rectangleOption } from "../store"
 
-class Rectangle extends Polygon {
+class Rectangle extends Shape {
 
     constructor(ctx: CanvasRenderingContext2D) {
         super(ctx, rectangleOption)
@@ -10,7 +10,7 @@ class Rectangle extends Polygon {
     draw(x: number, y: number): void {
         this.ctx.beginPath()
 
-        if (this.polygonOption.option.isPerfectPolygon || this.pressShift) {
+        if (this.polygonOption.option.isPerfectShape || this.pressShift) {
             this.ctx.rect(this.x, this.y,
                 Math.max(x - this.x, y - this.y),
                 Math.max(x - this.x, y - this.y))

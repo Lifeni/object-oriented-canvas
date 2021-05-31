@@ -92,7 +92,6 @@ const startListen = (window: BrowserWindow): void => {
 
         if (file) {
             try {
-                console.log(file[0])
                 const data = fs.readFileSync(file[0])
                 event.sender.send("import-image-data", {
                     data: data.toString("base64"),

@@ -1,9 +1,9 @@
-import Vector from "./bases/Vector"
-import { canvasTextHistory, textOption, TextOption } from "../store"
+import { textOption, TextOption } from "../store"
 import TextInput from "./widgets/TextInput"
 import { textInputEmitter } from "../emitter"
+import Base from "./bases/Base"
 
-class Text extends Vector {
+class Text extends Base {
     public textOption: TextOption = textOption
     private readonly id: string
 
@@ -36,11 +36,9 @@ class Text extends Vector {
     }
 
     blur(x: number, y: number): void {
-
         if (!this.active) return
 
         this.active = false
-
         this.getCanvas()
 
         const minX = Math.min(this.x, x)
@@ -74,14 +72,6 @@ class Text extends Vector {
         })
 
         this.setCanvas()
-    }
-
-    setCanvas(): void {
-        canvasTextHistory.set(this.ctx.getImageData(0, 0, this.vw, this.vh))
-    }
-
-    getCanvas(): void {
-        this.ctx.putImageData(canvasTextHistory.get(), 0, 0)
     }
 }
 
