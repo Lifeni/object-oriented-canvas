@@ -10,7 +10,7 @@ export default class TextInput extends HTMLElement {
         super()
         const shadowRoot = this.attachShadow({ mode: "open" })
         shadowRoot.innerHTML = `
-            <textarea class="text-input" id="text-input" autofocus placeholder="在此输入文字"></textarea>
+            <textarea class="text-input" id="text-input" placeholder="在此输入文字"></textarea>
             <section>
                 <button class="cancel" id="cancel" aria-label="取消" title="取消">
                     ${this.iconMap("cancel")}
@@ -55,6 +55,7 @@ export default class TextInput extends HTMLElement {
         <style>
             :host {
                 position: absolute;
+                z-index: 20;
             }
         
             textarea {
@@ -76,6 +77,10 @@ export default class TextInput extends HTMLElement {
                 transition: all 0.1s;
             }
             
+            textarea::placeholder {
+                color: ${textOption.option.fontColor};
+            }
+            
             textarea:focus {
                 border-color: transparent;
                 outline: solid 4px #18a0fb;
@@ -94,6 +99,7 @@ export default class TextInput extends HTMLElement {
                 padding: 0;
                 gap: 8px;
                 box-sizing: border-box;
+                pointer-events: none;
             }
             
             button {
@@ -111,6 +117,7 @@ export default class TextInput extends HTMLElement {
                 cursor: pointer;
                 transform: translateX(50%);
                 outline: none;
+                pointer-events: initial;
             }
             
             .ok {

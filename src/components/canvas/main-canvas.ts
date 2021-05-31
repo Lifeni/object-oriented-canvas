@@ -72,8 +72,6 @@ export default class MainCanvas extends HTMLElement {
                 if (confirm("确定清空画布吗？")) {
                     this.clearCanvas()
                 }
-                this.type = "vector"
-                canvasTool.setDefault()
             } else if (event.current === "image") {
                 ipcRenderer.send("import-image")
                 ipcRenderer.once("import-image-data", (_, data: IImportImageData) => {
@@ -144,8 +142,8 @@ export default class MainCanvas extends HTMLElement {
     }
 
     clearCanvas(): void {
-        this.ctx.clearRect(0, 0, this.vw, this.vh)
         this.ctx.save()
+        this.ctx.clearRect(0, 0, this.vw, this.vh)
         this.ctx.fillStyle = "#fff"
         this.ctx.fillRect(0, 0, this.vw, this.vh)
         this.ctx.restore()

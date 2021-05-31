@@ -53,7 +53,7 @@ export default class ToolButton extends BaseButton {
 
     initEmit(): void {
         canvasEmitter.on("canvas-tool", event => {
-            if (event.current !== this.type) {
+            if (event.current !== "clear" && event.current !== this.type) {
                 this.status = "none"
             }
         })
@@ -62,8 +62,11 @@ export default class ToolButton extends BaseButton {
     listenClick(): void {
         fromEvent(this.button, "click").subscribe(() => {
             if (!this.focusable || !this.property) {
+                if (this.type !== "clear") {
+                    this.propertyBarEmitter("none")
+                }
+
                 this.canvasToolEmitter(this.type)
-                this.propertyBarEmitter("none")
             } else {
                 if (this.status === "none") {
                     this.canvasToolEmitter(this.type)
