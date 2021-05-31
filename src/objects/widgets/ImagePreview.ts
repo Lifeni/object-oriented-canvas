@@ -13,7 +13,7 @@ class ImagePreview {
     }
 
     mount(): void {
-        document.documentElement.append(this.element)
+        document.body.append(this.element)
     }
 
     move(x: number, y: number): void {

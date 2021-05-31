@@ -15,7 +15,7 @@ class TextInput {
     }
 
     mount(): void {
-        document.documentElement.append(this.element)
+        document.body.append(this.element)
         setTimeout(() => {
             this.element.shadowRoot.getElementById("text-input").focus()
         }, 200)
