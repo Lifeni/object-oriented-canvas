@@ -67,11 +67,9 @@ export default class MainCanvas extends HTMLElement {
     }
 
     handleEvent(): void {
-        canvasEmitter.on("canvas-tool", (event) => {
+        canvasEmitter.on("canvas-tool", event => {
             if (event.current === "clear") {
-                if (confirm("确定清空画布吗？")) {
-                    this.clearCanvas()
-                }
+                this.clearCanvas()
             } else if (event.current === "image") {
                 ipcRenderer.send("import-image")
                 ipcRenderer.once("import-image-data", (_, data: IImportImageData) => {
