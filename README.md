@@ -30,7 +30,7 @@ UI 方面，用 TypeScript + Electron + Web Components 实现。
 
 ## 开发
 
-推荐安装 `electronmon` 和 `concurrently` 来运行开发环境。
+推荐安装 `electronmon` 和 `concurrently` 和 `rimraf` 来运行开发环境。
 
 ```shell
 # 可以安装到全局环境

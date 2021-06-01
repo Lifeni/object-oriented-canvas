@@ -1,6 +1,6 @@
 {
   "name": "object-oriented-canvas",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "一个基于面向对象分析与设计的画布 App",
   "scripts": {
     "build": "tsc",
@@ -9,7 +9,7 @@
     "watch": "tsc -w",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
     "start": "npm run build && electron ./dist/main.js",
-    "dev": "concurrently \"tsc -w\" \"electronmon ./dist/main.js\""
+    "dev": "rimraf ./dist && tsc && concurrently \"tsc -w\" \"electronmon ./dist/main.js\""
   },
   "repository": "https://github.com/Lifeni/object-oriented-canvas",
   "author": "Lifeni",
