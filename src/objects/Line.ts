@@ -12,6 +12,10 @@ class Line extends Base {
     }
 
     draw(x: number, y: number): void {
+        const dx = Math.abs(this.x - x)
+        const dy = Math.abs(this.y - y)
+        if (dx < 1 && dy < 1) return
+
         this.ctx.beginPath()
         this.ctx.moveTo(this.x, this.y)
         this.ctx.lineTo(x, y)
@@ -20,6 +24,11 @@ class Line extends Base {
 
     blur(x: number, y: number): void {
         this.active = false
+
+        const dx = Math.abs(this.x - x)
+        const dy = Math.abs(this.y - y)
+        if (dx < 1 && dy < 1) return
+
         this.pushHistory<LineObjectType>({
             id: uuidv4(),
             name: "line",
@@ -35,7 +44,8 @@ class Line extends Base {
         this.create(data.x, data.y)
         this.lineOption.setOption(data.option)
         this.draw(data.ex, data.ey)
-        this.blur(data.ex, data.ey)
+
+        this.active = false
     }
 
     applyOption(): void {

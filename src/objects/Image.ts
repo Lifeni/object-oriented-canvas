@@ -102,6 +102,7 @@ class ImageObject extends Base {
             ey: imageRatio > containerRatio ? dy : dx / imageRatio,
             data: this.imageData.data
         })
+
     }
 
     reDraw(data: ImageObjectType): void {

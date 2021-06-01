@@ -8,6 +8,10 @@ class Circle extends Shape {
     }
 
     draw(x: number, y: number): void {
+        const dx = Math.abs(this.x - x)
+        const dy = Math.abs(this.y - y)
+        if (dx < 1 && dy < 1) return
+
         this.ctx.beginPath()
 
         if (this.shapeOption.option.isPerfectShape || this.pressShift) {
@@ -25,6 +29,10 @@ class Circle extends Shape {
 
     blur(x: number, y: number): void {
         this.active = false
+
+        const dx = Math.abs(this.x - x)
+        const dy = Math.abs(this.y - y)
+        if (dx < 1 && dy < 1) return
 
         this.pushHistory<CircleObjectType>({
             id: uuidv4(),
@@ -58,7 +66,8 @@ class Circle extends Shape {
         this.create(data.x, data.y)
         this.shapeOption.setOption(data.option)
         this.draw(data.ex, data.ey)
-        this.blur(data.ex, data.ey)
+
+        this.active = false
     }
 }
 

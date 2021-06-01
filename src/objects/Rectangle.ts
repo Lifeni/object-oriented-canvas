@@ -9,6 +9,10 @@ class Rectangle extends Shape {
     }
 
     draw(x: number, y: number): void {
+        const dx = Math.abs(this.x - x)
+        const dy = Math.abs(this.y - y)
+        if (dx < 1 && dy < 1) return
+
         this.ctx.beginPath()
 
         if (this.shapeOption.option.isPerfectShape || this.pressShift) {
@@ -24,6 +28,11 @@ class Rectangle extends Shape {
 
     blur(x: number, y: number): void {
         this.active = false
+
+        const dx = Math.abs(this.x - x)
+        const dy = Math.abs(this.y - y)
+        if (dx < 1 && dy < 1) return
+
         this.pushHistory<RectangleObjectType>({
             id: uuidv4(),
             name: "rectangle",
@@ -42,7 +51,8 @@ class Rectangle extends Shape {
         this.create(data.x, data.y)
         this.shapeOption.setOption(data.option)
         this.draw(data.ex, data.ey)
-        this.blur(data.ex, data.ey)
+
+        this.active = false
     }
 }
 

@@ -6,7 +6,9 @@ import { ipcRenderer } from "electron"
 const newCanvas = (): void => {
     canvasHistory.clear()
     canvasHistory.clearCanvas(canvasContext.ctx)
+
     canvasFile.file = null
+
     canvasEmitter.emit("canvas-tool", { current: "cursor" })
     canvasEmitter.emit("property-bar", { current: "none" })
 }
@@ -20,6 +22,9 @@ const openFile = (): void => {
         if (uuid === id) {
             canvasHistory.set(file)
             canvasHistory.reDraw(file)
+            canvasHistory.clear()
+            canvasHistory.clearCanvas(canvasContext.ctx)
+
             canvasEmitter.emit("canvas-tool", { current: "cursor" })
             canvasEmitter.emit("property-bar", { current: "none" })
             console.log("打开文件", name)

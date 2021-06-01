@@ -17,9 +17,29 @@ export const canvasContext = new CanvasContext()
 
 class CanvasHistory {
     public history: Array<CanvasHistoryType> = []
+    public feature: Array<CanvasHistoryType> = []
 
     push<T extends CanvasHistoryType>(data: T) {
         this.history.push(data)
+        this.feature = []
+    }
+
+    undo(): void {
+        const temp = this.history.pop()
+        if (temp) {
+            this.feature.push(temp)
+            this.clearCanvas(canvasContext.ctx)
+            this.reDraw(this.history)
+        }
+    }
+
+    redo(): void {
+        const temp = this.feature.pop()
+        if (temp) {
+            this.history.push(temp)
+            this.clearCanvas(canvasContext.ctx)
+            this.reDraw(this.history)
+        }
     }
 
     set(file: Array<CanvasHistoryType>): void {
@@ -28,13 +48,11 @@ class CanvasHistory {
 
     clear(): void {
         this.history = []
+        this.feature = []
     }
 
     reDraw(data: Array<CanvasHistoryType>): void {
         const ctx = canvasContext.ctx
-
-        this.clear()
-        this.clearCanvas(ctx)
 
         data.forEach((atom) => {
             switch (atom.name) {
