@@ -92,9 +92,19 @@ export default class ShapePropertyBar extends Base {
     }
 
     handleElementVisibility(shadow: ShadowRoot): void {
-        const noFillColor = shadow.getElementById("no-fill-color")
+        const noFillColor = shadow.getElementById("no-fill-color") as HTMLInputElement
         const fillColor = shadow.getElementById("fill-color")
+
+        const check = () => {
+            if (noFillColor.checked) {
+                fillColor.classList.add("hide")
+            } else {
+                fillColor.classList.remove("hide")
+            }
+        }
+
+        check()
         noFillColor && fromEvent(noFillColor, "change")
-            .subscribe(() => fillColor.classList.toggle("hide"))
+            .subscribe(() => check())
     }
 }

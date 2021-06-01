@@ -1,6 +1,7 @@
 import { ipcMain } from "electron/main"
 import { app, BrowserWindow, dialog } from "electron"
 import fs from "fs"
+import { canvasFile } from "../store"
 
 const startListen = (window: BrowserWindow): void => {
 
@@ -130,23 +131,35 @@ const startListen = (window: BrowserWindow): void => {
     ipcMain.on("save-file", (event, args: IPCSaveFileProps) => {
         const { data, type } = args
 
-        const file = dialog.showSaveDialogSync(
-            {
-                filters: [
-                    { name: "JSON", extensions: ["json"] },
-                    { name: "All Files", extensions: ["*"] }
-                ],
-                properties: ["createDirectory"]
-            }
-        )
-
-        if (file) {
+        if (type === "save" && canvasFile.file) {
             try {
-                fs.writeFileSync(file, JSON.stringify(data))
+                fs.writeFileSync(canvasFile.file, JSON.stringify(data))
             } catch (error) {
-                console.error(type, error)
+                console.error("保存文件", canvasFile.file, error)
+            }
+
+        } else {
+            const file = dialog.showSaveDialogSync(
+                {
+                    filters: [
+                        { name: "JSON", extensions: ["json"] },
+                        { name: "All Files", extensions: ["*"] }
+                    ],
+                    properties: ["createDirectory"]
+                }
+            )
+
+            if (file) {
+                try {
+                    fs.writeFileSync(file, JSON.stringify(data))
+                    canvasFile.set(file)
+                } catch (error) {
+                    console.error("另存为文件", file, error)
+                }
             }
         }
+
+
     })
 }
 

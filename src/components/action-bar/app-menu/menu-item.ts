@@ -1,6 +1,7 @@
 import { ipcRenderer } from "electron"
 import { fromEvent } from "rxjs"
 import { canvasElement, canvasHistory } from "../../../store"
+import { canvasEmitter } from "../../../emitter"
 
 export default class MenuItem extends HTMLElement {
     static get observedAttributes(): Array<string> {
@@ -34,8 +35,13 @@ export default class MenuItem extends HTMLElement {
                         ipcRenderer.send("open-file")
                         ipcRenderer.once("open-file-data", (_, data) => {
                             const { file, name }: IPCOpenFileProps = data
+
                             canvasHistory.set(file)
                             canvasHistory.reDraw(file)
+                            canvasEmitter.emit("canvas-tool", { current: "cursor" })
+                            canvasEmitter.emit("property-bar", { current: "none" })
+
+                            console.log("打开文件", name)
                         })
                         break
                     }

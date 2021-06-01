@@ -96,6 +96,16 @@ class CanvasHistory {
 
 export const canvasHistory = new CanvasHistory()
 
+class CanvasFile {
+    public file: string | null = null
+
+    set(path: string) {
+        this.file = path
+    }
+}
+
+export const canvasFile = new CanvasFile()
+
 class CanvasTool {
     public tool = "cursor"
 
@@ -144,7 +154,9 @@ class CanvasElement {
 }
 
 export const canvasTool = new CanvasTool()
+
 export const canvasSnapshot = new CanvasSnapshot()
+
 export const canvasElement = new CanvasElement()
 
 export class ShapeOption {
@@ -163,6 +175,7 @@ export class ShapeOption {
 }
 
 export const circleOption = new ShapeOption()
+
 export const rectangleOption = new ShapeOption()
 
 export class LineOption {
