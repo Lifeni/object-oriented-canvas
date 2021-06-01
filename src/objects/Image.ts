@@ -64,19 +64,26 @@ class ImageObject extends Base {
         }
     }
 
+
     blur(x: number, y: number): void {
         if (!this.active) return
+
         this.active = false
         this.drawImage(x, y)
         this.imagePreview.unmount()
+
+        const dx = Math.abs(x - this.x)
+        const dy = Math.abs(y - this.y)
+        const imageRatio = this.image.width / this.image.height
+        const containerRatio = dx / dy
 
         this.pushHistory<ImageObjectType>({
             id: uuidv4(),
             name: "image",
             x: this.x,
             y: this.y,
-            ex: x,
-            ey: y,
+            ex: imageRatio > containerRatio ? dy * imageRatio : dx,
+            ey: imageRatio > containerRatio ? dx : dx / imageRatio,
             data: this.imageData.data
         })
     }
