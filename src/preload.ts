@@ -1,3 +1,5 @@
+import { startBinding } from "./utils/key-binding"
+
 window.addEventListener("DOMContentLoaded", () => {
     console.log("Hello, Electron!")
 
@@ -26,4 +28,6 @@ window.addEventListener("DOMContentLoaded", () => {
     import("./components/property-bar/objects/rectangle")
 
     import("./libs/canvas/wrapText")
+
+    startBinding()
 })

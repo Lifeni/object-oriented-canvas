@@ -1,12 +1,12 @@
 import { app, BrowserWindow } from "electron"
 import * as path from "path"
-import { startListen } from "./utils/ipcMainListener"
+import { startListen } from "./utils/ipc-main-listener"
 
 function createWindow() {
     const mainWindow = new BrowserWindow({
         width: 800,
-        height: 600,
         minWidth: 800,
+        height: 600,
         minHeight: 600,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
@@ -16,9 +16,10 @@ function createWindow() {
         frame: false
     })
 
-    mainWindow.loadFile(path.join(__dirname, "../index.html")).then(() => {
-        startListen(mainWindow)
-    })
+    mainWindow.loadFile(path.join(__dirname, "../index.html"))
+        .then(() => {
+            startListen(mainWindow)
+        })
 
     if (!app.isPackaged) {
         mainWindow.webContents.openDevTools()

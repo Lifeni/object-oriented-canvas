@@ -1,7 +1,7 @@
 import { fromEvent } from "rxjs"
 import { canvasEmitter, objectOptionEmitter } from "../../emitter"
 import { canvasContext, canvasElement, canvasHistory, canvasSnapshot, canvasTool } from "../../store"
-import { canvasObjectMap, CanvasObjects } from "../../utils/canvasObjectMap"
+import { objectsMap, CanvasObjects } from "../../utils/objects-map"
 import Text from "../../objects/Text"
 import { ipcRenderer } from "electron"
 import ImageObject from "../../objects/Image"
@@ -70,14 +70,14 @@ export default class MainCanvas extends HTMLElement {
                 ipcRenderer.send("import-image", uuid)
                 ipcRenderer.once("import-image-data", (_, data: IImportImageData) => {
                     if (uuid === data.id) {
-                        this.obj = canvasObjectMap("image", this.ctx, data)
+                        this.obj = objectsMap("image", this.ctx, data)
                         this.type = "binary"
                     }
                 })
                 canvasTool.setDefault()
             } else {
                 canvasTool.setTool(event.current)
-                this.obj = canvasObjectMap(event.current, this.ctx)
+                this.obj = objectsMap(event.current, this.ctx)
                 this.type = "vector"
             }
         })
@@ -123,7 +123,7 @@ export default class MainCanvas extends HTMLElement {
                     this.setCanvas()
 
                     if (this.obj instanceof Text) {
-                        this.obj = canvasObjectMap("text", this.ctx)
+                        this.obj = objectsMap("text", this.ctx)
                     } else if (this.obj instanceof ImageObject) {
                         this.obj = null
                     }

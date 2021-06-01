@@ -1,8 +1,7 @@
 import Base from "./Base"
 import { objectOptionEmitter } from "../../emitter"
-import { fromEvent } from "rxjs"
-import { pluck } from "rxjs/operators"
 import { ShapeOption } from "../../store"
+import Mousetrap from "mousetrap"
 
 class Shape extends Base {
     public pressShift = false
@@ -29,14 +28,13 @@ class Shape extends Base {
     }
 
     bindKey(): void {
-        fromEvent(window, "keydown")
-            .pipe(
-                pluck("shiftKey"),
-            )
-            .subscribe(() => this.pressShift = true)
+        Mousetrap.bind("shift", () => {
+            this.pressShift = true
+        }, "keydown")
 
-        fromEvent(window, "keyup")
-            .subscribe(() => this.pressShift = false)
+        Mousetrap.bind("shift", () => {
+            this.pressShift = false
+        }, "keyup")
     }
 
     checkOption(): void {

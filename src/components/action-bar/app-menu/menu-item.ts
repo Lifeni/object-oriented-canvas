@@ -1,8 +1,7 @@
 import { ipcRenderer } from "electron"
 import { fromEvent } from "rxjs"
-import { canvasContext, canvasElement, canvasFile, canvasHistory } from "../../../store"
-import { canvasEmitter } from "../../../emitter"
-import { v4 as uuidv4 } from "uuid"
+import { canvasElement } from "../../../store"
+import { newCanvas, openFile, saveAsFile, saveFile } from "../../../utils/file-action"
 
 export default class MenuItem extends HTMLElement {
     static get observedAttributes(): Array<string> {
@@ -26,50 +25,26 @@ export default class MenuItem extends HTMLElement {
             .subscribe(() => {
                 switch (this.action) {
                     case "export-image": {
-                        ipcRenderer.send(this.action, {
+                        ipcRenderer.send("export-image", {
                             data: canvasElement.exportFile(`image/${this.type}`),
                             type: this.type
                         })
                         break
                     }
                     case "new-canvas": {
-                        canvasHistory.clear()
-                        canvasHistory.clearCanvas(canvasContext.ctx)
-                        canvasFile.file = null
-                        canvasEmitter.emit("canvas-tool", { current: "cursor" })
-                        canvasEmitter.emit("property-bar", { current: "none" })
+                        newCanvas()
                         break
                     }
                     case "open-file": {
-                        const uuid = uuidv4()
-                        ipcRenderer.send("open-file", uuid)
-                        ipcRenderer.once("open-file-data", (_, data) => {
-                            const { file, name, id }: IPCOpenFileProps = data
-
-                            if (uuid === id) {
-                                canvasHistory.set(file)
-                                canvasHistory.reDraw(file)
-                                canvasEmitter.emit("canvas-tool", { current: "cursor" })
-                                canvasEmitter.emit("property-bar", { current: "none" })
-                                console.log("打开文件", name)
-                            }
-                        })
+                        openFile()
                         break
                     }
                     case "save-file": {
-                        ipcRenderer.send("save-file", {
-                            type: "save",
-                            data: canvasHistory.history,
-                            file: canvasFile.file
-                        })
+                        saveFile()
                         break
                     }
                     case "save-as-file" : {
-                        ipcRenderer.send("save-file", {
-                            type: "save-as",
-                            data: canvasHistory.history,
-                            file: canvasFile.file
-                        })
+                        saveAsFile()
                         break
                     }
                     default: {

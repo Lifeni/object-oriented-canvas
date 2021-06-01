@@ -9,7 +9,7 @@ type CanvasVectorObjects = Circle | Rectangle | Line | Text | null
 type CanvasBinaryObjects = ImageObject | null
 type CanvasObjects = CanvasVectorObjects | CanvasBinaryObjects
 
-const canvasObjectMap = (name: string, ctx: CanvasRenderingContext2D, data?: IImportImageData): CanvasObjects => {
+const objectsMap = (name: string, ctx: CanvasRenderingContext2D, data?: IImportImageData): CanvasObjects => {
     switch (name) {
         case "circle": {
             return new Circle(ctx)
@@ -33,7 +33,7 @@ const canvasObjectMap = (name: string, ctx: CanvasRenderingContext2D, data?: IIm
 }
 
 export {
-    canvasObjectMap,
+    objectsMap,
     CanvasObjects,
     CanvasVectorObjects,
     CanvasBinaryObjects

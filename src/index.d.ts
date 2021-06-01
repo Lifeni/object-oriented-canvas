@@ -94,5 +94,4 @@ type IPCSaveFileType = "save" | "save-as"
 type IPCSaveFileProps = {
     data: Array<CanvasHistoryType>,
     type: IPCSaveFileType,
-    file: string | null
 }

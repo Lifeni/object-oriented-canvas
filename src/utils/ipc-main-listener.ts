@@ -132,13 +132,13 @@ const startListen = (window: BrowserWindow): void => {
     })
 
     ipcMain.on("save-file", (event, args: IPCSaveFileProps) => {
-        const { data, type, file } = args
+        const { data, type } = args
 
-        if (type === "save" && file) {
+        if (type === "save" && canvasFile.file) {
             try {
-                fs.writeFileSync(file, JSON.stringify(data))
+                fs.writeFileSync(canvasFile.file, JSON.stringify(data))
             } catch (error) {
-                console.error("保存文件", file, error)
+                console.error("保存文件", canvasFile.file, error)
             }
 
         } else {
