@@ -1,5 +1,10 @@
 import { objectOptionEmitter } from "./emitter"
 import { ipcRenderer } from "electron"
+import Circle from "./objects/Circle"
+import Rectangle from "./objects/Rectangle"
+import Line from "./objects/Line"
+import Text from "./objects/Text"
+import Image from "./objects/Image"
 
 class CanvasContext {
     public ctx: CanvasRenderingContext2D
@@ -16,6 +21,14 @@ class CanvasHistory {
 
     push<T extends CanvasHistoryType>(data: T) {
         this.history.push(data)
+    }
+
+    set(file: Array<CanvasHistoryType>): void {
+        this.history = file
+    }
+
+    clear(): void {
+        this.history = []
     }
 
     save(): void {
@@ -35,14 +48,34 @@ class CanvasHistory {
     reDraw(data: Array<CanvasHistoryType>): void {
         const ctx = canvasContext.ctx
 
-        this.history = []
-        this.clear(ctx)
-
-        console.log(data)
+        this.clear()
+        this.clearCanvas(ctx)
 
         data.forEach((atom) => {
             switch (atom.name) {
                 case "circle": {
+                    const circle = new Circle(ctx)
+                    circle.reDraw(atom as CircleObjectType)
+                    break
+                }
+                case "rectangle": {
+                    const rectangle = new Rectangle(ctx)
+                    rectangle.reDraw(atom as RectangleObjectType)
+                    break
+                }
+                case "line": {
+                    const line = new Line(ctx)
+                    line.reDraw(atom as LineObjectType)
+                    break
+                }
+                case "text": {
+                    const text = new Text(ctx, atom.id)
+                    text.reDraw(atom as TextObjectType)
+                    break
+                }
+                case "image": {
+                    const image = new Image(ctx, atom.id)
+                    image.reDraw(atom as ImageObjectType)
                     break
                 }
                 default: {
@@ -52,7 +85,7 @@ class CanvasHistory {
         })
     }
 
-    clear(ctx: CanvasRenderingContext2D): void {
+    clearCanvas(ctx: CanvasRenderingContext2D): void {
         ctx.save()
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
         ctx.fillStyle = "#fff"

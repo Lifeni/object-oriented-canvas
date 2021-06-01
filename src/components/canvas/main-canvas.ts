@@ -1,6 +1,6 @@
 import { fromEvent } from "rxjs"
 import { canvasEmitter, objectOptionEmitter } from "../../emitter"
-import { canvasContext, canvasElement, canvasSnapshot, canvasTool } from "../../store"
+import { canvasContext, canvasElement, canvasHistory, canvasSnapshot, canvasTool } from "../../store"
 import { canvasObjectMap, CanvasObjects } from "../../utils/canvasObjectMap"
 import Text from "../../objects/Text"
 import { ipcRenderer } from "electron"
@@ -39,7 +39,6 @@ export default class MainCanvas extends HTMLElement {
         this.ctx = this.canvas.getContext("2d")
 
         this.initCanvas()
-        this.tryDraw()
         this.handleEvent()
     }
 
@@ -56,16 +55,6 @@ export default class MainCanvas extends HTMLElement {
 
         this.setCanvas()
         canvasElement.set(this.canvas)
-    }
-
-    tryDraw(): void {
-        this.ctx.font = "48px Inter"
-        this.ctx.fillText("Hello, Electron", 80, 108)
-
-        this.ctx.font = "24px Inter"
-        this.ctx.fillText("🎨 Object-oriented Canvas", 80, 160)
-
-        this.setCanvas()
     }
 
     handleEvent(): void {
@@ -148,6 +137,7 @@ export default class MainCanvas extends HTMLElement {
         this.ctx.fillRect(0, 0, this.vw, this.vh)
         this.ctx.restore()
         this.setCanvas()
+        canvasHistory.clear()
     }
 }
 

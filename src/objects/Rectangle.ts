@@ -34,6 +34,13 @@ class Rectangle extends Shape {
             option: this.shapeOption.option,
         })
     }
+
+    reDraw(data: RectangleObjectType): void {
+        this.create(data.x, data.y)
+        this.shapeOption.setOption(data.option)
+        this.draw(data.ex, data.ey)
+        this.blur(data.ex, data.ey)
+    }
 }
 
 export default Rectangle

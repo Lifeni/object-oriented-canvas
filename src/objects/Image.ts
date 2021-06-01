@@ -1,5 +1,6 @@
 import ImagePreview from "./widgets/ImagePreview"
 import Base from "./bases/Base"
+import { v4 as uuidv4 } from "uuid"
 
 class ImageObject extends Base {
     public imagePreview: ImagePreview
@@ -10,14 +11,16 @@ class ImageObject extends Base {
     public flag = 0
     private readonly id: string
 
-    constructor(ctx: CanvasRenderingContext2D, id: string, data: IImportImageData) {
+    constructor(ctx: CanvasRenderingContext2D, id: string, data?: IImportImageData) {
         super(ctx)
 
-        this.imageData = data
-        this.imagePreview = new ImagePreview(id, data)
-        this.imagePreview.mount()
+        if (data) {
+            this.imageData = data
+            this.imagePreview = new ImagePreview(id, data)
+            this.imagePreview.mount()
 
-        this.image.src = `data:image/png;base64,${this.imageData.data}`
+            this.image.src = `data:image/png;base64,${this.imageData.data}`
+        }
 
         this.flag = 1
         this.id = id
@@ -66,6 +69,27 @@ class ImageObject extends Base {
         this.active = false
         this.drawImage(x, y)
         this.imagePreview.unmount()
+
+        this.pushHistory<ImageObjectType>({
+            id: uuidv4(),
+            name: "image",
+            x: this.x,
+            y: this.y,
+            ex: x,
+            ey: y,
+            data: this.imageData.data
+        })
+    }
+
+    reDraw(data: ImageObjectType): void {
+        this.x = data.x
+        this.y = data.y
+
+        const image = new Image()
+        image.src = `data:image/png;base64,${data.data}`
+        image.onload = () => {
+            this.ctx.drawImage(image, this.x, this.y, data.ex, data.ey)
+        }
     }
 }
 

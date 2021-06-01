@@ -2,6 +2,7 @@ import { textOption, TextOption } from "../store"
 import TextInput from "./widgets/TextInput"
 import { textInputEmitter } from "../emitter"
 import Base from "./bases/Base"
+import { v4 as uuidv4 } from "uuid"
 
 class Text extends Base {
     public textOption: TextOption = textOption
@@ -53,13 +54,17 @@ class Text extends Base {
 
         textInputEmitter.on("ok", ({ value, id }) => {
             if (this.id === id) {
-                this.ctx.font =
-                    `${this.textOption.option.isBold ? `bold` : ``} ${this.textOption.option.isItalic ? `italic` : ``} ${this.textOption.option.fontSize * window.devicePixelRatio}px ${this.textOption.option.fontFamily}`
-                this.ctx.fillStyle = this.textOption.option.fontColor
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                this.ctx.wrapText(value, this.x + 18, this.y + this.textOption.option.fontSize * window.devicePixelRatio + 14,
-                    dx, this.textOption.option.fontSize * window.devicePixelRatio * 1.5)
+                this.drawText(dx, value)
+                this.pushHistory<TextObjectType>({
+                    id: uuidv4(),
+                    name: "text",
+                    x: this.x,
+                    y: this.y,
+                    ex: x,
+                    ey: y,
+                    option: this.textOption.option,
+                    data: value
+                })
 
                 textInput.unmount()
             }
@@ -72,6 +77,26 @@ class Text extends Base {
         })
 
         this.setCanvas()
+    }
+
+    drawText(dx: number, value: string): void {
+        this.ctx.font =
+            `${this.textOption.option.isBold ? `bold` : ``} ${this.textOption.option.isItalic ? `italic` : ``} ${this.textOption.option.fontSize * window.devicePixelRatio}px ${this.textOption.option.fontFamily}`
+        this.ctx.fillStyle = this.textOption.option.fontColor
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        this.ctx.wrapText(value, this.x + 18, this.y + this.textOption.option.fontSize * window.devicePixelRatio + 14,
+            dx, this.textOption.option.fontSize * window.devicePixelRatio * 1.5)
+    }
+
+
+    reDraw(data: TextObjectType): void {
+        this.textOption.setOption(data.option)
+        this.x = data.x
+        this.y = data.y
+
+        this.drawText(data.ex, data.data)
     }
 }
 

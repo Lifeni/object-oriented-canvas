@@ -50,6 +50,12 @@ class Circle extends Shape {
         return this.calc(dx, dy) / this.calc(x, y)
     }
 
+    reDraw(data: CircleObjectType): void {
+        this.create(data.x, data.y)
+        this.shapeOption.setOption(data.option)
+        this.draw(data.ex, data.ey)
+        this.blur(data.ex, data.ey)
+    }
 }
 
 export default Circle

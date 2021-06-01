@@ -34,6 +34,7 @@ export default class MenuItem extends HTMLElement {
                         ipcRenderer.send("open-file")
                         ipcRenderer.once("open-file-data", (_, data) => {
                             const { file, name }: IPCOpenFileProps = data
+                            canvasHistory.set(file)
                             canvasHistory.reDraw(file)
                         })
                         break

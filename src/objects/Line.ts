@@ -31,6 +31,13 @@ class Line extends Base {
         })
     }
 
+    reDraw(data: LineObjectType): void {
+        this.create(data.x, data.y)
+        this.lineOption.setOption(data.option)
+        this.draw(data.ex, data.ey)
+        this.blur(data.ex, data.ey)
+    }
+
     applyOption(): void {
         const apply = (who: ILineOption): void => {
             this.ctx.lineWidth = who.lineWidth
