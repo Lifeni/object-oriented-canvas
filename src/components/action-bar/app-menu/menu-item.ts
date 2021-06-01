@@ -1,6 +1,6 @@
 import { ipcRenderer } from "electron"
 import { fromEvent } from "rxjs"
-import { canvasElement, canvasHistory } from "../../../store"
+import { canvasContext, canvasElement, canvasFile, canvasHistory } from "../../../store"
 import { canvasEmitter } from "../../../emitter"
 import { v4 as uuidv4 } from "uuid"
 
@@ -32,6 +32,14 @@ export default class MenuItem extends HTMLElement {
                         })
                         break
                     }
+                    case "new-canvas": {
+                        canvasHistory.clear()
+                        canvasHistory.clearCanvas(canvasContext.ctx)
+                        canvasFile.file = null
+                        canvasEmitter.emit("canvas-tool", { current: "cursor" })
+                        canvasEmitter.emit("property-bar", { current: "none" })
+                        break
+                    }
                     case "open-file": {
                         const uuid = uuidv4()
                         ipcRenderer.send("open-file", uuid)
@@ -51,14 +59,16 @@ export default class MenuItem extends HTMLElement {
                     case "save-file": {
                         ipcRenderer.send("save-file", {
                             type: "save",
-                            data: canvasHistory.history
+                            data: canvasHistory.history,
+                            file: canvasFile.file
                         })
                         break
                     }
                     case "save-as-file" : {
                         ipcRenderer.send("save-file", {
                             type: "save-as",
-                            data: canvasHistory.history
+                            data: canvasHistory.history,
+                            file: canvasFile.file
                         })
                         break
                     }

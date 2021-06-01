@@ -83,8 +83,16 @@ type IPCExportImageType = "png" | "jpeg" | "webp"
 
 type IPCExportImageProps = { data: string, type: IPCExportImageType }
 
-type IPCOpenFileProps = { file: Array<CanvasHistoryType>, name: string, id: string }
+type IPCOpenFileProps = {
+    file: Array<CanvasHistoryType>,
+    name: string,
+    id: string
+}
 
 type IPCSaveFileType = "save" | "save-as"
 
-type IPCSaveFileProps = { data: Array<CanvasHistoryType>, type: IPCSaveFileType }
+type IPCSaveFileProps = {
+    data: Array<CanvasHistoryType>,
+    type: IPCSaveFileType,
+    file: string | null
+}

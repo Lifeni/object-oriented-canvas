@@ -87,6 +87,10 @@ class CanvasFile {
     set(path: string) {
         this.file = path
     }
+
+    clear(): void {
+        this.file = null
+    }
 }
 
 export const canvasFile = new CanvasFile()
@@ -112,6 +116,10 @@ class CanvasSnapshot {
 
     get(): ImageData {
         return this.snapshot
+    }
+
+    clear(): void {
+        this.snapshot = null
     }
 }
 

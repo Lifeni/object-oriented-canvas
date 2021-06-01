@@ -5,6 +5,7 @@ export default class AppMenu extends HTMLElement {
         shadowRoot.innerHTML = `
             <menu-button icon="menu" id="menu-button" class="menu-button"></menu-button>
             <div class="menu" role="menu" id="menu">
+                <menu-item action="new-canvas">新建</menu-item>
                 <menu-item action="open-file">打开</menu-item>
                 <menu-item action="save-file">保存</menu-item>
                 <menu-item action="save-as-file">另存为</menu-item>
