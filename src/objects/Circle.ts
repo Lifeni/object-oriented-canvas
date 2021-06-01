@@ -1,5 +1,6 @@
 import Shape from "./bases/Shape"
 import { circleOption } from "../store"
+import { v4 as uuidv4 } from "uuid"
 
 class Circle extends Shape {
     constructor(ctx: CanvasRenderingContext2D) {
@@ -20,6 +21,19 @@ class Circle extends Shape {
         }
 
         this.checkOption()
+    }
+
+    blur(x: number, y: number): void {
+        this.active = false
+        this.pushHistory<CircleObjectType>({
+            id: uuidv4(),
+            name: "circle",
+            x: this.x,
+            y: this.y,
+            ex: x,
+            ey: y,
+            option: this.shapeOption.option,
+        })
     }
 
     calc(dx: number, dy: number): number {

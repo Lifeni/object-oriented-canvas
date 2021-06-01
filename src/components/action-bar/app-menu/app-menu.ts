@@ -7,7 +7,7 @@ export default class AppMenu extends HTMLElement {
             <div class="menu" role="menu" id="menu">
                 <menu-item action="open-file">打开</menu-item>
                 <menu-item action="save-file">保存</menu-item>
-                <menu-item action="save-as">另存为</menu-item>
+                <menu-item action="save-as-file">另存为</menu-item>
                 <div class="divider"></div>
                 <menu-item action="export-image" type="png">导出为 PNG</menu-item>
                 <menu-item action="export-image" type="jpeg">导出为 JPG</menu-item>
@@ -26,9 +26,9 @@ export default class AppMenu extends HTMLElement {
         const menuButton = shadowRoot.getElementById("menu-button")
 
         window.addEventListener("click", (event) => {
+
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-
             if (event.target.shadowRoot?.activeElement?.classList.contains("menu-button")) {
                 menu.classList.toggle("show")
             } else {

@@ -1,6 +1,7 @@
 import Base from "./bases/Base"
 import { objectOptionEmitter } from "../emitter"
 import { lineOption, LineOption } from "../store"
+import { v4 as uuidv4 } from "uuid"
 
 class Line extends Base {
     public lineOption: LineOption = lineOption
@@ -15,6 +16,19 @@ class Line extends Base {
         this.ctx.moveTo(this.x, this.y)
         this.ctx.lineTo(x, y)
         this.ctx.stroke()
+    }
+
+    blur(x: number, y: number): void {
+        this.active = false
+        this.pushHistory<LineObjectType>({
+            id: uuidv4(),
+            name: "line",
+            x: this.x,
+            y: this.y,
+            ex: x,
+            ey: y,
+            option: this.lineOption.option,
+        })
     }
 
     applyOption(): void {

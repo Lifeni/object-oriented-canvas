@@ -1,4 +1,4 @@
-import { canvasSnapshot } from "../../store"
+import { canvasHistory, canvasSnapshot } from "../../store"
 
 class Base {
     public ctx: CanvasRenderingContext2D
@@ -21,7 +21,6 @@ class Base {
         this.y = y
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     blur(x: number, y: number): void {
         this.active = false
     }
@@ -32,6 +31,10 @@ class Base {
 
     getCanvas(): void {
         this.ctx.putImageData(canvasSnapshot.get(), 0, 0)
+    }
+
+    pushHistory<T extends CanvasHistoryType>(object: T): void {
+        canvasHistory.push<T>(object)
     }
 }
 

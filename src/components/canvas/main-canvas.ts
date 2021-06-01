@@ -1,6 +1,6 @@
 import { fromEvent } from "rxjs"
 import { canvasEmitter, objectOptionEmitter } from "../../emitter"
-import { canvasElement, canvasSnapshot, canvasTool } from "../../store"
+import { canvasContext, canvasElement, canvasSnapshot, canvasTool } from "../../store"
 import { canvasObjectMap, CanvasObjects } from "../../utils/canvasObjectMap"
 import Text from "../../objects/Text"
 import { ipcRenderer } from "electron"
@@ -44,6 +44,8 @@ export default class MainCanvas extends HTMLElement {
     }
 
     initCanvas(): void {
+        canvasContext.set(this.ctx)
+
         this.ctx.canvas.width = this.vw
         this.ctx.canvas.height = this.vh
 

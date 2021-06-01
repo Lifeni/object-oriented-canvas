@@ -6,10 +6,12 @@
     "build": "tsc",
     "build:win": "tsc && electron-builder --win portable",
     "build:linux": "tsc && electron-builder --linux",
-    "watch": "tsc -w",
     "lint": "eslint -c .eslintrc --ext .ts ./src",
-    "start": "npm run build && electron ./dist/main.js",
-    "dev": "rimraf ./dist && tsc && concurrently \"tsc -w\" \"electronmon ./dist/main.js\""
+    "start": "electronmon ./dist/main.js",
+    "watch": "tsc -w",
+    "dev": "concurrently npm:watch npm:start",
+    "clear": "rimraf ./dist",
+    "prebuild": "npm run clear"
   },
   "repository": "https://github.com/Lifeni/object-oriented-canvas",
   "author": "Lifeni",

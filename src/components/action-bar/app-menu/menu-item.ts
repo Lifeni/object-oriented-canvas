@@ -1,6 +1,6 @@
 import { ipcRenderer } from "electron"
 import { fromEvent } from "rxjs"
-import { canvasElement } from "../../../store"
+import { canvasElement, canvasHistory } from "../../../store"
 
 export default class MenuItem extends HTMLElement {
     static get observedAttributes(): Array<string> {
@@ -24,7 +24,26 @@ export default class MenuItem extends HTMLElement {
             .subscribe(() => {
                 switch (this.action) {
                     case "export-image": {
-                        ipcRenderer.send(this.action, canvasElement.exportFile(`image/${this.type}`), this.type)
+                        ipcRenderer.send(this.action, {
+                            data: canvasElement.exportFile(`image/${this.type}`),
+                            type: this.type
+                        })
+                        break
+                    }
+                    case "open-file": {
+                        ipcRenderer.send("open-file")
+                        ipcRenderer.once("open-file-data", (_, data) => {
+                            const { file, name }: IPCOpenFileProps = data
+                            canvasHistory.reDraw(file)
+                        })
+                        break
+                    }
+                    case "save-file": {
+                        canvasHistory.save()
+                        break
+                    }
+                    case "save-as-file" : {
+                        canvasHistory.saveAs()
                         break
                     }
                     default: {

@@ -58,7 +58,9 @@ const startListen = (window: BrowserWindow): void => {
         })
     })
 
-    ipcMain.on("export-image", (event, data: string, type: string) => {
+    ipcMain.on("export-image", (event, args: IPCExportImageProps) => {
+        const { data, type } = args
+
         const file = dialog.showSaveDialogSync(
             {
                 filters: [
@@ -73,8 +75,7 @@ const startListen = (window: BrowserWindow): void => {
             try {
                 const base64 = data.replace(`data:image/${type};base64,`, "")
                 fs.writeFileSync(file, base64, "base64")
-            } catch
-                (error) {
+            } catch (error) {
                 console.error(error)
             }
         }
@@ -97,9 +98,53 @@ const startListen = (window: BrowserWindow): void => {
                     data: data.toString("base64"),
                     name: file[0]
                 })
-            } catch
-                (error) {
+            } catch (error) {
                 console.error(error)
+            }
+        }
+    })
+
+    ipcMain.on("open-file", (event) => {
+        const file = dialog.showOpenDialogSync(
+            {
+                filters: [
+                    { name: "JSON", extensions: ["json"] },
+                ],
+                properties: ["openFile"]
+            }
+        )
+
+        if (file) {
+            try {
+                const data = fs.readFileSync(file[0])
+                event.sender.send("open-file-data", {
+                    file: JSON.parse(data.toString()),
+                    name: file[0]
+                })
+            } catch (error) {
+                console.error(error)
+            }
+        }
+    })
+
+    ipcMain.on("save-file", (event, args: IPCSaveFileProps) => {
+        const { data, type } = args
+
+        const file = dialog.showSaveDialogSync(
+            {
+                filters: [
+                    { name: "JSON", extensions: ["json"] },
+                    { name: "All Files", extensions: ["*"] }
+                ],
+                properties: ["createDirectory"]
+            }
+        )
+
+        if (file) {
+            try {
+                fs.writeFileSync(file, JSON.stringify(data))
+            } catch (error) {
+                console.error(type, error)
             }
         }
     })

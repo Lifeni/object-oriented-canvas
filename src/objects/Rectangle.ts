@@ -1,5 +1,6 @@
 import Shape from "./bases/Shape"
 import { rectangleOption } from "../store"
+import { v4 as uuidv4 } from "uuid"
 
 class Rectangle extends Shape {
 
@@ -19,6 +20,19 @@ class Rectangle extends Shape {
         }
 
         this.checkOption()
+    }
+
+    blur(x: number, y: number): void {
+        this.active = false
+        this.pushHistory<RectangleObjectType>({
+            id: uuidv4(),
+            name: "rectangle",
+            x: this.x,
+            y: this.y,
+            ex: x,
+            ey: y,
+            option: this.shapeOption.option,
+        })
     }
 }
 
