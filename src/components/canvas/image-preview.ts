@@ -35,6 +35,7 @@ export default class ImagePreview extends HTMLElement {
             :host(.hide) {
                 opacity: 0;
                 visibility: hidden;
+                transition: opacity 0.2s;
             }         
         </style>
     `

@@ -48,7 +48,7 @@ class ImageObject extends Base {
 
         if (dx < 4 && dy < 4) return
 
-        if (dx < 100 || dy < 100) {
+        if (dx < 100 && dy < 100) {
             this.imagePreview.show()
         } else {
             this.imagePreview.hide()
@@ -58,9 +58,15 @@ class ImageObject extends Base {
         const containerRatio = dx / dy
 
         if (imageRatio > containerRatio) {
-            this.ctx.drawImage(this.image, this.x, this.y, dy * imageRatio, dy)
+            const mX = (this.x > x) ? (this.x - dy * imageRatio) : this.x
+            const mY = (this.y > y) ? (this.y - dy) : this.y
+
+            this.ctx.drawImage(this.image, mX, mY, dy * imageRatio, dy)
         } else {
-            this.ctx.drawImage(this.image, this.x, this.y, dx, dx / imageRatio)
+            const mX = (this.x > x) ? (this.x - dx) : this.x
+            const mY = (this.y > y) ? (this.y - dx / imageRatio) : this.y
+
+            this.ctx.drawImage(this.image, mX, mY, dx, dx / imageRatio)
         }
     }
 
@@ -77,25 +83,32 @@ class ImageObject extends Base {
         const imageRatio = this.image.width / this.image.height
         const containerRatio = dx / dy
 
+        let mX, mY
+
+        if (imageRatio > containerRatio) {
+            mX = (this.x > x) ? (this.x - dy * imageRatio) : this.x
+            mY = (this.y > y) ? (this.y - dy) : this.y
+        } else {
+            mX = (this.x > x) ? (this.x - dx) : this.x
+            mY = (this.y > y) ? (this.y - dx / imageRatio) : this.y
+        }
+
         this.pushHistory<ImageObjectType>({
             id: uuidv4(),
             name: "image",
-            x: this.x,
-            y: this.y,
+            x: mX,
+            y: mY,
             ex: imageRatio > containerRatio ? dy * imageRatio : dx,
-            ey: imageRatio > containerRatio ? dx : dx / imageRatio,
+            ey: imageRatio > containerRatio ? dy : dx / imageRatio,
             data: this.imageData.data
         })
     }
 
     reDraw(data: ImageObjectType): void {
-        this.x = data.x
-        this.y = data.y
-
         const image = new Image()
         image.src = `data:image/png;base64,${data.data}`
         image.onload = () => {
-            this.ctx.drawImage(image, this.x, this.y, data.ex, data.ey)
+            this.ctx.drawImage(image, data.x, data.y, data.ex, data.ey)
         }
     }
 }
