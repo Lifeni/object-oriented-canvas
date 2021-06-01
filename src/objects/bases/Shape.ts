@@ -6,24 +6,24 @@ import { ShapeOption } from "../../store"
 
 class Shape extends Base {
     public pressShift = false
-    public polygonOption: ShapeOption
+    public shapeOption: ShapeOption
 
     constructor(ctx: CanvasRenderingContext2D, store: ShapeOption) {
         super(ctx)
-        this.polygonOption = store
+        this.shapeOption = store
         this.applyOption()
         this.bindKey()
     }
 
     applyOption(): void {
-        const apply = (who: IPolygonOption): void => {
+        const apply = (who: IShapeOption): void => {
             this.ctx.lineWidth = who.borderWidth
             this.ctx.strokeStyle = who.borderColor
             this.ctx.fillStyle = who.fillColor || "#ffffff"
         }
 
-        apply(this.polygonOption.option)
-        objectOptionEmitter.on("polygon", (event: IPolygonOption) => {
+        apply(this.shapeOption.option)
+        objectOptionEmitter.on("shape", (event: IShapeOption) => {
             apply(event)
         })
     }
@@ -40,11 +40,11 @@ class Shape extends Base {
     }
 
     checkOption(): void {
-        if (!this.polygonOption.option.noFillColor) {
+        if (!this.shapeOption.option.noFillColor) {
             this.ctx.fill()
         }
 
-        if (this.polygonOption.option.borderWidth !== 0) {
+        if (this.shapeOption.option.borderWidth !== 0) {
             this.ctx.stroke()
         }
     }

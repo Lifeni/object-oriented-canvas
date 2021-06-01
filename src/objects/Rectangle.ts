@@ -10,7 +10,7 @@ class Rectangle extends Shape {
     draw(x: number, y: number): void {
         this.ctx.beginPath()
 
-        if (this.polygonOption.option.isPerfectShape || this.pressShift) {
+        if (this.shapeOption.option.isPerfectShape || this.pressShift) {
             this.ctx.rect(this.x, this.y,
                 Math.max(x - this.x, y - this.y),
                 Math.max(x - this.x, y - this.y))

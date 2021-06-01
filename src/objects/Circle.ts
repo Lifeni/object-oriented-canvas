@@ -9,7 +9,7 @@ class Circle extends Shape {
     draw(x: number, y: number): void {
         this.ctx.beginPath()
 
-        if (this.polygonOption.option.isPerfectShape || this.pressShift) {
+        if (this.shapeOption.option.isPerfectShape || this.pressShift) {
             this.ctx.arc(this.x - (this.x - x) / 2, this.y - (this.y - y) / 2,
                 this.calc(this.x - x, this.y - y), 0, 2 * Math.PI)
         } else {
