@@ -1,5 +1,4 @@
 import { objectOptionEmitter } from "./emitter"
-import { ipcRenderer } from "electron"
 import Circle from "./objects/Circle"
 import Rectangle from "./objects/Rectangle"
 import Line from "./objects/Line"
@@ -29,20 +28,6 @@ class CanvasHistory {
 
     clear(): void {
         this.history = []
-    }
-
-    save(): void {
-        ipcRenderer.send("save-file", {
-            type: "save",
-            data: this.history
-        })
-    }
-
-    saveAs(): void {
-        ipcRenderer.send("save-file", {
-            type: "save-as",
-            data: this.history
-        })
     }
 
     reDraw(data: Array<CanvasHistoryType>): void {

@@ -82,7 +82,7 @@ const startListen = (window: BrowserWindow): void => {
         }
     })
 
-    ipcMain.on("import-image", (event) => {
+    ipcMain.on("import-image", (event, id: string) => {
         const file = dialog.showOpenDialogSync(
             {
                 filters: [
@@ -97,7 +97,8 @@ const startListen = (window: BrowserWindow): void => {
                 const data = fs.readFileSync(file[0])
                 event.sender.send("import-image-data", {
                     data: data.toString("base64"),
-                    name: file[0]
+                    name: file[0],
+                    id: id
                 })
             } catch (error) {
                 console.error(error)
@@ -105,7 +106,7 @@ const startListen = (window: BrowserWindow): void => {
         }
     })
 
-    ipcMain.on("open-file", (event) => {
+    ipcMain.on("open-file", (event, id: string) => {
         const file = dialog.showOpenDialogSync(
             {
                 filters: [
@@ -118,9 +119,11 @@ const startListen = (window: BrowserWindow): void => {
         if (file) {
             try {
                 const data = fs.readFileSync(file[0])
+                canvasFile.set(file[0])
                 event.sender.send("open-file-data", {
                     file: JSON.parse(data.toString()),
-                    name: file[0]
+                    name: file[0],
+                    id: id
                 })
             } catch (error) {
                 console.error(error)
@@ -158,8 +161,6 @@ const startListen = (window: BrowserWindow): void => {
                 }
             }
         }
-
-
     })
 }
 

@@ -76,13 +76,14 @@ interface IObserverFunction {
 interface IImportImageData {
     name: string
     data: string
+    id: string
 }
 
 type IPCExportImageType = "png" | "jpeg" | "webp"
 
 type IPCExportImageProps = { data: string, type: IPCExportImageType }
 
-type IPCOpenFileProps = { file: Array<CanvasHistoryType>, name: string }
+type IPCOpenFileProps = { file: Array<CanvasHistoryType>, name: string, id: string }
 
 type IPCSaveFileType = "save" | "save-as"
 

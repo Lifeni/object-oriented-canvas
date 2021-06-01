@@ -5,6 +5,7 @@ import { canvasObjectMap, CanvasObjects } from "../../utils/canvasObjectMap"
 import Text from "../../objects/Text"
 import { ipcRenderer } from "electron"
 import ImageObject from "../../objects/Image"
+import { v4 as uuidv4 } from "uuid"
 
 export default class MainCanvas extends HTMLElement {
 
@@ -17,6 +18,8 @@ export default class MainCanvas extends HTMLElement {
 
     public obj: CanvasObjects
     public type: "vector" | "binary" = "vector"
+
+    public flag = 0
 
     readonly stylesheet = `
         <style>
@@ -62,10 +65,14 @@ export default class MainCanvas extends HTMLElement {
             if (event.current === "clear") {
                 this.clearCanvas()
             } else if (event.current === "image") {
-                ipcRenderer.send("import-image")
+                const uuid = uuidv4()
+
+                ipcRenderer.send("import-image", uuid)
                 ipcRenderer.once("import-image-data", (_, data: IImportImageData) => {
-                    this.obj = canvasObjectMap(event.current, this.ctx, data)
-                    this.type = "binary"
+                    if (uuid === data.id) {
+                        this.obj = canvasObjectMap("image", this.ctx, data)
+                        this.type = "binary"
+                    }
                 })
                 canvasTool.setDefault()
             } else {
@@ -84,6 +91,8 @@ export default class MainCanvas extends HTMLElement {
                     this.obj.create(event.offsetX * this.dpr, event.offsetY * this.dpr)
                     objectOptionEmitter.emit("blur")
                     this.setCanvas()
+
+                    this.flag = 1
                 }
             })
 
@@ -108,7 +117,7 @@ export default class MainCanvas extends HTMLElement {
         fromEvent(this.canvas, "mouseup")
             .subscribe((event: MouseEvent) => {
                 const target = event.target as HTMLElement
-                if (this.obj
+                if (this.obj && this.flag === 1
                     && (target.localName === "main-canvas" || target.localName === "canvas")) {
                     this.obj.blur(event.offsetX * this.dpr, event.offsetY * this.dpr)
                     this.setCanvas()
@@ -118,6 +127,8 @@ export default class MainCanvas extends HTMLElement {
                     } else if (this.obj instanceof ImageObject) {
                         this.obj = null
                     }
+
+                    this.flag = 0
                 }
             })
     }

@@ -2,6 +2,7 @@ import { ipcRenderer } from "electron"
 import { fromEvent } from "rxjs"
 import { canvasElement, canvasHistory } from "../../../store"
 import { canvasEmitter } from "../../../emitter"
+import { v4 as uuidv4 } from "uuid"
 
 export default class MenuItem extends HTMLElement {
     static get observedAttributes(): Array<string> {
@@ -32,25 +33,33 @@ export default class MenuItem extends HTMLElement {
                         break
                     }
                     case "open-file": {
-                        ipcRenderer.send("open-file")
+                        const uuid = uuidv4()
+                        ipcRenderer.send("open-file", uuid)
                         ipcRenderer.once("open-file-data", (_, data) => {
-                            const { file, name }: IPCOpenFileProps = data
+                            const { file, name, id }: IPCOpenFileProps = data
 
-                            canvasHistory.set(file)
-                            canvasHistory.reDraw(file)
-                            canvasEmitter.emit("canvas-tool", { current: "cursor" })
-                            canvasEmitter.emit("property-bar", { current: "none" })
-
-                            console.log("打开文件", name)
+                            if (uuid === id) {
+                                canvasHistory.set(file)
+                                canvasHistory.reDraw(file)
+                                canvasEmitter.emit("canvas-tool", { current: "cursor" })
+                                canvasEmitter.emit("property-bar", { current: "none" })
+                                console.log("打开文件", name)
+                            }
                         })
                         break
                     }
                     case "save-file": {
-                        canvasHistory.save()
+                        ipcRenderer.send("save-file", {
+                            type: "save",
+                            data: canvasHistory.history
+                        })
                         break
                     }
                     case "save-as-file" : {
-                        canvasHistory.saveAs()
+                        ipcRenderer.send("save-file", {
+                            type: "save-as",
+                            data: canvasHistory.history
+                        })
                         break
                     }
                     default: {
