@@ -31,7 +31,10 @@ class Rectangle extends Shape {
             y: this.y,
             ex: x,
             ey: y,
-            option: this.shapeOption.option,
+            option: {
+                ...this.shapeOption.option,
+                isPerfectShape: (this.shapeOption.option.isPerfectShape || this.pressShift)
+            },
         })
     }
 

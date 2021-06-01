@@ -25,6 +25,7 @@ class Circle extends Shape {
 
     blur(x: number, y: number): void {
         this.active = false
+
         this.pushHistory<CircleObjectType>({
             id: uuidv4(),
             name: "circle",
@@ -32,7 +33,10 @@ class Circle extends Shape {
             y: this.y,
             ex: x,
             ey: y,
-            option: this.shapeOption.option,
+            option: {
+                ...this.shapeOption.option,
+                isPerfectShape: (this.shapeOption.option.isPerfectShape || this.pressShift)
+            },
         })
     }
 
