@@ -22,6 +22,8 @@ class CanvasHistory {
     push<T extends CanvasHistoryType>(data: T) {
         this.history.push(data)
         this.feature = []
+
+        canvasFile.change()
     }
 
     undo(): void {
@@ -105,9 +107,18 @@ export const canvasHistory = new CanvasHistory()
 
 class CanvasFile {
     public file: string | null = null
+    public saved = false
 
     set(path: string) {
         this.file = path
+    }
+
+    save() {
+        this.saved = true
+    }
+
+    change() {
+        this.saved = false
     }
 
     clear(): void {

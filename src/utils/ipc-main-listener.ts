@@ -1,7 +1,6 @@
 import { ipcMain } from "electron/main"
 import { app, BrowserWindow, dialog } from "electron"
 import fs from "fs"
-import { canvasFile } from "../store"
 
 const startListen = (window: BrowserWindow): void => {
 
@@ -119,7 +118,6 @@ const startListen = (window: BrowserWindow): void => {
         if (file) {
             try {
                 const data = fs.readFileSync(file[0])
-                canvasFile.set(file[0])
                 event.sender.send("open-file-data", {
                     file: JSON.parse(data.toString()),
                     name: file[0],
@@ -132,13 +130,13 @@ const startListen = (window: BrowserWindow): void => {
     })
 
     ipcMain.on("save-file", (event, args: IPCSaveFileProps) => {
-        const { data, type } = args
+        const { data, type, id, file } = args
 
-        if (type === "save" && canvasFile.file) {
+        if (type === "save" && file) {
             try {
-                fs.writeFileSync(canvasFile.file, JSON.stringify(data))
+                fs.writeFileSync(file, JSON.stringify(data))
             } catch (error) {
-                console.error("保存文件", canvasFile.file, error)
+                console.error("保存文件", file, error)
             }
 
         } else {
@@ -155,7 +153,10 @@ const startListen = (window: BrowserWindow): void => {
             if (file) {
                 try {
                     fs.writeFileSync(file, JSON.stringify(data))
-                    canvasFile.set(file)
+                    event.sender.send("save-file-data", {
+                        name: file,
+                        id: id
+                    })
                 } catch (error) {
                     console.error("另存为文件", file, error)
                 }

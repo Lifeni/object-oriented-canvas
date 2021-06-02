@@ -4,7 +4,7 @@ import { fromEvent } from "rxjs"
 
 type ToolButtonStatus = "none" | "selected" | "show-property-bar"
 type CanvasObjectName = "circle" | "rectangle" | "line" | "image" | "text" | "cursor" | "clear"
-type CanvasObjectPropertyBarName = "circle" | "rectangle" | "line" | "text" | "none"
+type CanvasObjectPropertyBarName = "circle" | "rectangle" | "line" | "text" | "cursor"
 
 export default class ToolButton extends BaseButton {
     public button
@@ -18,17 +18,18 @@ export default class ToolButton extends BaseButton {
     }
 
     static get observedAttributes(): Array<string> {
-        return ["type", "property"]
+        return ["type", "property", "class"]
     }
 
     readonly type = this.getAttribute("type") as CanvasObjectName
     readonly property = this.getAttribute("property") as CanvasObjectPropertyBarName
+    readonly className = this.getAttribute("class")
 
     constructor() {
         super()
         const shadowRoot = this.attachShadow({ mode: "open" })
         shadowRoot.innerHTML = `
-            <button id="tool-button-shadow" data-status="none">
+            <button id="tool-button-shadow" data-status="none" class=${this.className || ""}>
                 ${this.iconMap(this.icon)}
             </button>
             ${this.baseStyle}
@@ -61,23 +62,20 @@ export default class ToolButton extends BaseButton {
 
     listenClick(): void {
         fromEvent(this.button, "click").subscribe(() => {
-            if (!this.focusable || !this.property) {
+            if (!this.focusable && !this.property) {
                 if (this.type !== "clear") {
-                    this.propertyBarEmitter("none")
+                    this.propertyBarEmitter("cursor")
                 }
 
                 this.canvasToolEmitter(this.type)
             } else {
                 if (this.status === "none") {
                     this.canvasToolEmitter(this.type)
-                    this.propertyBarEmitter("none")
+                    this.propertyBarEmitter(this.type as CanvasObjectPropertyBarName)
                     this.status = "selected"
                 } else if (this.status === "selected") {
-                    this.propertyBarEmitter(this.type as CanvasObjectPropertyBarName)
-                    this.status = "show-property-bar"
-                } else if (this.status === "show-property-bar") {
-                    this.propertyBarEmitter("none")
-                    this.status = "selected"
+                    this.propertyBarEmitter("cursor")
+                    this.status = "none"
                 }
             }
         })

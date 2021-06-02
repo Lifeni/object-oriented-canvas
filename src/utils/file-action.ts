@@ -7,10 +7,11 @@ const newCanvas = (): void => {
     canvasHistory.clear()
     canvasHistory.clearCanvas(canvasContext.ctx)
 
-    canvasFile.file = null
+    canvasFile.clear()
+    canvasFile.change()
 
     canvasEmitter.emit("canvas-tool", { current: "cursor" })
-    canvasEmitter.emit("property-bar", { current: "none" })
+    canvasEmitter.emit("property-bar", { current: "cursor" })
 }
 
 const openFile = (): void => {
@@ -20,35 +21,40 @@ const openFile = (): void => {
         const { file, name, id }: IPCOpenFileProps = data
 
         if (uuid === id) {
+            canvasFile.set(name)
+            canvasFile.save()
+
             canvasHistory.clear()
             canvasHistory.set(file)
             canvasHistory.clearCanvas(canvasContext.ctx)
             canvasHistory.reDraw(file)
 
             canvasEmitter.emit("canvas-tool", { current: "cursor" })
-            canvasEmitter.emit("property-bar", { current: "none" })
-            console.log("打开文件", name)
+            canvasEmitter.emit("property-bar", { current: "cursor" })
         }
     })
 }
 
-const saveFile = (): void => {
+const saveFile = (type: IPCSaveFileType): void => {
+    const uuid = uuidv4()
+
     ipcRenderer.send("save-file", {
-        type: "save",
+        type: type,
         data: canvasHistory.history,
+        id: uuid,
+        file: canvasFile.file
+    })
+
+    ipcRenderer.once("save-file-data", (_, data) => {
+        const { name, id }: IPCSaveFileCallbackProps = data
+        if (uuid === id) {
+            canvasFile.set(name)
+            canvasFile.save()
+
+            canvasEmitter.emit("property-bar", { current: "self" })
+        }
     })
 }
 
-const saveAsFile = (): void => {
-    ipcRenderer.send("save-file", {
-        type: "save-as",
-        data: canvasHistory.history,
-    })
-}
 
-export {
-    newCanvas,
-    openFile,
-    saveFile,
-    saveAsFile
-}
+export { newCanvas, openFile, saveFile }

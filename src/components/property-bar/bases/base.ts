@@ -33,26 +33,47 @@ export default class Base extends HTMLElement {
     readonly stylesheet = `
         <style>
             section {
-                position: absolute;
-                left: 0;
-                top: 48px;
                 width: 100%;
                 height: 40px;
                 padding: 8px 18px;
                 display: flex;
                 align-items: center;
-                color: #fff;
-                background: #2c2c2c;
+                color: #000000;
+                background: #f5f5f5;
+                border-top: solid 1px #f5f5f5;
+                border-bottom: solid 1px #eeeeee;
                 box-sizing: border-box;
                 gap: 18px;
-                animation: show-bar 0.2s;
                 overflow-y: hidden;
             }
             
             h1 {
                 padding: 0 20px 0 0;
-                border-right: solid 1px rgba(255, 255, 255, 0.1);
+                border-right: solid 1px #e0e0e0;
                 font-size: 0.75rem;
+                user-select: none;
+            }
+            
+            p {
+                margin: 0 2px;
+                font-size: 0.75rem;
+            }
+            
+            p.saved-status {
+                font-size: 0.625rem;
+                margin: 0 -8px 0 4px;
+                padding: 2px 6px;
+                border: solid 1px #eeeeee;
+                border-radius: 4px;
+                background: #eeeeee;
+            }
+            
+            p.saved-status.red {
+                background: #ffcdd2;
+            }
+            
+            p.saved-status.green {
+                background: #C8E6C9;
             }
         
             label,
@@ -69,10 +90,10 @@ export default class Base extends HTMLElement {
                 width: 48px;
                 height: 24px;
                 padding: 0 8px;
-                border: none;
+                border: solid 1px #eeeeee;
                 border-radius: 4px;
-                color: #fff;
-                background: rgba(255, 255, 255, 0.05);
+                color: #000000;
+                background: #ffffff;
                 font-family: InterApp, sans-serif;
                 font-size: 0.75rem;
                 outline: none;
@@ -98,18 +119,6 @@ export default class Base extends HTMLElement {
             input[type="checkbox"] {
                 width: 0.75rem;
                 height: 0.75rem;
-            }
-            
-            @keyframes show-bar {
-                from {
-                    padding: 0 18px;
-                    height: 0;
-                }
-                
-                to {
-                    padding: 8px 18px;
-                    height: 40px;
-                }
             }
         </style>
     `

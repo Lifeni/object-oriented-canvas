@@ -1,7 +1,7 @@
 import { ipcRenderer } from "electron"
 import { fromEvent } from "rxjs"
 import { canvasElement } from "../../../store"
-import { newCanvas, openFile, saveAsFile, saveFile } from "../../../utils/file-action"
+import { newCanvas, openFile, saveFile } from "../../../utils/file-action"
 
 export default class MenuItem extends HTMLElement {
     static get observedAttributes(): Array<string> {
@@ -40,11 +40,11 @@ export default class MenuItem extends HTMLElement {
                         break
                     }
                     case "save-file": {
-                        saveFile()
+                        saveFile("save")
                         break
                     }
                     case "save-as-file" : {
-                        saveAsFile()
+                        saveFile("save-as")
                         break
                     }
                     default: {

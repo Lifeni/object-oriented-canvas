@@ -10,7 +10,7 @@ export default class CanvasTools extends HTMLElement {
                 <tool-button icon="line" tooltip="线" type="line" focusable="true" property="true"></tool-button>
                 <tool-button icon="text" tooltip="文本" type="text" focusable="true" property="true"></tool-button>
                 <tool-button icon="image" tooltip="图像" type="image"></tool-button>
-                <tool-button icon="clear" tooltip="清空画布" type="clear"></tool-button>
+                <tool-button icon="clear" tooltip="清空画布" type="clear" class="danger"></tool-button>
             </section>
             ${this.stylesheet}
         `

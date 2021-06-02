@@ -30,6 +30,16 @@ export default class PropertyBar extends HTMLElement {
                 shadowRoot.innerHTML = `<text-property-bar></text-property-bar>`
                 break
             }
+            case "cursor": {
+                shadowRoot.innerHTML = `<cursor-property-bar></cursor-property-bar>`
+                break
+            }
+            case "self": {
+                const html = shadowRoot.innerHTML
+                shadowRoot.innerHTML = ""
+                shadowRoot.innerHTML = html
+                break
+            }
             default: {
                 shadowRoot.innerHTML = ``
                 break

@@ -119,21 +119,12 @@ export default class BaseButton extends HTMLElement {
                 background: rgba(255, 255, 255, 0.1);
             }
             
-            button.close:hover {
+            button.danger:hover {
                 background: #e81123;
             }
              
             button[data-status="selected"] {
                 background: #18a0fb;
-                padding-top: 4px;
-                border-bottom: solid 4px #017dd0;
-                transition: all 0.2s;
-            }
-            
-            button[data-status="show-property-bar"] {
-                background: #017dd0;
-                padding-top: 4px;
-                border-bottom: solid 4px #18a0fb;
                 transition: all 0.2s;
             }
             
@@ -153,18 +144,6 @@ export default class BaseButton extends HTMLElement {
                     white-space: nowrap;
                     transform: translateX(-50%);
                     animation: show-tooltip 0.2s;
-                }
-                
-                button[data-status="selected"]:hover::after {
-                    content: "点击展开";
-                    bottom: -36px;
-                    animation: show-tooltip-again 0.2s;
-                }
-                
-                button[data-status="show-property-bar"]:hover::after {
-                    content: "点击折叠";
-                    bottom: -36px;
-                    animation: show-tooltip-again 0.2s;
                 }
             ` : ``}
             

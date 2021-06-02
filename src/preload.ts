@@ -26,6 +26,7 @@ window.addEventListener("DOMContentLoaded", () => {
     import("./components/property-bar/objects/line")
     import("./components/property-bar/objects/text")
     import("./components/property-bar/objects/rectangle")
+    import("./components/property-bar/objects/cursor")
 
     import("./libs/canvas/wrapText")
 
