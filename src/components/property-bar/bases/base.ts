@@ -74,7 +74,7 @@ export default class Base extends HTMLElement {
                 background: #eeeeee;
             }
             
-            p。status.red {
+            p.status.red {
                 background: #ffcdd2;
             }
             

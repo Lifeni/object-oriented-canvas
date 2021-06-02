@@ -135,6 +135,10 @@ const startListen = (window: BrowserWindow): void => {
         if (type === "save" && file) {
             try {
                 fs.writeFileSync(file, JSON.stringify(data))
+                event.sender.send("save-file-data", {
+                    name: file,
+                    id: id
+                })
             } catch (error) {
                 console.error("保存文件", file, error)
             }

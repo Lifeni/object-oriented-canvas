@@ -1,4 +1,4 @@
-import { objectOptionEmitter } from "./emitter"
+import { canvasEmitter, objectOptionEmitter } from "./emitter"
 import Circle from "./objects/Circle"
 import Rectangle from "./objects/Rectangle"
 import Line from "./objects/Line"
@@ -32,6 +32,7 @@ class CanvasHistory {
             this.feature.push(temp)
             this.clearCanvas(canvasContext.ctx)
             this.reDraw(this.history)
+            canvasFile.change()
         }
     }
 
@@ -39,8 +40,8 @@ class CanvasHistory {
         const temp = this.feature.pop()
         if (temp) {
             this.history.push(temp)
-            this.clearCanvas(canvasContext.ctx)
-            this.reDraw(this.history)
+            this.reDrawOnce(temp)
+            canvasFile.change()
         }
     }
 
@@ -115,10 +116,12 @@ class CanvasFile {
 
     save() {
         this.saved = true
+        canvasEmitter.emit("property-bar", { current: "self" })
     }
 
     change() {
         this.saved = false
+        canvasEmitter.emit("property-bar", { current: "self" })
     }
 
     clear(): void {
