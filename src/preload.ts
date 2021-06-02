@@ -19,14 +19,15 @@ window.addEventListener("DOMContentLoaded", () => {
     import("./components/canvas/main-canvas")
     import("./components/canvas/text-input")
 
-    import("./components/property-bar/bases/base")
     import("./components/property-bar/property-bar")
 
     import("./components/property-bar/objects/circle")
     import("./components/property-bar/objects/line")
     import("./components/property-bar/objects/text")
     import("./components/property-bar/objects/rectangle")
-    import("./components/property-bar/objects/cursor")
+
+    import("./components/property-bar/features/cursor")
+    import("./components/property-bar/features/share")
 
     import("./libs/canvas/wrapText")
 

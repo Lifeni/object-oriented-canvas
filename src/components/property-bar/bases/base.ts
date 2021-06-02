@@ -43,37 +43,56 @@ export default class Base extends HTMLElement {
                 border-top: solid 1px #f5f5f5;
                 border-bottom: solid 1px #eeeeee;
                 box-sizing: border-box;
-                gap: 18px;
+                gap: 16px;
                 overflow-y: hidden;
             }
             
+            div {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            
             h1 {
-                padding: 0 20px 0 0;
+                padding: 0 16px 0 0;
                 border-right: solid 1px #e0e0e0;
                 font-size: 0.75rem;
                 user-select: none;
             }
             
             p {
-                margin: 0 2px;
+                margin: 0;
                 font-size: 0.75rem;
             }
             
-            p.saved-status {
+            p.status {
                 font-size: 0.625rem;
-                margin: 0 -8px 0 4px;
-                padding: 2px 6px;
+                margin: 0 4px;
+                padding: 4px 8px;
                 border: solid 1px #eeeeee;
                 border-radius: 4px;
                 background: #eeeeee;
             }
             
-            p.saved-status.red {
+            p。status.red {
                 background: #ffcdd2;
             }
             
-            p.saved-status.green {
+            p.status.green {
                 background: #C8E6C9;
+            }
+            
+            p.status.blue {
+                background: #BBDEFB;
+            }
+            
+            button {
+                padding: 4px 8px;
+                font-size: 0.75rem;
+                border: solid 1px #e0e0e0;
+                border-radius: 4px;
+                background: #eeeeee;
+                cursor: pointer;
             }
         
             label,
@@ -106,7 +125,7 @@ export default class Base extends HTMLElement {
             }
             
             input[type="text"] {
-                width: 128px;
+                width: 150px;
                 height: 24px;
             }
             

@@ -34,6 +34,10 @@ export default class PropertyBar extends HTMLElement {
                 shadowRoot.innerHTML = `<cursor-property-bar></cursor-property-bar>`
                 break
             }
+            case "share": {
+                shadowRoot.innerHTML = `<share-property-bar></share-property-bar>`
+                break
+            }
             case "self": {
                 const html = shadowRoot.innerHTML
                 shadowRoot.innerHTML = ""
