@@ -20,10 +20,10 @@ const openFile = (): void => {
         const { file, name, id }: IPCOpenFileProps = data
 
         if (uuid === id) {
-            canvasHistory.set(file)
-            canvasHistory.reDraw(file)
             canvasHistory.clear()
+            canvasHistory.set(file)
             canvasHistory.clearCanvas(canvasContext.ctx)
+            canvasHistory.reDraw(file)
 
             canvasEmitter.emit("canvas-tool", { current: "cursor" })
             canvasEmitter.emit("property-bar", { current: "none" })

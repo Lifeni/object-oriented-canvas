@@ -1,7 +1,7 @@
 import { fromEvent } from "rxjs"
 import { canvasEmitter, objectOptionEmitter } from "../../emitter"
 import { canvasContext, canvasElement, canvasHistory, canvasSnapshot, canvasTool } from "../../store"
-import { objectsMap, CanvasObjects } from "../../utils/objects-map"
+import { CanvasObjects, objectsMap } from "../../utils/objects-map"
 import Text from "../../objects/Text"
 import { ipcRenderer } from "electron"
 import ImageObject from "../../objects/Image"
@@ -93,6 +93,9 @@ export default class MainCanvas extends HTMLElement {
                     this.setCanvas()
 
                     this.flag = 1
+                } else if (!this.obj && canvasTool.tool === "cursor"
+                    && (target.localName === "main-canvas" || target.localName === "canvas")) {
+                    this.focusObject(event.offsetX * this.dpr, event.offsetY * this.dpr)
                 }
             })
 
@@ -131,6 +134,20 @@ export default class MainCanvas extends HTMLElement {
                     this.flag = 0
                 }
             })
+    }
+
+    focusObject(x: number, y: number): void {
+        canvasHistory.clearCanvas(canvasContext.ctx)
+        let once = 0
+        for (let i = canvasHistory.history.length - 1; i >= 0; i--) {
+            const ctx = canvasContext.ctx
+            canvasHistory.reDrawOnce(canvasHistory.history[i])
+            if (once === 0 && ctx.isPointInPath(x, y)) {
+                ctx.strokeStyle = "blue"
+                ctx.stroke()
+                once = 1
+            }
+        }
     }
 
     setCanvas(): void {

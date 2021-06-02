@@ -51,40 +51,44 @@ class CanvasHistory {
         this.feature = []
     }
 
-    reDraw(data: Array<CanvasHistoryType>): void {
+    reDrawOnce(atom: CanvasHistoryType): void {
         const ctx = canvasContext.ctx
 
-        data.forEach((atom) => {
-            switch (atom.name) {
-                case "circle": {
-                    const circle = new Circle(ctx)
-                    circle.reDraw(atom as CircleObjectType)
-                    break
-                }
-                case "rectangle": {
-                    const rectangle = new Rectangle(ctx)
-                    rectangle.reDraw(atom as RectangleObjectType)
-                    break
-                }
-                case "line": {
-                    const line = new Line(ctx)
-                    line.reDraw(atom as LineObjectType)
-                    break
-                }
-                case "text": {
-                    const text = new Text(ctx, atom.id)
-                    text.reDraw(atom as TextObjectType)
-                    break
-                }
-                case "image": {
-                    const image = new Image(ctx, atom.id)
-                    image.reDraw(atom as ImageObjectType)
-                    break
-                }
-                default: {
-                    break
-                }
+        switch (atom.name) {
+            case "circle": {
+                const circle = new Circle(ctx)
+                circle.reDraw(atom as CircleObjectType)
+                break
             }
+            case "rectangle": {
+                const rectangle = new Rectangle(ctx)
+                rectangle.reDraw(atom as RectangleObjectType)
+                break
+            }
+            case "line": {
+                const line = new Line(ctx)
+                line.reDraw(atom as LineObjectType)
+                break
+            }
+            case "text": {
+                const text = new Text(ctx, atom.id)
+                text.reDraw(atom as TextObjectType)
+                break
+            }
+            case "image": {
+                const image = new Image(ctx, atom.id)
+                image.reDraw(atom as ImageObjectType)
+                break
+            }
+            default: {
+                break
+            }
+        }
+    }
+
+    reDraw(data: Array<CanvasHistoryType>): void {
+        data.forEach((atom) => {
+            this.reDrawOnce(atom)
         })
     }
 
