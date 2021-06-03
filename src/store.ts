@@ -172,7 +172,7 @@ class CanvasConnection {
         this.listener()
     }
 
-    send(action: ConnectionActionType, data?: CanvasHistoryType): void {
+    send(action: ConnectionActionType, data?: CanvasHistoryType | Array<CanvasHistoryType>): void {
         this.socket.emit("send", {
             from: this.id,
             action: action,
@@ -191,6 +191,13 @@ class CanvasConnection {
                     }
                     case "clear": {
                         canvasHistory.clearCanvas(canvasContext.ctx)
+                        break
+                    }
+                    case "open": {
+                        canvasHistory.clear()
+                        canvasHistory.clearCanvas(canvasContext.ctx)
+                        canvasHistory.set(res.data)
+                        canvasHistory.reDraw(res.data)
                         break
                     }
                     default: {

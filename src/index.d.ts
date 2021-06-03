@@ -109,4 +109,4 @@ type IPCStartServerProps = {
     path: string
 }
 
-type ConnectionActionType = "add" | "remove" | "update" | "clear"
+type ConnectionActionType = "add" | "remove" | "update" | "open" | "clear"

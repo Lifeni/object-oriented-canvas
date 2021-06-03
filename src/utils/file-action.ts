@@ -1,4 +1,4 @@
-import { canvasContext, canvasFile, canvasHistory } from "../store"
+import { canvasConnection, canvasContext, canvasFile, canvasHistory } from "../store"
 import { canvasEmitter } from "../emitter"
 import { v4 as uuidv4 } from "uuid"
 import { ipcRenderer } from "electron"
@@ -31,6 +31,10 @@ const openFile = (): void => {
 
             canvasEmitter.emit("canvas-tool", { current: "cursor" })
             canvasEmitter.emit("property-bar", { current: "cursor" })
+
+            if (canvasConnection.status !== "normal") {
+                canvasConnection.send("open", file)
+            }
         }
     })
 }
