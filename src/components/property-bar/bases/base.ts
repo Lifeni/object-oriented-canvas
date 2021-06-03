@@ -57,6 +57,7 @@ export default class Base extends HTMLElement {
                 padding: 0 16px 0 0;
                 border-right: solid 1px #e0e0e0;
                 font-size: 0.75rem;
+                font-weight: bold;
                 user-select: none;
             }
             
@@ -71,6 +72,7 @@ export default class Base extends HTMLElement {
                 padding: 4px 8px;
                 border: solid 1px #eeeeee;
                 border-radius: 4px;
+                color: rgba(0, 0, 0, 0.8);
                 background: #eeeeee;
             }
             
@@ -79,11 +81,11 @@ export default class Base extends HTMLElement {
             }
             
             p.status.green {
-                background: #C8E6C9;
+                background: #c8e6c9;
             }
             
             p.status.blue {
-                background: #BBDEFB;
+                background: #bbdefb;
             }
             
             button {
@@ -93,6 +95,11 @@ export default class Base extends HTMLElement {
                 border-radius: 4px;
                 background: #eeeeee;
                 cursor: pointer;
+            }
+            
+            button.danger {
+                color: #ffffff;
+                background: #e81123;
             }
         
             label,
@@ -121,6 +128,11 @@ export default class Base extends HTMLElement {
             input.hide {
                 display: none;
                 visibility: hidden;
+                cursor: not-allowed;
+            }
+            
+            input:disabled {
+                color: #616161;
                 cursor: not-allowed;
             }
             

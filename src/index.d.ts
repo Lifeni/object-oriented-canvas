@@ -102,3 +102,11 @@ type IPCSaveFileCallbackProps = {
     name: string,
     id: string
 }
+
+type ConnectionStatusType = "normal" | "hosted" | "connected"
+
+type IPCStartServerProps = {
+    path: string
+}
+
+type ConnectionActionType = "add" | "remove" | "update" | "clear"

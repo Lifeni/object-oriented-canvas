@@ -25,8 +25,8 @@ const openFile = (): void => {
             canvasFile.save()
 
             canvasHistory.clear()
-            canvasHistory.set(file)
             canvasHistory.clearCanvas(canvasContext.ctx)
+            canvasHistory.set(file)
             canvasHistory.reDraw(file)
 
             canvasEmitter.emit("canvas-tool", { current: "cursor" })

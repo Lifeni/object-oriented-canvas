@@ -1,6 +1,14 @@
 import { fromEvent } from "rxjs"
 import { canvasEmitter, objectOptionEmitter } from "../../emitter"
-import { canvasContext, canvasElement, canvasFile, canvasHistory, canvasSnapshot, canvasTool } from "../../store"
+import {
+    canvasConnection,
+    canvasContext,
+    canvasElement,
+    canvasFile,
+    canvasHistory,
+    canvasSnapshot,
+    canvasTool
+} from "../../store"
 import { CanvasObjects, objectsMap } from "../../utils/objects-map"
 import Text from "../../objects/Text"
 import { ipcRenderer } from "electron"
@@ -159,14 +167,14 @@ export default class MainCanvas extends HTMLElement {
     }
 
     clearCanvas(): void {
-        this.ctx.save()
-        this.ctx.clearRect(0, 0, this.vw, this.vh)
-        this.ctx.fillStyle = "#fff"
-        this.ctx.fillRect(0, 0, this.vw, this.vh)
-        this.ctx.restore()
+        canvasHistory.clear()
+        canvasHistory.clearCanvas(this.ctx)
         this.setCanvas()
         canvasFile.change()
-        canvasHistory.clear()
+
+        if (canvasConnection.status !== "normal") {
+            canvasConnection.send("clear")
+        }
     }
 }
 

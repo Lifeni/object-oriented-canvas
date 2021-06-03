@@ -11,7 +11,7 @@
     "watch": "tsc -w",
     "dev": "concurrently npm:watch npm:start",
     "clear": "rimraf ./dist",
-    "prebuild": "npm run clear"
+    "double": "concurrently npm:start npm:start"
   },
   "repository": "https://github.com/Lifeni/object-oriented-canvas",
   "author": "Lifeni",

@@ -4,6 +4,8 @@ import Rectangle from "./objects/Rectangle"
 import Line from "./objects/Line"
 import Text from "./objects/Text"
 import Image from "./objects/Image"
+import { Socket as SocketClient } from "socket.io-client"
+import { v4 as uuidv4 } from "uuid"
 
 class CanvasContext {
     public ctx: CanvasRenderingContext2D
@@ -24,24 +26,32 @@ class CanvasHistory {
         this.feature = []
 
         canvasFile.change()
+
+        if (canvasConnection.status !== "normal") {
+            canvasConnection.send("add", data)
+        }
     }
 
     undo(): void {
-        const temp = this.history.pop()
-        if (temp) {
-            this.feature.push(temp)
-            this.clearCanvas(canvasContext.ctx)
-            this.reDraw(this.history)
-            canvasFile.change()
+        if (canvasConnection.status === "normal") {
+            const temp = this.history.pop()
+            if (temp) {
+                this.feature.push(temp)
+                this.clearCanvas(canvasContext.ctx)
+                this.reDraw(this.history)
+                canvasFile.change()
+            }
         }
     }
 
     redo(): void {
-        const temp = this.feature.pop()
-        if (temp) {
-            this.history.push(temp)
-            this.reDrawOnce(temp)
-            canvasFile.change()
+        if (canvasConnection.status === "normal") {
+            const temp = this.feature.pop()
+            if (temp) {
+                this.history.push(temp)
+                this.reDrawOnce(temp)
+                canvasFile.change()
+            }
         }
     }
 
@@ -116,20 +126,95 @@ class CanvasFile {
 
     save() {
         this.saved = true
-        canvasEmitter.emit("property-bar", { current: "self" })
+        this.refresh()
     }
 
     change() {
         this.saved = false
-        canvasEmitter.emit("property-bar", { current: "self" })
+        this.refresh()
     }
 
     clear(): void {
         this.file = null
     }
+
+    refresh(): void {
+        canvasEmitter.emit("property-bar", { current: "self" })
+    }
 }
 
 export const canvasFile = new CanvasFile()
+
+class CanvasConnection {
+    public status: ConnectionStatusType = "normal"
+    public path = ""
+    public socket: SocketClient
+    public id: string
+
+    setSocket(socket: SocketClient): void {
+        this.socket = socket
+    }
+
+    host(path: string): void {
+        this.status = "hosted"
+        this.path = path
+
+        this.refresh()
+        this.listener()
+    }
+
+    connect(path: string): void {
+        this.status = "connected"
+        this.path = path
+        this.id = uuidv4()
+
+        this.refresh()
+        this.listener()
+    }
+
+    send(action: ConnectionActionType, data?: CanvasHistoryType): void {
+        this.socket.emit("send", {
+            from: this.id,
+            action: action,
+            data: data || {}
+        })
+    }
+
+    listener(): void {
+        this.socket.on("broadcast", (res) => {
+            if (res.from !== this.id) {
+                switch (res.action) {
+                    case "add": {
+                        // canvasHistory.push(res.data)
+                        canvasHistory.reDrawOnce(res.data)
+                        break
+                    }
+                    case "clear": {
+                        canvasHistory.clearCanvas(canvasContext.ctx)
+                        break
+                    }
+                    default: {
+                        break
+                    }
+                }
+            }
+        })
+    }
+
+    close(): void {
+        this.status = "normal"
+        this.path = ""
+        this.id = ""
+
+        this.refresh()
+    }
+
+    refresh(): void {
+        canvasEmitter.emit("property-bar", { current: "self" })
+    }
+}
+
+export const canvasConnection = new CanvasConnection()
 
 class CanvasTool {
     public tool = "cursor"

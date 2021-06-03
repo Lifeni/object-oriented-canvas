@@ -1,6 +1,7 @@
 import { ipcMain } from "electron/main"
 import { app, BrowserWindow, dialog } from "electron"
 import fs from "fs"
+import { closeServer, startServer } from "../socket/server"
 
 const startListen = (window: BrowserWindow): void => {
 
@@ -165,6 +166,26 @@ const startListen = (window: BrowserWindow): void => {
                     console.error("另存为文件", file, error)
                 }
             }
+        }
+    })
+
+    ipcMain.on("start-server", (event, args: IPCStartServerProps) => {
+        const { path } = args
+        console.log(path)
+        try {
+            startServer(path)
+            console.log("启动服务", path)
+        } catch (error) {
+            console.error(error)
+        }
+    })
+
+    ipcMain.on("close-server", () => {
+        try {
+            closeServer()
+            console.log("结束服务")
+        } catch (error) {
+            console.error(error)
         }
     })
 }

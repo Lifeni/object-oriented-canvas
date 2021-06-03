@@ -20,6 +20,7 @@ function createWindow() {
         .then(() => {
             startListen(mainWindow)
         })
+        .catch(console.error)
 
     if (!app.isPackaged) {
         mainWindow.webContents.openDevTools()
