@@ -87,16 +87,15 @@ class Text extends Base {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         this.ctx.wrapText(value, this.x + 18, this.y + this.textOption.option.fontSize * window.devicePixelRatio + 14,
-            dx, this.textOption.option.fontSize * window.devicePixelRatio * 1.5)
+            dx - 40, this.textOption.option.fontSize * window.devicePixelRatio * 1.5)
     }
-
 
     reDraw(data: TextObjectType): void {
         this.textOption.setOption(data.option)
         this.x = data.x
         this.y = data.y
 
-        this.drawText(data.ex, data.data)
+        this.drawText(Math.abs(data.x - data.ex), data.data)
     }
 }
 

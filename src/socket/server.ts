@@ -11,7 +11,9 @@ const startServer = (path: string): void => {
         throw new Error("端口无法识别")
     }
 
-    const io = new Server(httpServer)
+    const io = new Server(httpServer, {
+        maxHttpBufferSize: 1e8
+    })
 
     io.on("connection", (socket: Socket) => {
         socket.on("hi", (callback) => {

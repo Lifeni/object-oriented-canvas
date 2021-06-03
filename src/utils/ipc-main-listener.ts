@@ -171,7 +171,6 @@ const startListen = (window: BrowserWindow): void => {
 
     ipcMain.on("start-server", (event, args: IPCStartServerProps) => {
         const { path } = args
-        console.log(path)
         try {
             startServer(path)
             console.log("启动服务", path)
