@@ -6,6 +6,7 @@ import Text from "./objects/Text"
 import Image from "./objects/Image"
 import { Socket as SocketClient } from "socket.io-client"
 import { v4 as uuidv4 } from "uuid"
+import ObjectFrame from "./objects/widgets/ObjectFrame"
 
 class CanvasContext {
     public ctx: CanvasRenderingContext2D
@@ -329,3 +330,5 @@ export class TextOption {
 }
 
 export const textOption = new TextOption()
+
+export const objectFrame = new ObjectFrame()

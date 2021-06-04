@@ -7,7 +7,8 @@ import {
     canvasFile,
     canvasHistory,
     canvasSnapshot,
-    canvasTool
+    canvasTool,
+    objectFrame
 } from "../../store"
 import { CanvasObjects, objectsMap } from "../../utils/objects-map"
 import Text from "../../objects/Text"
@@ -149,10 +150,16 @@ export default class MainCanvas extends HTMLElement {
         let once = 0
         for (let i = canvasHistory.history.length - 1; i >= 0; i--) {
             const ctx = canvasContext.ctx
-            canvasHistory.reDrawOnce(canvasHistory.history[i])
+            const object = canvasHistory.history[i]
+            canvasHistory.reDrawOnce(object)
             if (once === 0 && ctx.isPointInPath(x, y)) {
-                ctx.strokeStyle = "blue"
-                ctx.stroke()
+                const minX = Math.min(object.x, object.ex)
+                const minY = Math.min(object.y, object.ey)
+                const dx = Math.abs(object.x - object.ex)
+                const dy = Math.abs(object.y - object.ey)
+
+                objectFrame.move(minX, minY, dx, dy)
+                objectFrame.show()
                 once = 1
             }
         }

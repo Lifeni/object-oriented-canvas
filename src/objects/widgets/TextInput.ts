@@ -1,17 +1,8 @@
-import { canvasElement } from "../../store"
+import Base from "./Base"
 
-class TextInput {
-    private readonly element: HTMLElement
-
+class TextInput extends Base {
     constructor(x: number, y: number, w: number, h: number, id: string) {
-        this.element = document.createElement("text-input")
-
-        this.element.style.left = `${x / window.devicePixelRatio}px`
-        this.element.style.top = `${y / window.devicePixelRatio + canvasElement.get().getBoundingClientRect().y}px`
-        this.element.style.width = `${w / window.devicePixelRatio}px`
-        this.element.style.height = `${h / window.devicePixelRatio}px`
-
-        this.element.dataset.id = id
+        super(x, y, w, h, id, "text-input")
     }
 
     mount(): void {
@@ -19,10 +10,6 @@ class TextInput {
         setTimeout(() => {
             this.element.shadowRoot.getElementById("text-input").focus()
         }, 200)
-    }
-
-    unmount(): void {
-        this.element.remove()
     }
 }
 

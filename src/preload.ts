@@ -17,6 +17,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     import("./components/canvas/image-preview")
     import("./components/canvas/main-canvas")
+    import("./components/canvas/object-frame")
     import("./components/canvas/text-input")
 
     import("./components/property-bar/property-bar")
