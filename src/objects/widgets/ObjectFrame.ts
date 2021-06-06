@@ -3,7 +3,8 @@ import { canvasElement } from "../../store"
 class ObjectFrame {
     public readonly element: HTMLElement
     private readonly dpr = window.devicePixelRatio
-    private flag = 0
+    public mounted = 0
+    public display = 0
 
     constructor() {
         this.element = document.createElement("object-frame")
@@ -14,9 +15,9 @@ class ObjectFrame {
     }
 
     move(x: number, y: number, w: number, h: number): void {
-        if (this.flag === 0) {
+        if (this.mounted === 0) {
             this.mount()
-            this.flag = 1
+            this.mounted = 1
         }
 
         this.element.style.left = `${x / this.dpr}px`
@@ -27,10 +28,12 @@ class ObjectFrame {
 
     show(): void {
         this.element.classList.add("show")
+        this.display = 1
     }
 
     hide(): void {
         this.element.classList.remove("show")
+        this.display = 0
     }
 }
 

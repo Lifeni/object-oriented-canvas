@@ -104,6 +104,9 @@ export default class MainCanvas extends HTMLElement {
                     this.flag = 1
                 } else if (!this.obj && canvasTool.tool === "cursor"
                     && (target.localName === "main-canvas" || target.localName === "canvas")) {
+                    if (objectFrame.mounted === 1 && objectFrame.display === 1) {
+                        objectFrame.hide()
+                    }
                     this.focusObject(event.offsetX * this.dpr, event.offsetY * this.dpr)
                 }
             })
