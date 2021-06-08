@@ -1,6 +1,6 @@
 {
   "name": "object-oriented-canvas",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "一个基于面向对象分析与设计的画布 App",
   "scripts": {
     "build": "tsc",
@@ -17,7 +17,6 @@
   "author": "Lifeni",
   "license": "MIT",
   "devDependencies": {
-    "@types/keyboardjs": "^2.5.0",
     "@types/mousetrap": "^1.6.8",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
