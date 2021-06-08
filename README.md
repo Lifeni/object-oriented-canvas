@@ -2,6 +2,9 @@
 
 # Object-oriented Canvas
 
+![Version](https://img.shields.io/github/package-json/v/Lifeni/object-oriented-canvas)
+![GitHub](https://img.shields.io/github/license/Lifeni/object-oriented-canvas)
+
 这是一个基于面向对象分析与设计的画布 App，也是软件代码开发技术的课程设计。
 
 ## 功能
@@ -32,13 +35,17 @@
 
 - 没有注释（没写过注释）
 
-这个项目的使命（课程大作业）已经完成了，我也只是想体验一下 Electron 和 RxJS，所以未来这个项目不一定会更新了，不过 Bug 应该还会修一修的。
+这个项目的使命（课程大作业）已经完成了，我也只是想体验一下 Electron 和 RxJS，
+
+所以未来这个项目不一定会更新了，不过 Bug 应该还会修一修的。
 
 ## 技术
 
+开始写这个项目的时候就计划用尽量少的依赖来做，然后用面向对象的思想开发。
+
 - 平台方面，用的是 Electron，理论上支持 Windows、Linux 和 macOS
 
-- 用户界面上，用 TypeScript + Lit (Web Components) 实现
+- 用户界面上，用 TypeScript + Lit (Web Components) 实现，UI 模仿的是 Figma
 
 - 数据方面，用 RxJS 对事件进行绑定和处理
 
