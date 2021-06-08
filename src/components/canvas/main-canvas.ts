@@ -8,7 +8,6 @@ import {
     canvasHistory,
     canvasSnapshot,
     canvasTool,
-    objectFrame
 } from "../../store"
 import { CanvasObjects, objectsMap } from "../../utils/objects-map"
 import Text from "../../objects/Text"
@@ -102,12 +101,6 @@ export default class MainCanvas extends HTMLElement {
                     this.setCanvas()
 
                     this.flag = 1
-                } else if (!this.obj && canvasTool.tool === "cursor"
-                    && (target.localName === "main-canvas" || target.localName === "canvas")) {
-                    if (objectFrame.mounted === 1 && objectFrame.display === 1) {
-                        objectFrame.hide()
-                    }
-                    this.focusObject(event.offsetX * this.dpr, event.offsetY * this.dpr)
                 }
             })
 
@@ -146,26 +139,6 @@ export default class MainCanvas extends HTMLElement {
                     this.flag = 0
                 }
             })
-    }
-
-    focusObject(x: number, y: number): void {
-        canvasHistory.clearCanvas(canvasContext.ctx)
-        let once = 0
-        for (let i = canvasHistory.history.length - 1; i >= 0; i--) {
-            const ctx = canvasContext.ctx
-            const object = canvasHistory.history[i]
-            canvasHistory.reDrawOnce(object)
-            if (once === 0 && ctx.isPointInPath(x, y)) {
-                const minX = Math.min(object.x, object.ex)
-                const minY = Math.min(object.y, object.ey)
-                const dx = Math.abs(object.x - object.ex)
-                const dy = Math.abs(object.y - object.ey)
-
-                objectFrame.move(minX, minY, dx, dy)
-                objectFrame.show()
-                once = 1
-            }
-        }
     }
 
     setCanvas(): void {
