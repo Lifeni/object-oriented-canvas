@@ -18,25 +18,34 @@ class CanvasContext {
 export const canvasContext = new CanvasContext()
 
 class CanvasHistory {
+    // 历史绘图数据
     public history: Array<CanvasHistoryType> = []
+    // 保存已经撤销的数据
     public feature: Array<CanvasHistoryType> = []
 
+    // 绘图操作后，存入历史
     push<T extends CanvasHistoryType>(data: T) {
         this.history.push(data)
         this.feature = []
 
+        // 表明画板已经发生改变
         canvasFile.change()
 
+        // 如果开启了局域网连接，则发送改动到其他客户端
         if (canvasConnection.status !== "normal") {
             canvasConnection.send("add", data)
         }
     }
 
+    // 撤销
     undo(): void {
+        // 撤销操作仅在非局域网连接下启用
         if (canvasConnection.status === "normal") {
             const temp = this.history.pop()
             if (temp) {
                 this.feature.push(temp)
+
+                // 撤销后重绘画板
                 this.clearCanvas(canvasContext.ctx)
                 this.reDraw(this.history)
                 canvasFile.change()
@@ -44,29 +53,38 @@ class CanvasHistory {
         }
     }
 
+    // 重做
     redo(): void {
+        // 重做操作仅在非局域网连接下启用
         if (canvasConnection.status === "normal") {
             const temp = this.feature.pop()
             if (temp) {
                 this.history.push(temp)
+
+                // 重做后只需重绘重做的数据即可
                 this.reDrawOnce(temp)
                 canvasFile.change()
             }
         }
     }
 
+    // 整个替换历史记录，用在读入文件时
     set(file: Array<CanvasHistoryType>): void {
         this.history = file
     }
 
+    // 清空历史记录和撤销记录
     clear(): void {
         this.history = []
         this.feature = []
     }
 
+    // 重绘一次
     reDrawOnce(atom: CanvasHistoryType): void {
+        // 获得当前 Canvas 的 ctx
         const ctx = canvasContext.ctx
 
+        // 根据数据类型进行重绘
         switch (atom.name) {
             case "circle": {
                 const circle = new Circle(ctx)
@@ -99,12 +117,14 @@ class CanvasHistory {
         }
     }
 
+    // 重绘历史记录中的所有数据
     reDraw(data: Array<CanvasHistoryType>): void {
         data.forEach((atom) => {
             this.reDrawOnce(atom)
         })
     }
 
+    // 清空画布，不清空历史记录
     clearCanvas(ctx: CanvasRenderingContext2D): void {
         ctx.save()
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
@@ -173,6 +193,7 @@ class CanvasConnection {
     }
 
     send(action: ConnectionActionType, data?: CanvasHistoryType | Array<CanvasHistoryType>): void {
+        // 发送当前绘图操作的数据
         this.socket.emit("send", {
             from: this.id,
             action: action,
@@ -181,19 +202,23 @@ class CanvasConnection {
     }
 
     listener(): void {
+        // 接收广播数据
         this.socket.on("broadcast", (res) => {
+            // 如果当前的操作不是自己发送的
             if (res.from !== this.id) {
                 switch (res.action) {
                     case "add": {
-                        // canvasHistory.push(res.data)
+                        // 因为是添加图形，所以只绘制单个数据
                         canvasHistory.reDrawOnce(res.data)
                         break
                     }
                     case "clear": {
+                        // 清空画板
                         canvasHistory.clearCanvas(canvasContext.ctx)
                         break
                     }
                     case "open": {
+                        // 打开文件时，需要先清空画板，再绘制所有数据
                         canvasHistory.clear()
                         canvasHistory.clearCanvas(canvasContext.ctx)
                         canvasHistory.set(res.data)

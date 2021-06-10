@@ -15,18 +15,11 @@ class Circle extends Shape {
         this.ctx.beginPath()
 
         if (this.shapeOption.option.isPerfectShape || this.pressShift) {
-            // this.ctx.arc(this.x - (this.x - x) / 2, this.y - (this.y - y) / 2,
-            //     this.calc(this.x - x, this.y - y), 0, 2 * Math.PI)
             const dx = Math.abs(this.x - x)
             const dy = Math.abs(this.y - y)
             const d = Math.min(dx, dy)
             this.ctx.arc((this.x + x) / 2, (this.y + y) / 2, d / 2, 0, 2 * Math.PI)
         } else {
-            // this.ctx.ellipse(this.x - (this.x - x) / 2, this.y - (this.y - y) / 2,
-            //     this.calcRatio(this.x - x, this.y - y) * Math.abs(x - this.x) / 2,
-            //     this.calcRatio(this.x - x, this.y - y) * Math.abs(y - this.y) / 2,
-            //     Math.PI * (Math.atan((this.y - y) / (this.x - x))) / 180, 0, 2 * Math.PI)
-
             const dx = Math.abs(this.x - x)
             const dy = Math.abs(this.y - y)
             this.ctx.ellipse((this.x + x) / 2, (this.y + y) / 2, dx / 2, dy / 2,
