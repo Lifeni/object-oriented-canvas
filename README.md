@@ -37,7 +37,7 @@
 
 - 没有图形的移动和修改（也是懒得做了）
 
-- 没有注释（没写过注释）
+- 没啥注释（有，但不完全有）
 
 这个项目的使命（课程大作业）已经完成了，我也只是想体验一下 Electron 和 RxJS，
 
@@ -49,11 +49,13 @@
 
 - 平台方面，用的是 Electron，理论上支持 Windows、Linux 和 macOS
 
-- 用户界面上，用 TypeScript + Lit (Web Components) 实现，UI 模仿的是 Figma
+- 用户界面上，用 TypeScript + Web Components 实现，UI 模仿的是 Figma
 
-- 数据方面，用 RxJS 对事件进行绑定和处理
+- 数据方面，用 mitt 和 RxJS 对事件进行绑定和处理
 
 - 目前没有用前端的打包工具，仅使用 tsc 处理 TypeScript 文件
+
+未来可能会使用 Lit 来重构 UI 界面，并且移除 mitt，全部使用 RxJS。
 
 ## 开发
 
