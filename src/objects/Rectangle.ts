@@ -15,6 +15,7 @@ class Rectangle extends Shape {
 
         this.ctx.beginPath()
 
+        // 判断是否是正方形
         if (this.shapeOption.option.isPerfectShape || this.pressShift) {
             this.ctx.rect(this.x, this.y,
                 Math.max(x - this.x, y - this.y),

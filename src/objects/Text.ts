@@ -21,6 +21,7 @@ class Text extends Base {
         this.setCanvas()
     }
 
+    // 绘制预选框
     draw(x: number, y: number): void {
         if (this.active) {
             this.ctx.save()
@@ -36,6 +37,7 @@ class Text extends Base {
         }
     }
 
+    // 绘制结束时插入一个文本框用于输入
     blur(x: number, y: number): void {
         if (!this.active) return
 
@@ -52,6 +54,7 @@ class Text extends Base {
         const textInput = new TextInput(minX, minY, dx, dy, this.id)
         textInput.mount()
 
+        // 监听输入完成事件
         textInputEmitter.on("ok", ({ value, id }) => {
             if (this.id === id) {
                 this.drawText(dx, value)
@@ -70,6 +73,7 @@ class Text extends Base {
             }
         })
 
+        // 监听输入取消事件
         textInputEmitter.on("cancel", ({ id }) => {
             if (this.id === id) {
                 textInput.unmount()
@@ -79,11 +83,15 @@ class Text extends Base {
         this.setCanvas()
     }
 
+    // 绘制文字
     drawText(dx: number, value: string): void {
+        // 确定绘制文字的样式
         this.ctx.font =
             `${this.textOption.option.isBold ? `bold` : ``} ${this.textOption.option.isItalic ? `italic` : ``} ${this.textOption.option.fontSize * window.devicePixelRatio}px ${this.textOption.option.fontFamily}`
         this.ctx.fillStyle = this.textOption.option.fontColor
 
+        // 自动换行绘制文本
+        // Polyfill 来自 https://www.zhangxinxu.com/wordpress/2018/02/canvas-text-break-line-letter-spacing-vertical/
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         this.ctx.wrapText(value, this.x + 18, this.y + this.textOption.option.fontSize * window.devicePixelRatio + 14,

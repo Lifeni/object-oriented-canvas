@@ -14,6 +14,7 @@ class Circle extends Shape {
 
         this.ctx.beginPath()
 
+        // 判断是否绘制正圆
         if (this.shapeOption.option.isPerfectShape || this.pressShift) {
             const dx = Math.abs(this.x - x)
             const dy = Math.abs(this.y - y)
